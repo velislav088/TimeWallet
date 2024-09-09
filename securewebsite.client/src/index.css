@@ -1,3 +1,4 @@
+/* Global styles */
 *{
   margin: 0;
   padding: 0;
@@ -10,43 +11,34 @@ body {
   background: #0a023b;
   font-family: Verdana, Tahoma, Arial;
 }
-
 .btn {
   cursor: pointer;
 }
-
 .message {
   font-weight: bold;
 }
-
 .message .normal {
   font-weight: normal;
   font-size: 14px;
 }
-
 .top-nav {
   margin: 10px 20px;
 }
-
 .top-nav a {
   text-decoration: none;
   margin: 5px;
 }
-
 .top-nav .item-holder * {
   margin-left: 15px;
 }
-
 .page {
   margin-left: 20px;
   margin-right: 20px;
 }
-
 ol,
 ul {
   line-height: 30px;
 }
-
 table,
 tr,
 td,
@@ -54,17 +46,14 @@ th {
   border: 1px solid black;
   border-collapse: collapse;
 }
-
 td,
 th {
   padding: 5px 10px;
 }
-
 .my-5 {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
 .waiting-page {
   position: fixed;
   top: 25%;
@@ -79,7 +68,6 @@ th {
   align-items: center;
   align-content: center;
 }
-
 .waiting-page div {
   text-align: center;
   font-weight: bold;
@@ -132,9 +120,6 @@ th {
   box-shadow: 0 0 40px rgba(8,7,16,0.6);
   padding: 50px 35px;
 }
-.auth-container .login{
-  height: 510px;
-}
 .auth-container form *{
   font-family: 'Poppins',sans-serif;
   color: #ffffff;
@@ -185,11 +170,9 @@ th {
 .auth-container .button:focus {
   background-color: #fb8332;
 }
-
 .auth-container .button:hover {
   transform: translateY(-3px);
 }
-
 .auth-container .button:active {
   background-color: #c85000;
   box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
@@ -208,4 +191,8 @@ th {
   position: absolute;
   left: 57.9%;
   top: 64.7%
+}
+/* Login page readjustment */
+.auth-container .login{
+  height: 510px;
 }
