@@ -33,8 +33,10 @@ function Register() {
                         
                         <input type="submit" value="Register" className='button' />
 
-                        <span>Or </span>
-                        <Link to='/login'>Login</Link>              
+                        <div className='logout-redirect'>
+                            <span>Or </span>
+                            <Link to='/login'>Login</Link>     
+                        </div>         
                 </form>
             </div>
     );

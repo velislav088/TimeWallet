@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
 
@@ -13,35 +14,34 @@ function Login() {
     }, []);
 
     return (
-        <section className='login-page-wrapper page'>
-            <div className='login-page'>
-                <header>
-                    <h1>Login Page</h1>
-                </header>
-                <p className='message'></p>
-                <div className='form-holder'>
+            <div className='auth-container login'>
+                <div className='background'>
+                    <div className="shape"></div>
+                    <div className="shape"></div>
+                </div>
                     <form action="#" className='login' onSubmit={loginHandler}>
+                        <p className='message'></p>
+                        <h3>Login Here</h3>
                         <label htmlFor="email">Email</label>
-                        <br />
-                        <input type="email" name='Email' id='email' required />
-                        <br />
+                        <input type="email" placeholder='Email' name='Email' id='email' required />
+
                         <label htmlFor="password">Password</label>
-                        <br />
-                        <input type="password" name='Password' id='password' required />
-                        <br />
-                        <input type="checkbox" name='Remember' id='remember' />
-                        <label htmlFor="remember">Remember Password?</label>
-                        <br />
-                        <br />
-                        <input type="submit" value="Login" className='login btn' />
+                        <input type="password" placeholder='Password' name='Password' id='password' required />
+
+                        <div className='login-checkbox'>
+                            <label htmlFor="remember">Remember Password?</label>
+                            <input type="checkbox" name='Remember' id='remember' className='checkbox' />                        
+                        </div>
+                        
+
+                        <input type="submit" value="Login" className='button' />
+
+                        <div className='logout-redirect'>
+                            <span>Or </span>
+                            <Link to='/register'>Register</Link>     
+                        </div>     
                     </form>
-                </div>
-                <div className='my-5'>
-                    <span>Or </span>
-                    <a href="/register">Register</a>
-                </div>
             </div>
-        </section>
     );
     async function loginHandler(e) {
         e.preventDefault();

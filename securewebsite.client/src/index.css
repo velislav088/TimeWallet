@@ -132,6 +132,9 @@ th {
   box-shadow: 0 0 40px rgba(8,7,16,0.6);
   padding: 50px 35px;
 }
+.auth-container .login{
+  height: 510px;
+}
 .auth-container form *{
   font-family: 'Poppins',sans-serif;
   color: #ffffff;
@@ -166,7 +169,8 @@ th {
   color: #e5e5e5;
 }
 .auth-container .button{
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   width: 100%;
   background-color: #ffffff;
   color: #080710;
@@ -180,7 +184,6 @@ th {
 .auth-container .button:hover,
 .auth-container .button:focus {
   background-color: #fb8332;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
 .auth-container .button:hover {
@@ -191,4 +194,18 @@ th {
   background-color: #c85000;
   box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
   transform: translateY(0);
+}
+.auth-container .logout-redirect{
+  position: absolute;
+  left: 40%;
+}
+.auth-container a:hover{
+  color: purple;
+  transition: all 250ms;
+}
+.auth-container .checkbox{
+  width: 14px;
+  position: absolute;
+  left: 57.9%;
+  top: 64.7%
 }

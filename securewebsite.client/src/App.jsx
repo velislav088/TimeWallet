@@ -1,6 +1,5 @@
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import ProtectedRoutes from './ProtectedRoutes';
-import './App.css';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
