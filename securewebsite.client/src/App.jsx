@@ -1,10 +1,10 @@
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import ProtectedRoutes from './ProtectedRoutes';
 import './App.css';
-import Home from './components/Home';
-import Admin from './components/Admin';
-import Login from './components/Login';
-import Register from './components/Register';
+import Home from './pages/Home';
+import Admin from './pages/Admin';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const router = createBrowserRouter(
     createRoutesFromElements(

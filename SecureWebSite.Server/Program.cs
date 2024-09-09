@@ -23,7 +23,7 @@ namespace SecureWebSite.Server
 						builder.Services.AddIdentityCore<User>(options => {
 								options.SignIn.RequireConfirmedAccount = true;
 								options.Password.RequireDigit = true;
-								options.Password.RequireNonAlphanumeric = true;
+								options.Password.RequireNonAlphanumeric = false;
 								options.Password.RequireUppercase = true;
 								options.Password.RequiredLength = 6;
 								options.Password.RequiredUniqueChars = 0;

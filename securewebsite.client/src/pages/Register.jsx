@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
 
@@ -13,36 +14,29 @@ function Register() {
     }, []);
 
     return (
-        <section className='register-page-wrapper page'>
-            <div className='register-page'>
-                <header>
-                    <h1>Register Page</h1>
-                </header>
-                <p className='message'></p>
-                <div className='form-holder'>
-                    <form action="#" className='register' onSubmit={registerHandler}>
+            <div className='auth-container'>
+                <div className='background'>
+                    <div className="shape"></div>
+                    <div className="shape"></div>
+                </div>
+                <form action="#" className='register' onSubmit={registerHandler}>
+                        <p className='message'></p>
+                        <h3>Register Here</h3>
                         <label htmlFor="name">Name</label>
-                        <br />
-                        <input type="text" name='Name' id='name' required />
-                        <br />
-                        <label htmlFor="email">Email</label>
-                        <br />
-                        <input type="email" name='Email' id='email' required />
-                        <br />
-                        <label htmlFor="password">Password</label>
-                        <br />
-                        <input type="password" name='PasswordHash' id='password' required />
+                        <input type="text" placeholder='Name' name='Name' id='name' required />
 
-                        <br />
-                        <input type="submit" value="Register" className='register btn' />
-                    </form>
-                </div>
-                <div className='my-5'>
-                    <span>Or </span>
-                    <a href="/login">Login</a>
-                </div>
+                        <label htmlFor="email">Email</label>
+                        <input type="email" placeholder='Email' name='Email' id='email' required />
+
+                        <label htmlFor="password">Password</label>
+                        <input type="password" placeholder='Password' name='PasswordHash' id='password' required />
+                        
+                        <input type="submit" value="Register" className='button' />
+
+                        <span>Or </span>
+                        <Link to='/login'>Login</Link>              
+                </form>
             </div>
-        </section>
     );
     async function registerHandler(e) {
         e.preventDefault();
