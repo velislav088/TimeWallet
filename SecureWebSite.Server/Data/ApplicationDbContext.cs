@@ -13,6 +13,14 @@ namespace SecureWebSite.Server.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Accounts> Accounts { get; set; } = null!;
+        public DbSet<ElementsI> ElementsI { get; set; } = null!;
+        public DbSet<ElementsP> ElementsP { get; set; } = null!;
+        public DbSet<Incomes> Incomes { get; set; } = null!;
+        public DbSet<IncomesHistories> IncomeHistory { get; set; } = null!;
+        public DbSet<Payments> Payments { get; set; } = null!;
+        public DbSet<PaymentsHistories> PaymentHistories { get; set; } = null!;
+        public DbSet<TransactionsHistories> TransactionHistories { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
