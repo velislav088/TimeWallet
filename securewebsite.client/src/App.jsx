@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Navbar from './components/Navbar';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -47,24 +48,17 @@ function App() {
         }
     };
     return (
-        <section>
-            <div className='top-nav'>
+        <div>
+            <div>
                 {
                     isLogged ?
-                        <span className='item-holder'>
-                            <a href="/">Home</a>
-                            <a href="/admin">Admin</a>
-                            <span onClick={logout}>Log Out</span>
-                        </span> :
-                        <span className='item-holder'>
-                            <a href="/login">Login</a>
-                            <a href="/register">Register</a>
-                        </span>
-                }
+                        <Navbar/>
+                        :
+                        <h1>test12</h1>
+                }               
             </div>
-
             <RouterProvider router={router} />
-        </section>
+        </div>
     );
 }
 
