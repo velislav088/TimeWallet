@@ -60,10 +60,12 @@ function App() {
       <div>
         {isLogged ? (
           <span className="navbar">
-            <ul>
+            <ul className="navbar-left">
               <a className="button" href="/">
                 Home
               </a>
+            </ul>
+            <ul>
               <a className="button" href="/admin">
                 Admin
               </a>

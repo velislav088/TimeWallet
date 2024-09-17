@@ -190,6 +190,7 @@ th {
   height: 510px;
 }
 
+/* Navbar */
 .navbar {
   width: 100%;
   display: flex;
@@ -208,6 +209,12 @@ th {
   list-style: none;
   text-align: right;
   padding: 10px;
+}
+.navbar .navbar-left {
+    flex: 1;
+    list-style: none;
+    text-align: left;
+    padding: 10px;
 }
 /* Navbar buttons */
 .navbar .button {
