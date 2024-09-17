@@ -71,7 +71,7 @@ function App() {
               </a>
               <a className="button" onClick={logout}>
                 Log Out
-              </a>
+              </a>  
             </ul>
           </span>
         ) : (

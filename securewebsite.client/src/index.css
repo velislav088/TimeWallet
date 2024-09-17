@@ -11,7 +11,7 @@ body {
   background: #77d7b5;
   font-family: Verdana, Tahoma, Arial;
 }
-.btn {
+.button {
   cursor: pointer;
 }
 .message {
