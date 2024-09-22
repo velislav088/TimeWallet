@@ -10,6 +10,7 @@ import Home from "./pages/Home"
 import Admin from "./pages/Admin"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import Profile from "./pages/Profile"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
 			<Route element={<ProtectedRoutes />}>
 				<Route path="/" element={<Home />} />
 				<Route path="/admin" element={<Admin />} />
+				<Route path="/profile" element={<Profile />} />
 			</Route>
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
@@ -66,8 +68,8 @@ function App() {
 							</a>
 						</ul>
 						<ul>
-							<a className="button" href="/admin">
-								Admin
+							<a className="button" href="/profile">
+								Profile
 							</a>
 							<a className="button" onClick={logout}>
 								Log Out

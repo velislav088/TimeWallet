@@ -6,30 +6,19 @@
 	font-family: sans-serif;
 }
 body {
-	margin: 0;
-	padding: 0;
 	background: #77d7b5;
-	font-family: Verdana, Tahoma, Arial;
 }
 .button {
 	cursor: pointer;
 }
 .message {
 	font-weight: bold;
+	margin-top: -20px;
 }
 .message .normal {
 	font-weight: normal;
 	font-size: 14px;
-}
-.top-nav {
-	margin: 10px 20px;
-}
-.top-nav a {
-	text-decoration: none;
-	margin: 5px;
-}
-.top-nav .item-holder * {
-	margin-left: 15px;
+	margin-bottom: 20px;
 }
 .page {
 	margin-left: 20px;
@@ -49,10 +38,6 @@ th {
 td,
 th {
 	padding: 5px 10px;
-}
-.my-5 {
-	margin-top: 5px;
-	margin-bottom: 5px;
 }
 .waiting-page {
 	position: fixed;
@@ -100,7 +85,7 @@ th {
 	bottom: -80px;
 }
 .auth-container form {
-	height: 570px;
+	height: auto;
 	width: 400px;
 	background-color: rgba(255, 255, 255, 0);
 	position: absolute;
@@ -147,7 +132,7 @@ th {
 	color: #e0efe1;
 }
 .auth-container .button {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: 10px;
 	width: 100%;
 	background-color: #e0efe1;
@@ -179,15 +164,17 @@ th {
 	color: purple;
 	transition: all 250ms;
 }
-.auth-container .checkbox {
-	width: 14px;
-	position: absolute;
-	left: 57.9%;
-	top: 64.7%;
+.auth-container .login-checkbox{
+	margin-top: -10px;
+	list-style-type: none;
 }
-/* Login page readjustment */
-.auth-container .login {
-	height: 510px;
+.auth-container .login-checkbox li{
+	float: left;
+}
+.auth-container .checkbox {
+	margin-top: 19px;
+	margin-left: 5px;
+	width: 14px;
 }
 
 /* Navbar */
@@ -197,7 +184,7 @@ th {
 	align-items: center;
 	justify-content: space-between;
 	background: #77d7b5;
-	border-bottom: 2px solid gray;
+	box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
 }
 .navbar .logo {
 	width: 300px;
@@ -235,11 +222,7 @@ th {
 .navbar .button:focus {
 	background-color: #5b8962;
 }
-.navbar .button:hover {
-	transform: translateY(-3px);
-}
 .navbar .button:active {
 	background-color: #507755;
 	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-	transform: translateY(0);
 }

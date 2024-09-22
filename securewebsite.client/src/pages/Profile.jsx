@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-function Home() {
-	document.title = "Welcome"
+function Profile() {
+	document.title = "Profile"
 	const [userInfo, setUserInfo] = useState({})
 
 	useEffect(() => {
@@ -56,4 +56,4 @@ function Home() {
 	)
 }
 
-export default Home
+export default Profile

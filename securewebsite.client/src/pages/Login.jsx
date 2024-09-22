@@ -13,7 +13,7 @@ function Login() {
 	}, [])
 
 	return (
-		<div className="auth-container login">
+		<div className="auth-container">
 			<div className="background">
 				<div className="shape"></div>
 				<div className="shape"></div>
@@ -39,15 +39,19 @@ function Login() {
 					required
 				/>
 
-				<div className="login-checkbox">
-					<label htmlFor="remember">Remember Password?</label>
-					<input
-						type="checkbox"
-						name="Remember"
-						id="remember"
-						className="checkbox"
-					/>
-				</div>
+				<ul className="login-checkbox">
+					<li>
+						<label htmlFor="remember">Remember Password?</label>
+					</li>
+					<li>
+						<input
+							type="checkbox"
+							name="Remember"
+							id="remember"
+							className="checkbox"
+						/>
+					</li>
+				</ul>
 
 				<input type="submit" value="Login" className="button" />
 
