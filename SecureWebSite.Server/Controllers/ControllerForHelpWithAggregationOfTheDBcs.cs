@@ -1,5 +1,6 @@
 ﻿using SecureWebSite.Server.Data;
 using SecureWebSite.Server.Models;
+using System.Collections.ObjectModel;
 
 namespace SecureWebSite.Server.Controllers
 {
@@ -90,6 +91,52 @@ namespace SecureWebSite.Server.Controllers
             else
             {
                 throw new ArgumentException($"there is no such an account with name:{name} in the DataBase");
+            }
+        }
+        public List<Accounts> GetAccountsByMonthlyIncome(int lower, int higher)
+        {
+            if(lower > higher)
+            {
+                throw new ArgumentException("No logic presented!!!");
+            }
+            else
+            {
+                return _context.Accounts.Where(a => a.MonthlyIncome >= lower && a.MonthlyIncome <= higher).ToList();
+            }
+        }
+        public Accounts GetAccountByPhoneNumber(string phoneNum)
+        {
+            if(_context.Accounts.FirstOrDefault(a => a.PhoneNumber == phoneNum) != null)
+            {
+                return _context.Accounts.FirstOrDefault(a => a.PhoneNumber == phoneNum);
+            }
+            else
+            {
+                throw new ArgumentException($"There is no such an account!(GetAccountByPhoneNumber({phoneNum}))");
+            }
+        }
+
+        public List<Accounts> GetAccountsByMoneyBallance(int lower, int higher)
+        {
+            if (lower > higher)
+            {
+                throw new ArgumentException("No logic presented!!!");
+            }
+            else
+            {
+                return _context.Accounts.Where(a => a.Ballance >= lower && a.Ballance <= higher).ToList();
+            }
+        }
+
+        public List<Accounts> GetAccountsByUserID(string id)
+        {
+            if(_context.Accounts.FirstOrDefault(a => a.UserId == id) != null)
+            {
+                return _context.Accounts.Where(a => a.UserId == id).ToList();
+            }
+            else
+            {
+                throw new ArgumentException($"There is no such an account!(GetAccountByUserID({id}))");
             }
         }
         
