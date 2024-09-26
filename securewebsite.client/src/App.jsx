@@ -12,6 +12,8 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Profile from "./pages/Profile"
 import Main, { mainLoader } from "./layouts/Main"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -62,9 +64,12 @@ function App() {
 		if (response.ok) {
 			localStorage.removeItem("user")
 
-			alert(data.message)
-
-			document.location = "/login"
+			toast.success(data.message || "Logged out successfully", {
+				autoClose: 1500, // 1.5-second auto close
+			  });
+			setTimeout(() => {
+				document.location = "/login";
+			}, 2000);
 		} else {
 			console.log("could not logout: ", response)
 		}
@@ -102,6 +107,7 @@ function App() {
 				)}
 			</div>
 			<RouterProvider router={router} />
+			<ToastContainer />
 		</div>
 	)
 }

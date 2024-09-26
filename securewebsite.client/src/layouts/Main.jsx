@@ -17,7 +17,6 @@ const Main = () => {
 
 	return (
 		<div>
-			{userInfo.name}
 			<Outlet />
 		</div>
 	)
