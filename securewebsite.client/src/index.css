@@ -164,11 +164,11 @@ th {
 	color: purple;
 	transition: all 250ms;
 }
-.auth-container .login-checkbox{
+.auth-container .login-checkbox {
 	margin-top: -10px;
 	list-style-type: none;
 }
-.auth-container .login-checkbox li{
+.auth-container .login-checkbox li {
 	float: left;
 }
 .auth-container .checkbox {
