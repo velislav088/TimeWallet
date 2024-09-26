@@ -1,23 +1,26 @@
 import React from "react"
 import { fetchData } from "../components/helpers"
-import { useLoaderData } from "react-router-dom"
+import { Outlet, useLoaderData } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-export function homeLoader() {
+export function mainLoader() {
 	const userName = fetchData("username")
 	return { userName }
 }
 
-const Home = () => {
+const Main = () => {
 	const [userInfo, setUserInfo] = useState({})
 
-useEffect(() => {
-	fetchData(setUserInfo);
-}, [])
+	useEffect(() => {
+		fetchData(setUserInfo)
+	}, [])
 
 	return (
-		<div>{userInfo.name}</div>
+		<div>
+			{userInfo.name}
+			<Outlet />
+		</div>
 	)
 }
 
-export default Home
+export default Main

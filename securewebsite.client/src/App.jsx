@@ -6,17 +6,29 @@ import {
 	Link,
 } from "react-router-dom"
 import ProtectedRoutes from "./ProtectedRoutes"
-import Home from "./pages/Home"
+import Home, { homeLoader } from "./pages/Home"
 import Admin from "./pages/Admin"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Profile from "./pages/Profile"
+import Main, { mainLoader } from "./layouts/Main"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route element={<ProtectedRoutes />}>
-				<Route path="/" element={<Home />} />
+				<Route
+					path="/"
+					element={<Main />}
+					loader={mainLoader}
+					children={[
+						<Route
+							index={true}
+							element={<Home />}
+							loader={homeLoader}
+						/>,
+					]}
+				/>
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/profile" element={<Profile />} />
 			</Route>
@@ -30,7 +42,7 @@ const router = createBrowserRouter(
 							<h1>Not Found</h1>
 						</header>
 						<p>
-							<a href="/">Back to Home</a>
+							<Link to="/">Back to Home</Link>
 						</p>
 					</div>
 				}
