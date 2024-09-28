@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function Register() {
 	document.title = "Register"
@@ -19,7 +20,6 @@ function Register() {
 				<div className="shape"></div>
 			</div>
 			<form action="#" className="register" onSubmit={registerHandler}>
-				<p className="message"></p>
 				<h3>Register Here</h3>
 				<label htmlFor="name">Name</label>
 				<input
@@ -86,21 +86,22 @@ function Register() {
 		const data = await response.json()
 
 		if (response.ok) {
-			document.location = "/login"
+			toast.success(data.message || "Registered successfully", {
+				autoClose: 1500, // 1.5-second auto close
+			})
+			setTimeout(() => {
+				document.location = "/login"
+			}, 2000)
 		}
 
-		const messageEl = document.querySelector(".message")
 		if (data.message) {
 			messageEl.innerHTML = data.message
 		} else {
-			let errorMessages =
-				"<div>Attention please:</div><div class='normal'>"
+			let errorMessages = ""
 			data.errors.forEach((error) => {
-				errorMessages += error.description + " "
+				errorMessages = error.description
+				toast.error(errorMessages)
 			})
-
-			errorMessages += "</div>"
-			messageEl.innerHTML = errorMessages
 		}
 
 		console.log("login error: ", data)

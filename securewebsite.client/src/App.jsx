@@ -14,6 +14,7 @@ import Profile from "./pages/Profile"
 import Main, { mainLoader } from "./layouts/Main"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import Welcome from "./pages/Welcome"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/profile" element={<Profile />} />
 			</Route>
+			<Route path="/welcome" element={<Welcome />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
 			<Route
@@ -66,10 +68,10 @@ function App() {
 
 			toast.success(data.message || "Logged out successfully", {
 				autoClose: 1500, // 1.5-second auto close
-			  });
+			})
 			setTimeout(() => {
-				document.location = "/login";
-			}, 2000);
+				document.location = "/login"
+			}, 2000)
 		} else {
 			console.log("could not logout: ", response)
 		}

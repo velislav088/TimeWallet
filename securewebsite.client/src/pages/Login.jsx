@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function Login() {
 	document.title = "Login"
@@ -19,7 +20,6 @@ function Login() {
 				<div className="shape"></div>
 			</div>
 			<form action="#" className="login" onSubmit={loginHandler}>
-				<p className="message"></p>
 				<h3>Login Here</h3>
 				<label htmlFor="email">Email</label>
 				<input
@@ -96,9 +96,9 @@ function Login() {
 			document.location = "/"
 		}
 
-		const messageEl = document.querySelector(".message")
 		if (data.message) {
-			messageEl.innerHTML = data.message
+			let errorMessage = data.message
+			toast.error(errorMessage)
 		} else {
 			messageEl.innerHTML = "Something went wrong, please try again"
 		}

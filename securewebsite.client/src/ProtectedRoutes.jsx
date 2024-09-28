@@ -35,7 +35,7 @@ function ProtectedRoutes() {
 	) : isLogged ? (
 		<Outlet />
 	) : (
-		<Navigate to="/login" />
+		<Navigate to="/welcome" />
 	)
 }
 
