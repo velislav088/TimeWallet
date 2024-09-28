@@ -93,17 +93,16 @@ function Login() {
 
 		if (response.ok) {
 			localStorage.setItem("user", dataToSend.Email)
-			document.location = "/"
-		}
-
-		if (data.message) {
+			toast.success(data.message || "Registered successfully", {
+				autoClose: 1500, // 1.5-second auto close
+			})
+			setTimeout(() => {
+				document.location = "/"
+			}, 2000)
+		} else {
 			let errorMessage = data.message
 			toast.error(errorMessage)
-		} else {
-			messageEl.innerHTML = "Something went wrong, please try again"
 		}
-
-		console.log("login error: ", data)
 	}
 }
 
