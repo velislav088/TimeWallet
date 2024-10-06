@@ -20,5 +20,7 @@ namespace SecureWebSite.Server.Models
 				public DateTime LastLogin { get; set; } = DateTime.Now;
 
 				public bool IsAdmin { get; set; } = false;
+
+		        public decimal Budget { get; set; }
 		}
 }

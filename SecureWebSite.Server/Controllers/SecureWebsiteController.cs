@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SecureWebSite.Server.Data;
 using SecureWebSite.Server.Models;
+using SecureWebSite.Server.Models.DTO_Models;
+using SecureWebSite.Server.Models.NewFolder1;
 using System.Security.Claims;
 
 namespace SecureWebSite.Server.Controllers
@@ -13,6 +17,7 @@ namespace SecureWebSite.Server.Controllers
 		{
 				private readonly SignInManager<User> signInManager = sm;
 				private readonly UserManager<User> userManager = um;
+		        private ApplicationDbContext context;
 
 				[HttpPost("register")]
 				public async Task<ActionResult> RegisterUser(User user)
@@ -86,13 +91,13 @@ namespace SecureWebSite.Server.Controllers
 						return Ok(new { message = "You are free to go!" });
 				}
 
-				[HttpGet("admin"), Authorize]
-				public ActionResult AdminPage(){
-						string[] partners = { "Raja", "Bill Gates", "Elon Musk", "Taylor Swift", "Jeff Bezoss",
-										"Mark Zuckerberg", "Joe Biden", "Putin"};
+				//[HttpGet("admin"), Authorize]
+				//public ActionResult AdminPage(){
+				//		string[] partners = { "Raja", "Bill Gates", "Elon Musk", "Taylor Swift", "Jeff Bezoss",
+				//						"Mark Zuckerberg", "Joe Biden", "Putin"};
 
-						return Ok(new { trustedPartners = partners });
-				}
+				//		return Ok(new { trustedPartners = partners });
+				//}
 
 				[HttpGet("home/{email}"), Authorize]
 				public async Task<ActionResult> HomePage(string email)
@@ -126,5 +131,70 @@ namespace SecureWebSite.Server.Controllers
 						return Ok(new {message = "Logged in", user = currentuser});
 				}
 
-		}
+		        [HttpPost("addBudget/{email}")]
+		        public async Task<ActionResult> AddBudget(BudgetAddDTO budget, string email)
+		        {
+                    User userInfo = await userManager.FindByEmailAsync(email);
+                    if (userInfo == null)
+                    {
+                       return BadRequest(new { message = "Something went wrong, please try again." });
+                    }
+			        else
+			        {
+                       userInfo.Budget = budget.BudgetAmount;
+				       return Ok(new {message = "Successfuly added budget! "});
+			        }
+
+                }
+
+		        [HttpPost("addExpense/{email}")]
+				public async Task<ActionResult> AddExpense(ExpenseAddDTO expense, int ExpenseId)
+		        {
+			        Payments p = context.Payments.FirstOrDefault(p => p.id == ExpenseId);
+			        if(p == null)
+			        {
+                        return BadRequest(new { message = "Something went wrong, please try again." });
+			        }
+			        else
+			        {
+				        ElementsP element = new ElementsP()
+				        {
+					       PaymentId = ExpenseId,
+					       Name = expense.Name,
+					       Price = expense.Price
+				        };
+					    context.ElementsP.Add(element);
+				        return Ok(new { message = "Successfuly added expense!" });
+						
+           			}
+
+		        }
+
+		        [HttpPost("addReceipt/{email}")] 
+		        public async Task<ActionResult> AddReceipt(int PaymentHistoriesId, string PayedTo)
+		        {
+			      PaymentsHistories ph = context.PaymentHistories.FirstOrDefault(ph => ph.id == PaymentHistoriesId);
+                  if (ph == null)
+                  {
+                    return BadRequest(new { message = "Something went wrong, please try again." });
+                  }
+			      else
+			      {
+				      Payments p = new Payments()
+				      {
+					    PaymentHistoryId = PaymentHistoriesId,
+					    MoneySpend = 0,
+					    PaymentDate = DateTime.Now,
+					    SpendTo = PayedTo
+				      };
+				      context.Payments.Add(p);
+				     return Ok(new { message = "Successfuly added receipt!" });
+                  }
+
+                }
+
+		        
+
+
+        }
 }
