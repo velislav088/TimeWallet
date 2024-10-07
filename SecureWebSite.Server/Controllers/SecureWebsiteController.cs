@@ -184,8 +184,7 @@ namespace SecureWebSite.Server.Controllers
 				{
 					if (col.Title == CollectionName && context.TransactionsHistories.FirstOrDefault(th => th.Title == col.Title) != null)
 					{
-				      UsersCollectionsNames.Add(col.Title);
-						
+				      UsersCollectionsNames.Add(col.Title);						
 					}
 				}
 
@@ -248,13 +247,14 @@ namespace SecureWebSite.Server.Controllers
             }
 			else
 			{
-                return Ok(new
-                {
-                    message = "Operation succesfully made!",
-                    UsersTransactions = context.TransactionsHistories
-                    .Where(th => th.UserId == userInfo.Id)
-                    .ToList()
-                });
+				return Ok(new
+				{
+					message = "Operation succesfully made!",
+					UsersTransactions = context
+					.Elements
+					.Where(e => e.TransactionHistories.UserId == userInfo.Id)
+
+				}); ;
             }
 			
         }
