@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecureWebSite.Server.Data;
 
@@ -11,9 +12,11 @@ using SecureWebSite.Server.Data;
 namespace SecureWebSite.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007132306_GettingTheDbFreshUpdate")]
+    partial class GettingTheDbFreshUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +184,36 @@ namespace SecureWebSite.Server.Data.Migrations
 
                     b.HasIndex("TransactionHistoriesId");
 
-                    b.ToTable("Elements");
+                    b.ToTable("ElementsP");
+                });
+
+            modelBuilder.Entity("SecureWebSite.Server.Models.Payments", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("MoneySpend")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SpendTo")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<int>("TransactionHistorysId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("TransactionHistorysId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("SecureWebSite.Server.Models.TransactionsHistories", b =>
@@ -205,7 +237,7 @@ namespace SecureWebSite.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TransactionsHistories");
+                    b.ToTable("IncomeHistory");
                 });
 
             modelBuilder.Entity("SecureWebSite.Server.Models.User", b =>
@@ -353,6 +385,17 @@ namespace SecureWebSite.Server.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("TransactionHistories");
+                });
+
+            modelBuilder.Entity("SecureWebSite.Server.Models.Payments", b =>
+                {
+                    b.HasOne("SecureWebSite.Server.Models.TransactionsHistories", "TransactionsHistories")
+                        .WithMany()
+                        .HasForeignKey("TransactionHistorysId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TransactionsHistories");
                 });
 
             modelBuilder.Entity("SecureWebSite.Server.Models.TransactionsHistories", b =>
