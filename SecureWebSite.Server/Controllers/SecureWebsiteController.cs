@@ -153,8 +153,10 @@ namespace SecureWebSite.Server.Controllers
 			return Ok(new { message = "Logged in", user = currentuser });
 		}
 
+		
+		//Баланса на сметката/user-a
 		[HttpPost("addBudget/{email}"), Authorize]
-		public async Task<ActionResult> AddBudget(BudgetAddDTO budget, string email)
+		public async Task<ActionResult> AddBudget(decimal Amount, string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
@@ -163,12 +165,13 @@ namespace SecureWebSite.Server.Controllers
 			}
 			else
 			{
-				userInfo.Budget = budget.BudgetAmount;
+				userInfo.Budget = Amount;
 				return Ok(new { message = "Successfuly added budget! " });
 			}
 
 		}
 
+		//Самата Колекция на елементите.
 		[HttpPost("addTransaction/{email}"), Authorize]
 		public async Task<ActionResult> AddTransaction(string email, string CollectionName)
 		{
@@ -206,6 +209,8 @@ namespace SecureWebSite.Server.Controllers
 
 		}
 
+		//Елемент
+		
 		[HttpPost("addElement/{email}"), Authorize]
 		public async Task<ActionResult> AddElement(string email, ElementAddDTO element)
 		{
@@ -219,6 +224,7 @@ namespace SecureWebSite.Server.Controllers
 				Elements elementToAdd = new Elements()
 				{
 					Name = element.Name,
+					//Това id мога да го променя да го намира и по userId + CollectionName, ако ще ти е по удобно.
 					TransactionHistoriesId = element.CollectionId,
 					Price = element.Price,
 					TypeOfTransaction = element.TypeOfTransaction
