@@ -9,6 +9,7 @@ using SecureWebSite.Server.Models;
 using SecureWebSite.Server.Models.DTO_Models;
 using SecureWebSite.Server.Models.NewFolder1;
 using System.Collections;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace SecureWebSite.Server.Controllers
@@ -219,7 +220,12 @@ namespace SecureWebSite.Server.Controllers
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
-			if(context.TransactionsHistories.FirstOrDefault(th => th.id == element.CollectionId) != null)
+
+            TransactionsHistories transactionsHistories = context
+                    .TransactionsHistories
+                    .FirstOrDefault(th => th.id == element.CollectionId);
+
+            if (transactionsHistories != null)
 			{
 				Elements elementToAdd = new Elements()
 				{
@@ -230,7 +236,22 @@ namespace SecureWebSite.Server.Controllers
 					TypeOfTransaction = element.TypeOfTransaction
 				};
 				context.Elements.Add(elementToAdd);
-				return Ok(new { message = $"Succesfully added new element named -{element.Name}-!" });
+
+				if (elementToAdd.TypeOfTransaction == Models.Enums.TypeOfTransaction.outcome)
+				{
+					transactionsHistories.SumOfElements -= elementToAdd.Price;
+				}
+				else if (elementToAdd.TypeOfTransaction == Models.Enums.TypeOfTransaction.income)
+				{
+					transactionsHistories.SumOfElements += elementToAdd.Price;
+				}
+				else
+				{
+					return BadRequest(new { message = $"None valid type of 'TypeOfTransaction' is presented in Element with id: {elementToAdd.id}" });
+				}
+			   
+
+                return Ok(new { message = $"Succesfully added new element named -{element.Name}-!" });
             }
 			else
 			{
@@ -265,8 +286,32 @@ namespace SecureWebSite.Server.Controllers
 			
         }
 
+        //In Process of making...
+		
+		[HttpPost("editElement/{email}"), Authorize]  
+		public async Task<ActionResult> EditAnChosenElement(string email, ElementEditDTO element)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			Elements ElementToEdit = context.Elements.FirstOrDefault(e => e.id == element.Id);
+			List<Elements> TheElementsThatBelongsToTheSpecificUser = context
+				.Elements
+				.Where(e => e.TransactionHistories.UserId == userInfo.Id)
+				.ToList();
+			if(ElementToEdit != null 
+				&& TheElementsThatBelongsToTheSpecificUser.Any(e => e.id == element.Id))
+            {
+				if(element.EditableThingsInTheElementsClass
+					== Models.Enums.EditableThingsInTheElementsClass.Price)
+				{
+					//ElementToEdit.Price =
+				}
+			}
+			return Ok(ElementToEdit);
+        }
 
-
-
-	} 
+    } 
 }
