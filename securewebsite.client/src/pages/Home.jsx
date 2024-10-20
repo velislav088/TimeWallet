@@ -3,6 +3,7 @@ import { fetchData } from "../components/helpers"
 import { useLoaderData } from "react-router-dom"
 import { useEffect, useState } from "react"
 import AddBudget from "../components/AddBudget"
+import AddTransaction from "../components/AddTransaction"
 
 export function homeLoader() {
 	const userName = fetchData("userName")
@@ -40,6 +41,7 @@ const Home = () => {
 	return (
 		<div>
 			<AddBudget />
+			<AddTransaction />
 		</div>
 	)
 }

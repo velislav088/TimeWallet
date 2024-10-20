@@ -226,26 +226,65 @@ th {
 	background-color: #507755;
 	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
 }
-.welcome-container{
-	max-width: 640px;
-	margin: 100px auto;
-	display: flex;
-	gap: 20px;
-	align-items: center;
+/* Welcome page styling */
+.welcome-container h1 {
+	font-size: 46px;
 }
-.header-image{
+.welcome-container {
+	padding: 50px 50px;
 	width: 100%;
 }
-.welcome-container a{
-	display: inline-block;
-	margin-top: 20px;
-	margin-left: 40px;
-	background-color: #e0efe1;
-	color: #080710;
-	font-size: 18px;
-	font-weight: 600;
-	border-radius: 5px;
-	transition: all 250ms;
-	padding: 5px 10px;
-	text-decoration: none;
+.welcome-container .content {
+	max-width: 1440px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	border-radius: 16px;
+	padding: 64px 0;
+}
+.content {
+	width: 100%;
+	display: flex;
+	overflow: scroll;
+	scroll-behavior: smooth;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	scrollbar-width: none;
+}
+.welcome-background {
+	background-color: #337e36;
+}
+.welcome-container .welcome-background .welcome-banner-text {
+	padding-left: 100px;
+	padding-right: 70px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	max-width: 90%;
+}
+.welcome-container .welcome-background .welcome-banner-text .subhead {
+	padding-top: 24px;
+	padding-right: 80px;
+	font-size: 22px;
+	line-height: 140%;
+	color: black;
+}
+.welcome-button-first {
+	background-color: purple;
+	border: 1px solid rgba(0, 0, 0, 0);
+	border: 0px;
+	border-radius: 400px;
+	font-size: 16px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.welcome-container .welcome-background .welcome-images .primary-image img {
+	max-width: 500px;
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
