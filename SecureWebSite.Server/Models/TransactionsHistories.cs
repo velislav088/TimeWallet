@@ -20,5 +20,9 @@ namespace SecureWebSite.Server.Models
 
         [Required]
         public DateTime Created = DateTime.Now;
+
+        public decimal SumOfElements = 0;
+
+        
     }
 }

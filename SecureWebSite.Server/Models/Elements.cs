@@ -6,6 +6,7 @@ namespace SecureWebSite.Server.Models
 {
     public class Elements
     {
+        
         [Key]
         [Required]
         public int id { get; set; }
