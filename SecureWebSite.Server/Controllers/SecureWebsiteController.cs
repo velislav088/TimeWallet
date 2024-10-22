@@ -166,7 +166,7 @@ namespace SecureWebSite.Server.Controllers
 			}
 			else
 			{
-				userInfo.Budget = Amount;
+				context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
 				return Ok(new { message = "Successfuly added budget! " });
 			}
 
