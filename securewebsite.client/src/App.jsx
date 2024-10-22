@@ -70,7 +70,7 @@ function App() {
 				autoClose: 1500, // 1.5-second auto close
 			})
 			setTimeout(() => {
-				document.location = "/login"
+				document.location = "/welcome"
 			}, 2000)
 		} else {
 			console.log("could not logout: ", response)
