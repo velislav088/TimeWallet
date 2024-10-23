@@ -167,12 +167,13 @@ namespace SecureWebSite.Server.Controllers
 			else
 			{
 				context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
+				context.SaveChanges();
 				return Ok(new { message = "Successfuly added budget! " });
 			}
 
 		}
 
-		//Самата Колекция на елементите.
+		//Добавяне на самата Колекция на елементите.
 		[HttpPost("addTransaction/{email}"), Authorize]
 		public async Task<ActionResult> AddTransaction(string email, string CollectionName)
 		{
@@ -210,7 +211,7 @@ namespace SecureWebSite.Server.Controllers
 
 		}
 
-		//Елемент
+		//добавяне на елемент
 		
 		[HttpPost("addElement/{email}"), Authorize]
 		public async Task<ActionResult> AddElement(string email, ElementAddDTO element)
@@ -236,6 +237,7 @@ namespace SecureWebSite.Server.Controllers
 					TypeOfTransaction = element.TypeOfTransaction
 				};
 				context.Elements.Add(elementToAdd);
+				context.SaveChanges();	
 
 				if (elementToAdd.TypeOfTransaction == Models.Enums.TypeOfTransaction.outcome)
 				{

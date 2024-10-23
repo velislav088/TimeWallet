@@ -21,7 +21,7 @@ namespace SecureWebSite.Server.Data
             base.OnConfiguring(optionsBuilder);
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=DESKTOP-N2P1BBN\SQLEXPRESS;Database=FMA_TEST2;Integrated Security=True;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=TrueWalletDB;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
 
