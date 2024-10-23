@@ -29,8 +29,14 @@ const Welcome = () => {
 					</div>
 				</div>
 				<div className="welcome-images">
-					<div className="primary-image" style={{display: 'block'}}>
-						<img className="pr-image" src={heroImage} alt width="1850" height="1598"></img>
+					<div className="primary-image" style={{ display: "block" }}>
+						<img
+							className="pr-image"
+							src={heroImage}
+							alt
+							width="1850"
+							height="1598"
+						></img>
 					</div>
 				</div>
 			</div>

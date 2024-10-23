@@ -253,7 +253,7 @@ th {
 	scrollbar-width: none;
 }
 .welcome-background {
-	background-color: #337e36;
+	background-color: #6a8dda;
 }
 .welcome-container .welcome-background .welcome-banner-text {
 	padding-left: 100px;
@@ -271,12 +271,9 @@ th {
 	color: black;
 }
 .welcome-button-first {
-	background-color: purple;
 	border: 1px solid rgba(0, 0, 0, 0);
-	border: 0px;
 	border-radius: 400px;
 	font-size: 16px;
-	white-space: nowrap;
 	cursor: pointer;
 }
 .welcome-container .welcome-background .welcome-images .primary-image img {
