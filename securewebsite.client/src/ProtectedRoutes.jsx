@@ -19,7 +19,6 @@ function ProtectedRoutes() {
 			})
 			.then((data) => {
 				localStorage.setItem("user", data.user.email)
-				console.log(data.user)
 			})
 			.catch((err) => {
 				console.log("Error protected routes: ", err)
