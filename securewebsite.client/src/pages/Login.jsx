@@ -96,9 +96,7 @@ function Login() {
 			toast.success(data.message || "Registered successfully", {
 				autoClose: 1500, // 1.5-second auto close
 			})
-			setTimeout(() => {
-				document.location = "/"
-			}, 2000)
+			document.location = "/"
 		} else {
 			let errorMessage = data.message
 			toast.error(errorMessage)

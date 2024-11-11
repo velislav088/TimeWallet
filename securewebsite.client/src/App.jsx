@@ -117,24 +117,24 @@ function App() {
 		<div className="App">
 			<div>
 				{isLogged ? (
-					<span className="navbar">
+					<nav>
 						<ul className="navbar-left">
 							<a className="button" href="/">
 								Home
 							</a>
 						</ul>
 						<ul>
-							<a className="button" href="/profile">
+							<a className="button button-profile" href="/profile">
 								Profile
 							</a>
-							<a className="button" onClick={logout}>
+							<a className="button button-logout" onClick={logout}>
 								Log Out
 							</a>
 						</ul>
-					</span>
+					</nav>
 				) : (
-					<span className="navbar">
-						<ul>
+					<nav>
+						<ul className="navbar-right">
 							<a className="button" href="/login">
 								Login
 							</a>
@@ -142,7 +142,7 @@ function App() {
 								Register
 							</a>
 						</ul>
-					</span>
+					</nav>
 				)}
 			</div>
 			<RouterProvider router={router} />
