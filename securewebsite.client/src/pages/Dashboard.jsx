@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { Link, useLoaderData } from "react-router-dom"
 import { toast } from "react-toastify"
 import AddBudgetForm from "../components/AddBudgetForm"
@@ -27,16 +29,6 @@ export async function dashboardAction({ request }) {
 
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
-
-	// removable
-	if (_action === "newUser") {
-		try {
-			localStorage.setItem("userName", JSON.stringify(values.userName))
-			return toast.success(`Welcome, ${values.userName}`)
-		} catch (e) {
-			throw new Error("There was a problem creating your account.")
-		}
-	}
 
 	if (_action === "createBudget") {
 		try {
@@ -98,10 +90,10 @@ const Dashboard = () => {
 	return (
 		<>
 			<div className="dashboard">
-				<h1>
+				<h2>
 					Welcome back,{" "}
-					<span className="accent">{userInfo.name}</span>
-				</h1>
+					<span className="accent">{userInfo.name}</span>!
+				</h2>
 				<div className="grid-sm">
 					{budgets && budgets.length > 0 ? (
 						<div className="grid-lg">
@@ -142,11 +134,7 @@ const Dashboard = () => {
 						</div>
 					) : (
 						<div className="grid-sm">
-							<p>
-								Personal budgeting is the secret to financial
-								freedom.
-							</p>
-							<p>Create a budget to get started!</p>
+							<h4>Create a <span className="accent">budget</span> to get started!</h4>
 							<AddBudgetForm />
 						</div>
 					)}
