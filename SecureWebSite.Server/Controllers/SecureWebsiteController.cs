@@ -288,8 +288,7 @@ namespace SecureWebSite.Server.Controllers
 			
         }
 
-        //In Process of making...
-		
+        //In Process of making...		
 		[HttpPost("editElement/{email}"), Authorize]  
 		public async Task<ActionResult> EditAnChosenElement(string email, ElementEditDTO element)
 		{
@@ -309,7 +308,7 @@ namespace SecureWebSite.Server.Controllers
 				if(element.EditableThingsInTheElementsClass
 					== Models.Enums.EditableThingsInTheElementsClass.Price)
 				{
-					//ElementToEdit.Price =
+					ElementToEdit.Price = decimal.Parse(element.Change);
 				}
 			}
 			return Ok(ElementToEdit);

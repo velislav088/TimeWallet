@@ -19,10 +19,6 @@ namespace SecureWebSite.Server.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=TrueWalletDB;Trusted_Connection=True;TrustServerCertificate=True;");
-            }
         }
 
 

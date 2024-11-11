@@ -6,6 +6,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+         
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5003"
@@ -27,6 +28,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+        //"CLIENT_ID": "d0ccac46-b9fb-4abe-afa7-f8074296f1b1"
       }
     }
   },
