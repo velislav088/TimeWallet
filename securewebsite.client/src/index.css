@@ -283,6 +283,8 @@ nav .button:active {
 /* Welcome page styling */
 .welcome-image {
 	width: 100%;
+	box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
+	margin-bottom: 100px;
 }
 .first-section-text {
 	position: absolute;
@@ -385,6 +387,13 @@ nav .button:active {
 	.first-section-text a {
 		font-size: var(--text-h5);
 	}
+}
+/* Welcome page footer */
+footer {
+	margin-left: 10px;
+}
+footer p{
+	font-size: var(--text-h6);
 }
 /* Dashboard */
 .dashboard h2 {
