@@ -18,18 +18,18 @@ const AddExpenseForm = ({ budgets }) => {
 	}, [isSubmitting])
 
 	return (
-		<div className="form-wrapper">
-			<h2 className="h3">
+		<div className="form-wrapper expense">
+			<h5>
 				Add New{" "}
 				<span className="accent">
 					{budgets.length === 1 &&
 						`${budgets.map((budg) => budg.name)}`}
 				</span>{" "}
 				Expense
-			</h2>
-			<fetcher.Form method="post" className="grid-sm" ref={formRef}>
-				<div className="expense-inputs">
-					<div className="grid-xs">
+			</h5>
+			<fetcher.Form method="post" ref={formRef}>
+				<div>
+					<div>
 						<label htmlFor="newExpense">Expense Name</label>
 						<input
 							type="text"
@@ -40,7 +40,7 @@ const AddExpenseForm = ({ budgets }) => {
 							required
 						/>
 					</div>
-					<div className="grid-xs">
+					<div>
 						<label htmlFor="newExpenseAmount">Amount</label>
 						<input
 							type="number"
@@ -48,12 +48,12 @@ const AddExpenseForm = ({ budgets }) => {
 							inputMode="decimal"
 							name="newExpenseAmount"
 							id="newExpenseAmount"
-							placeholder="e.g., 3.50"
+							placeholder="e.g., 1.50"
 							required
 						/>
 					</div>
 				</div>
-				<div className="grid-xs" hidden={budgets.length === 1}>
+				<div hidden={budgets.length === 1}>
 					<label htmlFor="newExpenseBudget">Budget Category</label>
 					<select
 						name="newExpenseBudget"
@@ -74,14 +74,14 @@ const AddExpenseForm = ({ budgets }) => {
 				<input type="hidden" name="_action" value="createExpense" />
 				<button
 					type="submit"
-					className="btn btn--dark"
 					disabled={isSubmitting}
+					className="button"
 				>
 					{isSubmitting ? (
-						<span>Submitting…</span>
+						<span className="submit-span">Submitting…</span>
 					) : (
 						<>
-							<span>Add Expense</span>
+							<span className="submit-span">Add Expense</span>
 						</>
 					)}
 				</button>

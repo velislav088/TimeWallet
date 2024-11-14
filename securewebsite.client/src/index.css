@@ -21,6 +21,7 @@
 	--text-h3: 2.441rem;
 	--text-h2: 3.052rem;
 	--text-h1: 3.815rem;
+	--toastify-color-success: var(--color-accent);
 }
 .button {
 	width: 100%;
@@ -32,6 +33,10 @@
 	cursor: pointer;
 	transition: all 250ms;
 	border: 2px solid var(--color-accent);
+}
+.button-transparent {
+	background-color: rgba(0, 0, 0, 0);
+	color: var(--color-accent);
 }
 body {
 	background: var(--color-primary);
@@ -197,7 +202,30 @@ th {
 	margin-left: 5px;
 	width: 14px;
 }
-
+/* Auth for small screens */
+@media only screen and (max-width: 500px) {
+	.auth-container .background {
+		width: auto;
+	}
+	.auth-container .shape:first-child {
+		left: auto;
+	}
+	.auth-container .shape:last-child {
+		right: 0px;
+	}
+}
+/* Auth for smallest sceens */
+@media only screen and (max-width: 400px) {
+	.auth-container form {
+		width: 300px;
+	}
+	.auth-container .shape:first-child {
+		left: -50px;
+	}
+	.auth-container .shape:last-child {
+		right: -50px;
+	}
+}
 /* Navbar */
 nav {
 	width: 100%;
@@ -216,7 +244,7 @@ nav ul {
 	list-style: none;
 	padding: 10px;
 }
-nav .navbar-right{
+nav .navbar-right {
 	flex-grow: 1;
 	text-align: right;
 }
@@ -237,7 +265,7 @@ nav .button {
 	padding: 5px 10px;
 	text-decoration: none;
 }
-nav .button-logout {
+nav .button-transparent {
 	background-color: rgba(0, 0, 0, 0);
 	color: var(--color-accent);
 }
@@ -253,65 +281,111 @@ nav .button:active {
 	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
 }
 /* Welcome page styling */
-.welcome-container h1 {
-	font-size: 46px;
-}
-.welcome-container {
-	padding: 50px 50px;
+.welcome-image {
 	width: 100%;
 }
-.welcome-container .content {
-	max-width: 1440px;
+.first-section-text {
+	position: absolute;
+	margin-left: 50vw;
+	margin-top: 12vw;
+	margin-right: 5vw;
+}
+.button-box {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	border-radius: 16px;
-	padding: 64px 0;
+	margin-top: 20px;
 }
-.content {
-	width: 100%;
-	display: flex;
-	overflow: scroll;
-	scroll-behavior: smooth;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	scrollbar-width: none;
+.button-box a {
+	text-decoration: none;
+	margin-right: 20px;
+	padding: 5px;
 }
-.welcome-background {
-	background-color: #6a8dda;
+.first-section-text .button-transparent {
+	background-color: var(--color-primary);
 }
-.welcome-container .welcome-background .welcome-banner-text {
-	padding-left: 100px;
-	padding-right: 70px;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	max-width: 90%;
+.first-section-text .button:hover,
+.first-section-text .button:focus {
+	background-color: var(--color-accent-hover);
+	border-color: var(--color-accent-hover);
 }
-.welcome-container .welcome-background .welcome-banner-text .subhead {
-	padding-top: 24px;
-	padding-right: 80px;
-	font-size: 22px;
-	line-height: 140%;
-	color: black;
+.first-section-text .button:hover {
+	transform: translateY(-3px);
 }
-.welcome-button-first {
-	border: 1px solid rgba(0, 0, 0, 0);
-	border-radius: 400px;
-	font-size: 16px;
-	cursor: pointer;
+.first-section-text .button:active {
+	background-color: var(--color-accent-active);
+	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+	transform: translateY(0);
+	border-color: var(--color-accent-active);
 }
-.welcome-container .welcome-background .welcome-images .primary-image img {
-	max-width: 500px;
-	width: 100%;
-	height: auto;
-	object-fit: contain;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+.first-section-text .button-transparent:hover,
+.first-section-text .button-transparent:hover {
+	color: var(--color-primary);
 }
-
+.first-section-text a {
+	width: max-content;
+}
+.first-section-text h1 {
+	color: var(--color-primary);
+	text-shadow: 4px 4px rgba(0, 0, 0, 0.5);
+}
+.first-section-text h3 {
+	color: var(--color-primary);
+	text-shadow: 4px 4px rgba(0, 0, 0, 0.2);
+}
+@media only screen and (max-width: 600px) {
+	.first-section-text h1 {
+		font-size: var(--text-h5);
+		text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+	}
+	.first-section-text h3 {
+		display: none;
+	}
+	.first-section-text a {
+		font-size: var(--text-p);
+		margin-bottom: 5px;
+	}
+	.button-box {
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+	}
+}
+@media only screen and (min-width: 600px) {
+	.first-section-text h1 {
+		font-size: var(--text-h4);
+		text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+	}
+	.first-section-text h3 {
+		font-size: var(--text-h5);
+		text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+	}
+	.first-section-text a {
+		font-size: var(--text-p);
+	}
+}
+@media only screen and (min-width: 768px) {
+	.first-section-text h1 {
+		font-size: var(--text-h3);
+		text-shadow: 3px 3px rgba(0, 0, 0, 0.5);
+	}
+	.first-section-text h3 {
+		font-size: var(--text-h4);
+		text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+	}
+	.first-section-text a {
+		font-size: var(--text-h6);
+	}
+}
+@media only screen and (min-width: 992px) {
+	.first-section-text h1 {
+		font-size: var(--text-h1);
+	}
+	.first-section-text h3 {
+		font-size: var(--text-h3);
+	}
+	.first-section-text a {
+		font-size: var(--text-h5);
+	}
+}
 /* Dashboard */
 .dashboard h2 {
 	font-size: var(--text-h2);
@@ -326,14 +400,32 @@ nav .button:active {
 	padding: 15px;
 }
 
-/* Add Budget Form */
+/* Components Form */
 .form-wrapper {
-	display: inline-block;
+	width: 290px;
+	display: inline-grid;
+	align-items: center;
 	border: 1px solid var(--color-accent);
 	box-shadow: 0 0 20px rgba(0, 4, 4, 0.25);
 	border-radius: 5px;
 	padding: 10px;
 	margin-top: 15px;
+}
+@media only screen and (max-width: 650px) {
+	.form-wrapper {
+		margin-right: 0px;
+	}
+	.budget-form {
+		margin-right: 0px !important;
+	}
+	.budget-box {
+		margin-right: 0px !important;
+	}
+}
+/* Margin only for create budget form */
+
+.budget-form {
+	margin-right: 40px;
 }
 .form-wrapper h5 {
 	font-size: var(--text-h5);
@@ -379,4 +471,17 @@ nav .button:active {
 .form-wrapper .submit-span {
 	color: var(--color-primary);
 	font-weight: 500;
+}
+.form-wrapper select {
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 2px solid var(--color-accent);
+}
+
+/* Budget Item */
+.budget-box {
+	margin-right: 40px;
 }

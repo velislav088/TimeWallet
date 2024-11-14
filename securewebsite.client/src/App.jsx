@@ -124,10 +124,10 @@ function App() {
 							</a>
 						</ul>
 						<ul>
-							<a className="button button-profile" href="/profile">
+							<a className="button" href="/profile">
 								Profile
 							</a>
-							<a className="button button-logout" onClick={logout}>
+							<a className="button button-transparent" onClick={logout}>
 								Log Out
 							</a>
 						</ul>
@@ -138,7 +138,7 @@ function App() {
 							<a className="button" href="/login">
 								Login
 							</a>
-							<a className="button" href="/register">
+							<a className="button button-transparent" href="/register">
 								Register
 							</a>
 						</ul>

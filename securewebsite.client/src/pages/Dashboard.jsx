@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFlag } from '@fortawesome/free-regular-svg-icons'
+import { faFlag } from "@fortawesome/free-regular-svg-icons"
 import { Link, useLoaderData } from "react-router-dom"
 import { toast } from "react-toastify"
 import AddBudgetForm from "../components/AddBudgetForm"
@@ -94,15 +94,15 @@ const Dashboard = () => {
 					Welcome back,{" "}
 					<span className="accent">{userInfo.name}</span>!
 				</h2>
-				<div className="grid-sm">
+				<div>
 					{budgets && budgets.length > 0 ? (
-						<div className="grid-lg">
-							<div className="flex-lg">
+						<div>
+							<div>
 								<AddBudgetForm />
 								<AddExpenseForm budgets={budgets} />
 							</div>
 							<h2>Existing Budgets</h2>
-							<div className="budgets">
+							<div>
 								{budgets.map((budget) => (
 									<BudgetItem
 										key={budget.id}
@@ -111,7 +111,7 @@ const Dashboard = () => {
 								))}
 							</div>
 							{expenses && expenses.length > 0 && (
-								<div className="grid-md">
+								<div>
 									<h2>Recent Expenses</h2>
 									<Table
 										expenses={expenses
@@ -122,10 +122,7 @@ const Dashboard = () => {
 											.slice(0, 8)}
 									/>
 									{expenses.length > 8 && (
-										<Link
-											to="expenses"
-											className="btn btn--dark"
-										>
+										<Link to="expenses">
 											View all expenses
 										</Link>
 									)}
@@ -133,8 +130,11 @@ const Dashboard = () => {
 							)}
 						</div>
 					) : (
-						<div className="grid-sm">
-							<h4>Create a <span className="accent">budget</span> to get started!</h4>
+						<div>
+							<h4>
+								Create a <span className="accent">budget</span>{" "}
+								to get started!
+							</h4>
 							<AddBudgetForm />
 						</div>
 					)}
