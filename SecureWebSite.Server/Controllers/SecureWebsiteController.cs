@@ -21,7 +21,7 @@ namespace SecureWebSite.Server.Controllers
 	{
 		private readonly SignInManager<User> signInManager = sm;
 		private readonly UserManager<User> userManager = um;
-		private ApplicationDbContext context;
+		private ApplicationDbContext context = new ApplicationDbContext();
 
 		[HttpPost("register")]
 		public async Task<ActionResult> RegisterUser(User user)
@@ -175,8 +175,8 @@ namespace SecureWebSite.Server.Controllers
 		}
 
 		//Добавяне на самата Колекция на елементите.
-		[HttpPost("addTransaction"), Authorize]
-		public async Task<ActionResult> AddTransaction(string email, string JsonCollection)
+		[HttpPost("addTransaction/{email}"), Authorize]
+		public async Task<ActionResult> AddTransaction(string email, [FromBody] CollectionAddDTO JsonCollection)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
@@ -186,32 +186,33 @@ namespace SecureWebSite.Server.Controllers
 			else
 			{
 				//[{"id":"9844a411-7003-4336-9d65-e423fd560320","name":"asd","createdAt":1731788136212,"amount":564,"color":"34 65% 50%"}]
-				CollectionAddDTO collectionDTO = JsonSerializer.Deserialize<CollectionAddDTO>(JsonCollection);
+				//CollectionAddDTO collectionDTO = JsonSerializer.Deserialize<CollectionAddDTO>(JsonCollection);
 
 
 				List<string> UsersCollectionsNames = new List<string>();
 				foreach (var col in context.TransactionsHistories)
 				{
-					if (col.Title == collectionDTO.name && context.TransactionsHistories.FirstOrDefault(th => th.Title == col.Title) != null)
+					if (col.Title == JsonCollection.Name && context.TransactionsHistories.FirstOrDefault(th => th.Title == col.Title) != null)
 					{
 						UsersCollectionsNames.Add(col.Title);
 					}
 				}
 
-				if (UsersCollectionsNames.Contains(collectionDTO.name))
+				if (UsersCollectionsNames.Contains(JsonCollection.Name))
 				{
 					return BadRequest(new { message = "There is already a collection named like this!" });
 				}
 
 				TransactionsHistories thToAdd = new TransactionsHistories()
 				{
-					id = collectionDTO.id,
-					Title = collectionDTO.name,
+					id = JsonCollection.Id,
+					Title = JsonCollection.Name,
 					UserId = userInfo.Id
 				};
 
 				context.TransactionsHistories.Add(thToAdd);
-				return Ok(new { message = $"Succesfully added new collection named -{collectionDTO.name}-!" });
+				context.SaveChanges();
+				return Ok(new { message = $"Succesfully added new collection named -{JsonCollection.Name}-!" });
 
 			}
 
@@ -232,17 +233,17 @@ namespace SecureWebSite.Server.Controllers
 
 			TransactionsHistories transactionsHistories = context
 					.TransactionsHistories
-					.FirstOrDefault(th => th.id == elementDTO.budgetId);
+					.FirstOrDefault(th => th.id == elementDTO.BudgetId);
 
 			if (transactionsHistories != null)
 			{
 				Elements elementToAdd = new Elements()
 				{
-					id = elementDTO.id,
-					Name = elementDTO.name,
+					id = elementDTO.Id,
+					Name = elementDTO.Name,
 					//Това id мога да го променя да го намира и по userId + CollectionName, ако ще ти е по удобно.
-					TransactionHistoriesId = elementDTO.budgetId,
-					Price = elementDTO.amount
+					TransactionHistoriesId = elementDTO.BudgetId,
+					Price = elementDTO.Amount
 				};
 				context.Elements.Add(elementToAdd);
 				context.SaveChanges();
@@ -261,7 +262,7 @@ namespace SecureWebSite.Server.Controllers
 				//}
 
 
-				return Ok(new { message = $"Succesfully added new element named -{elementDTO.name}-!" });
+				return Ok(new { message = $"Succesfully added new element named -{elementDTO.Name}-!" });
 			}
 			else
 			{
