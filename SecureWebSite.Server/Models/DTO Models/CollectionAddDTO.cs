@@ -2,7 +2,9 @@
 {
     public class CollectionAddDTO
     {
-       public string BudgetName { get; set; }
-       public decimal BudgetAmount {  get; set; }
+       public string id { get; set; }
+       public string name { get; set; }
+       public long createdAt { get; set; }
+       public decimal Amount { get; set; }
     }
 }

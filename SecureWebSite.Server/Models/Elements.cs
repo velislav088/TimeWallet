@@ -6,14 +6,14 @@ namespace SecureWebSite.Server.Models
 {
     public class Elements
     {
-        
+
         [Key]
         [Required]
-        public int id { get; set; }
+        public string id { get; set; }
 
         [ForeignKey(nameof(TransactionHistories))]
         [Required]
-        public int TransactionHistoriesId { get; set; }
+        public string TransactionHistoriesId { get; set; }
         public TransactionsHistories TransactionHistories { get; set; }
 
         [Required]
@@ -26,8 +26,5 @@ namespace SecureWebSite.Server.Models
 
         [Required]
         public DateTime Created = DateTime.Now;
-
-        [Required]
-        public TypeOfTransaction TypeOfTransaction { get; set; }
     }
 }

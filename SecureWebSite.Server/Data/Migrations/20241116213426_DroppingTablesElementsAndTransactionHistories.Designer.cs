@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecureWebSite.Server.Data;
 
@@ -11,9 +12,11 @@ using SecureWebSite.Server.Data;
 namespace SecureWebSite.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241116213426_DroppingTablesElementsAndTransactionHistories")]
+    partial class DroppingTablesElementsAndTransactionHistories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,51 +158,6 @@ namespace SecureWebSite.Server.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SecureWebSite.Server.Models.Elements", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(55)
-                        .HasColumnType("nvarchar(55)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("TransactionHistoriesId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("TransactionHistoriesId");
-
-                    b.ToTable("Elements");
-                });
-
-            modelBuilder.Entity("SecureWebSite.Server.Models.TransactionsHistories", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(55)
-                        .HasColumnType("nvarchar(55)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TransactionsHistories");
-                });
-
             modelBuilder.Entity("SecureWebSite.Server.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -334,28 +292,6 @@ namespace SecureWebSite.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SecureWebSite.Server.Models.Elements", b =>
-                {
-                    b.HasOne("SecureWebSite.Server.Models.TransactionsHistories", "TransactionHistories")
-                        .WithMany()
-                        .HasForeignKey("TransactionHistoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TransactionHistories");
-                });
-
-            modelBuilder.Entity("SecureWebSite.Server.Models.TransactionsHistories", b =>
-                {
-                    b.HasOne("SecureWebSite.Server.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
