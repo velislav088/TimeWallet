@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SecureWebSite.Server.Models
 {
-    public class TransactionsHistories
+    public class Budgets
     {
+        //[{"id":"9844a411-7003-4336-9d65-e423fd560320","name":"asd","createdAt":1731788136212,"amount":564,"color":"34 65% 50%"}]
+
         [Key]
         [Required]
-        public string id { get; set; }
+        public Guid id { get; set; }
 
         [Required]
         [ForeignKey(nameof(User))]
@@ -16,13 +18,14 @@ namespace SecureWebSite.Server.Models
 
         [MaxLength(Common.Common.Title_Max_Length)]
         [Required]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public DateTime Created = DateTime.Now;
+        public DateTime CreatedAt = DateTime.Now;
 
-        public decimal SumOfElements = 0;
+        //sum of all elementsProperty
 
-        
+        [Required]
+        public decimal Amount { get; set; }
     }
 }

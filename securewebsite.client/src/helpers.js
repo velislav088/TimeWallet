@@ -45,7 +45,7 @@ export const createBudget = async ({ name, amount }) => {
 	// Post to the API
 	try {
 		const user = localStorage.getItem("user")
-		const response = await fetch(`api/securewebsite/addTransaction/${user}`, {
+		const response = await fetch(`api/securewebsite/addBudget/${user}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

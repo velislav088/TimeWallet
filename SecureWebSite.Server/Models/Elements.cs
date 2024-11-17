@@ -9,12 +9,12 @@ namespace SecureWebSite.Server.Models
 
         [Key]
         [Required]
-        public string id { get; set; }
+        public Guid id { get; set; }
 
-        [ForeignKey(nameof(TransactionHistories))]
+        [ForeignKey(nameof(Budgets))]
         [Required]
-        public string TransactionHistoriesId { get; set; }
-        public TransactionsHistories TransactionHistories { get; set; }
+        public Guid BudgetId { get; set; }
+        public Budgets Budgets { get; set; }
 
         [Required]
         [MaxLength(Common.Common.UserName_Name_Length)]
@@ -22,9 +22,9 @@ namespace SecureWebSite.Server.Models
 
         [Required]
         [Range(Common.Common.Moneys_Min_Length, Common.Common.Moneys_Max_Length)]
-        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
 
         [Required]
-        public DateTime Created = DateTime.Now;
+        public DateTime CreatedAt = DateTime.Now;
     }
 }

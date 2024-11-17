@@ -157,7 +157,8 @@ namespace SecureWebSite.Server.Controllers
 
 		
 		//Баланса на сметката/user-a
-		[HttpPost("addBudget/{email}"), Authorize]
+		//test
+		[HttpPost("checkBudget/{email}"), Authorize]
 		public async Task<ActionResult> AddBudget(decimal Amount, string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -175,8 +176,8 @@ namespace SecureWebSite.Server.Controllers
 		}
 
 		//Добавяне на самата Колекция на елементите.
-		[HttpPost("addTransaction/{email}"), Authorize]
-		public async Task<ActionResult> AddTransaction(string email, [FromBody] CollectionAddDTO JsonCollection)
+		[HttpPost("addBudget/{email}"), Authorize]
+		public async Task<ActionResult> AddBudget(string email, [FromBody] BudgetAddDTO JsonCollection)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
@@ -186,31 +187,27 @@ namespace SecureWebSite.Server.Controllers
 			else
 			{
 				//[{"id":"9844a411-7003-4336-9d65-e423fd560320","name":"asd","createdAt":1731788136212,"amount":564,"color":"34 65% 50%"}]
-				//CollectionAddDTO collectionDTO = JsonSerializer.Deserialize<CollectionAddDTO>(JsonCollection);
 
-
-				List<string> UsersCollectionsNames = new List<string>();
-				foreach (var col in context.TransactionsHistories)
-				{
-					if (col.Title == JsonCollection.Name && context.TransactionsHistories.FirstOrDefault(th => th.Title == col.Title) != null)
-					{
-						UsersCollectionsNames.Add(col.Title);
-					}
-				}
+				List<string> UsersCollectionsNames = context.Budgets.Select(b => b.Name).ToList();
 
 				if (UsersCollectionsNames.Contains(JsonCollection.Name))
 				{
 					return BadRequest(new { message = "There is already a collection named like this!" });
 				}
 
-				TransactionsHistories thToAdd = new TransactionsHistories()
+				Budgets thToAdd = new Budgets()
 				{
 					id = JsonCollection.Id,
-					Title = JsonCollection.Name,
+					Name = JsonCollection.Name,
+					CreatedAt = DateTimeOffset
+					.FromUnixTimeMilliseconds(JsonCollection.CreatedAt)
+					.UtcDateTime,
+					Amount = JsonCollection.Amount,
 					UserId = userInfo.Id
 				};
+				
 
-				context.TransactionsHistories.Add(thToAdd);
+				context.Budgets.Add(thToAdd);
 				context.SaveChanges();
 				return Ok(new { message = $"Succesfully added new collection named -{JsonCollection.Name}-!" });
 
@@ -221,7 +218,7 @@ namespace SecureWebSite.Server.Controllers
 		//добавяне на елемент
 
 		[HttpPost("addElement/{email}"), Authorize]
-		public async Task<ActionResult> AddElement(string JsonElement, string email)
+		public async Task<ActionResult> AddElement(ElementAddDTO JsonElement, string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
@@ -229,73 +226,56 @@ namespace SecureWebSite.Server.Controllers
 				return BadRequest(new { message = "Something went wrong, please try again." });
 			}
 
-			ElementAddDTO elementDTO = JsonSerializer.Deserialize<ElementAddDTO>(JsonElement);
+			Budgets Budget = context
+					.Budgets
+					.FirstOrDefault(th => th.id == Guid.Parse(JsonElement.BudgetId));
 
-			TransactionsHistories transactionsHistories = context
-					.TransactionsHistories
-					.FirstOrDefault(th => th.id == elementDTO.BudgetId);
-
-			if (transactionsHistories != null)
+			if (Budget != null)
 			{
 				Elements elementToAdd = new Elements()
 				{
-					id = elementDTO.Id,
-					Name = elementDTO.Name,
+					id = Guid.Parse(JsonElement.Id),
+					Name = JsonElement.Name,
 					//Това id мога да го променя да го намира и по userId + CollectionName, ако ще ти е по удобно.
-					TransactionHistoriesId = elementDTO.BudgetId,
-					Price = elementDTO.Amount
+					BudgetId = Guid.Parse(JsonElement.BudgetId),
+					Amount = JsonElement.Amount
 				};
 				context.Elements.Add(elementToAdd);
 				context.SaveChanges();
-
-				//if (elementToAdd.TypeOfTransaction == Models.Enums.TypeOfTransaction.outcome)
-				//{
-				//	transactionsHistories.SumOfElements -= elementToAdd.Price;
-				//}
-				//else if (elementToAdd.TypeOfTransaction == Models.Enums.TypeOfTransaction.income)
-				//{
-				//	transactionsHistories.SumOfElements += elementToAdd.Price;
-				//}
-				//else
-				//{
-				//	return BadRequest(new { message = $"None valid type of 'TypeOfTransaction' is presented in Element with id: {elementToAdd.id}" });
-				//}
-
-
-				return Ok(new { message = $"Succesfully added new element named -{elementDTO.Name}-!" });
+				return Ok(new { message = $"Succesfully added new element named -{JsonElement.Name}-!" });
 			}
 			else
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = $"Something went wrong, please try again.(No Budget with name:'{JsonElement.Name}' exists)" });
 			}
 
 		}
 
-		[HttpGet("getTransactionHistroy/{email}"), Authorize]
-		public async Task<ActionResult> GetTransactionHistory(string email)
-		{
-			User userInfo = await userManager.FindByEmailAsync(email);
-			if (userInfo == null)
-			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
-			}
-			if (context.TransactionsHistories.FirstOrDefault(th => th.UserId == userInfo.Id) == null)
-			{
-			             return BadRequest(new { message = "There users has no transactions made!" });
-			         }
-			else
-			{
-				return Ok(new
-				{
-					message = "Operation succesfully made!",
-					UsersTransactions = context
-					.Elements
-					.Where(e => e.TransactionHistories.UserId == userInfo.Id)
+		//[HttpGet("getTransactionHistroy/{email}"), Authorize]
+		//public async Task<ActionResult> GetTransactionHistory(string email)
+		//{
+		//	User userInfo = await userManager.FindByEmailAsync(email);
+		//	if (userInfo == null)
+		//	{
+		//		return BadRequest(new { message = "Something went wrong, please try again." });
+		//	}
+		//	if (context.TransactionsHistories.FirstOrDefault(th => th.UserId == userInfo.Id) == null)
+		//	{
+		//	             return BadRequest(new { message = "There users has no transactions made!" });
+		//	         }
+		//	else
+		//	{
+		//		return Ok(new
+		//		{
+		//			message = "Operation succesfully made!",
+		//			UsersTransactions = context
+		//			.Elements
+		//			.Where(e => e.TransactionHistories.UserId == userInfo.Id)
 
-				}); ;
-			}
+		//		}); ;
+		//	}
 
-		}
+		//}
 
 		//In Process of making...
 
