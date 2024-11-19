@@ -9,6 +9,7 @@ import Table from "../components/Table"
 import {
 	createBudget,
 	createExpense,
+	deleteExpense,
 	deleteItem,
 	fetchData,
 	waait,
@@ -69,7 +70,7 @@ export async function dashboardAction({ request }) {
 
 	if (_action === "deleteExpense") {
 		try {
-			deleteItem({
+			deleteExpense({
 				key: "expenses",
 				id: values.expenseId,
 			})

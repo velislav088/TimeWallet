@@ -13,12 +13,21 @@ export const getAllMatchingItems = ({ category, key, value }) => {
 }
 
 // delete items from local storage
+export const deleteExpense = async ({ key, id }) => {
+	const existingData = fetchData(key)
+	if (id) {
+		const newData = existingData.filter((item) => item.id !== id)
+		return localStorage.setItem(key, JSON.stringify(newData))
+	}
+	return localStorage.removeItem(key)
+}
 export const deleteItem = async ({ key, id }) => {
 	const existingData = fetchData(key)
 
 	if (id) {
 		try {
 			const user = localStorage.getItem("user")
+			console.log(id)
 			const response = await fetch(
 				`../api/securewebsite/deleteBudget/${user}`,
 				{
@@ -36,8 +45,7 @@ export const deleteItem = async ({ key, id }) => {
 
 			const newData = existingData.filter((item) => item.id !== id)
 			localStorage.setItem(key, JSON.stringify(newData))
-
-			return newData
+			window.location.reload()
 		} catch (error) {
 			console.error("Error deleting item:", error.message)
 			throw error
@@ -103,13 +111,16 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	// post to the db
 	try {
 		const user = localStorage.getItem("user")
-		const response = await fetch(`api/securewebsite/addElement/${user}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newItem),
-		})
+		const response = await fetch(
+			`../api/securewebsite/addElement/${user}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newItem),
+			}
+		)
 
 		if (!response.ok) {
 			throw new Error(

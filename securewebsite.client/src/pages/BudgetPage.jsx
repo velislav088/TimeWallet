@@ -3,7 +3,7 @@ import { toast } from "react-toastify"
 import AddExpenseForm from "../components/AddExpenseForm"
 import BudgetItem from "../components/BudgetItem"
 import Table from "../components/Table"
-import { createExpense, deleteItem, getAllMatchingItems } from "../helpers"
+import { createExpense, deleteExpense, deleteItem, getAllMatchingItems } from "../helpers"
 
 export async function budgetLoader({ params }) {
 	const budget = await getAllMatchingItems({
@@ -45,7 +45,7 @@ export async function budgetAction({ request }) {
 
 	if (_action === "deleteExpense") {
 		try {
-			deleteItem({
+			deleteExpense({
 				key: "expenses",
 				id: values.expenseId,
 			})
