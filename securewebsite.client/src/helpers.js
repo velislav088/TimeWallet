@@ -37,12 +37,12 @@ export const createBudget = async ({ name, amount }) => {
 		amount: +amount,
 	}
 
-	// Update localStorage
+	// Update localStorage (temporary)
 	const existingBudgets = fetchData("budgets") ?? []
 	const updatedBudgets = [...existingBudgets, newItem]
 	localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 
-	// Post to the API
+	// Post to the db
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(`api/securewebsite/addBudget/${user}`, {
@@ -61,15 +61,15 @@ export const createBudget = async ({ name, amount }) => {
 
 		const data = await response.json()
 		console.log("Budget successfully created on API:", data)
-		return data // Return the response data if needed
+		return data
 	} catch (error) {
 		console.error("Failed to create budget on API:", error)
-		throw error // Rethrow the error for higher-level handling
+		throw error
 	}
 }
 
 // create expense
-export const createExpense = ({ name, amount, budgetId }) => {
+export const createExpense = async ({ name, amount, budgetId }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
 		name: name,
@@ -77,11 +77,36 @@ export const createExpense = ({ name, amount, budgetId }) => {
 		amount: +amount,
 		budgetId: budgetId,
 	}
+
+	//Update localstorage (temporary)
 	const existingExpenses = fetchData("expenses") ?? []
-	return localStorage.setItem(
-		"expenses",
-		JSON.stringify([...existingExpenses, newItem])
-	)
+	const updatedExpenses = [...existingExpenses, newItem]
+	localStorage.setItem("expenses", JSON.stringify(updatedExpenses))
+
+	//Post to the db
+	try {
+		const user = localStorage.getItem("user")
+		const response = await fetch(`api/securewebsite/addElement/${user}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newItem),
+		})
+
+		if (!response.ok) {
+			throw new Error(
+				`Error: ${response.status} - ${response.statusText}`
+			)
+		}
+
+		const data = await response.json()
+		console.log("Expense successfully created on API:", data)
+		return data
+	} catch (error) {
+		console.error("Failed to create expense on API:", error)
+		throw error
+	}
 }
 
 // total spent by budget
@@ -114,5 +139,25 @@ export const formatCurrency = (amt) => {
 	return amt.toLocaleString(undefined, {
 		style: "currency",
 		currency: "USD",
+	})
+}
+
+// Accordion menu functionality
+var acc = document.getElementsByClassName("accordion")
+var i
+
+for (i = 0; i < acc.length; i++) {
+	acc[i].addEventListener("click", function () {
+		/* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+		this.classList.toggle("active")
+
+		/* Toggle between hiding and showing the active panel */
+		var panel = this.nextElementSibling
+		if (panel.style.display === "block") {
+			panel.style.display = "none"
+		} else {
+			panel.style.display = "block"
+		}
 	})
 }

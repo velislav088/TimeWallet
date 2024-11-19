@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	font-family: sans-serif;
 	color: var(--color-secondary);
+	scroll-behavior: smooth;
 }
 :root {
 	--color-primary: hsl(100, 50%, 90%);
@@ -22,6 +23,16 @@
 	--text-h2: 3.052rem;
 	--text-h1: 3.815rem;
 	--toastify-color-success: var(--color-accent);
+}
+@media (prefers-color-scheme: light) {
+	:root {
+		--color-primary: hsl(100, 50%, 10%);
+		--color-secondary: hsl(100, 50%, 90%);
+		--color-accent: hsl(160, 80%, 80%);
+		--color-accent-hover: hsl(160, 80%, 85%);
+		--color-accent-active: hsl(160, 80%, 75%);
+		--color-tertiary: hsl(40, 80%, 80%);
+	}
 }
 .button {
 	width: 100%;
@@ -234,11 +245,18 @@ nav {
 	justify-content: space-between;
 	background: var(--color-primary);
 	box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
+	z-index: 3;
+	position: relative;
 }
 nav .logo {
-	width: 300px;
+	width: 200px;
 	cursor: pointer;
-	margin-left: 20px;
+	display: block;
+}
+@media only screen and (max-width: 420px) {
+	nav .logo {
+		width: 30vw;
+	}
 }
 nav ul {
 	list-style: none;
@@ -284,7 +302,7 @@ nav .button:active {
 .welcome-image {
 	width: 100%;
 	box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
-	margin-bottom: 100px;
+	margin-bottom: 10px;
 }
 .first-section-text {
 	position: absolute;
@@ -388,11 +406,96 @@ nav .button:active {
 		font-size: var(--text-h5);
 	}
 }
+/* Welcome page info cards */
+.info-card-section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.info-card-icons {
+	position: absolute;
+	bottom: 0;
+	right: 0%;
+	margin: 20px 20px;
+	font-size: var(--text-h1);
+}
+.info-card {
+	position: relative;
+	width: 400px;
+	background: linear-gradient(hsl(160, 80%, 20%), hsl(160, 80%, 40%));
+	border-radius: 5px;
+	padding: 20px 20px;
+	margin: 20px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.info-card h2 {
+	color: var(--color-primary);
+	font-size: var(--text-h2);
+	text-align: center;
+	font-weight: 500;
+}
+.info-card h4 {
+	margin-top: 10px;
+	color: var(--color-primary);
+	font-size: var(--text-h4);
+	font-weight: 300;
+}
+/* Accordion menus */
+.FAQ-section h1 {
+	font-size: var(--text-h2);
+	color: var(--color-secondary);
+	margin: 20px 20px;
+}
+.FAQ-box {
+	margin: 10px 10px;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.accordion {
+	font-size: var(--text-h4);
+	background-color: var(--color-accent);
+	color: var(--color-primary);
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	outline: none;
+	transition: 0.4s;
+}
+
+.active,
+.accordion:hover {
+	background-color: var(--color-accent-hover);
+}
+
+/* Accordion panel, hidden by default */
+.panel {
+	padding: 0 18px;
+	background-color: var(--color-accent);
+}
+.panel p {
+	font-size: var(--text-h5);
+	color: var(--color-primary);
+	margin: 10px 10px;
+}
+.accordion:after {
+	content: "\02795";
+	font-size: var(--text-h4);
+	float: right;
+	margin-left: 5px;
+	color: #007bff !important;
+}
+
+.active:after {
+	content: "\2796";
+}
 /* Welcome page footer */
 footer {
 	margin-left: 10px;
 }
-footer p{
+footer p {
 	font-size: var(--text-h6);
 }
 /* Dashboard */

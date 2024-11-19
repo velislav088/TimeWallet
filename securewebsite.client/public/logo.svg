@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79 65">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #15260d;
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-3 {
+        fill: #0a5c41;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #5c410a;
+        stroke-dasharray: 6.01 6.01;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer_1">
+    <path class="cls-1" d="M73,14.47v45.06c0,2.47-2,4.47-4.47,4.47H5.47c-2.47,0-4.47-2-4.47-4.47V5.5c0,2.48,1.99,4.48,4.47,4.5h63.06c2.47,0,4.47,2,4.47,4.47Z"/>
+    <g>
+      <rect class="cls-3" x="6" y="15" width="62" height="44" rx="4.42" ry="4.42"/>
+      <rect class="cls-2" x="6" y="15" width="62" height="44" rx="4.42" ry="4.42"/>
+    </g>
+    <path class="cls-1" d="M64,5.5v4.5H5.47c-2.48-.02-4.47-2.02-4.47-4.5,0-1.24.5-2.37,1.32-3.18.81-.82,1.94-1.32,3.18-1.32h54c2.49,0,4.5,2.01,4.5,4.5Z"/>
+    <path class="cls-1" d="M60,28h18v18h-18c-4.97,0-9-4.03-9-9h0c0-4.97,4.03-9,9-9Z"/>
+  </g>
+</svg>

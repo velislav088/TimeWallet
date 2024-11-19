@@ -28,6 +28,7 @@ import Profile from "./pages/Profile"
 import Welcome from "./pages/Welcome"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import logoImage from "/src/assets/logo-image.svg"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -41,9 +42,9 @@ const router = createBrowserRouter(
 					children={[
 						<Route
 							index={true}
-							element={<Dashboard />} 
-							loader={dashboardLoader} 
-							action={dashboardAction} 
+							element={<Dashboard />}
+							loader={dashboardLoader}
+							action={dashboardAction}
 							errorElement={<Error />}
 						/>,
 						<Route path="profile" element={<Profile />} />,
@@ -119,26 +120,45 @@ function App() {
 				{isLogged ? (
 					<nav>
 						<ul className="navbar-left">
-							<a className="button" href="/">
-								Home
+							<a href="/">
+								<img
+									className="logo"
+									src={logoImage}
+									alt="TimeWallet"
+								></img>
 							</a>
 						</ul>
 						<ul>
 							<a className="button" href="/profile">
 								Profile
 							</a>
-							<a className="button button-transparent" onClick={logout}>
+							<a
+								className="button button-transparent"
+								onClick={logout}
+							>
 								Log Out
 							</a>
 						</ul>
 					</nav>
 				) : (
 					<nav>
+						<ul className="navbar-left">
+							<a href="/">
+								<img
+									className="logo"
+									src={logoImage}
+									alt="TimeWallet"
+								></img>
+							</a>
+						</ul>
 						<ul className="navbar-right">
 							<a className="button" href="/login">
 								Login
 							</a>
-							<a className="button button-transparent" href="/register">
+							<a
+								className="button button-transparent"
+								href="/register"
+							>
 								Register
 							</a>
 						</ul>
