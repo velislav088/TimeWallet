@@ -9,6 +9,7 @@ using SecureWebSite.Server.Models;
 using SecureWebSite.Server.Models.DTO_Models;
 using SecureWebSite.Server.Models.NewFolder1;
 using System.Collections;
+using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
@@ -218,7 +219,7 @@ namespace SecureWebSite.Server.Controllers
 		//добавяне на елемент
 
 		[HttpPost("addElement/{email}"), Authorize]
-		public async Task<ActionResult> AddElement(ElementAddDTO JsonElement, string email)
+		public async Task<ActionResult> AddElement(ElementDTO JsonElement, string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
@@ -251,6 +252,49 @@ namespace SecureWebSite.Server.Controllers
 
 		}
 
+		[HttpDelete("deleteElement/{email}"), Authorize]
+		public async Task<ActionResult> DeleteElement(string email, [FromBody] string id)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			if(context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id)) == null)
+
+            {
+				return BadRequest(new { message = "No element with the given parameters exists!"});
+			}
+			else
+			{
+				Elements elementToRemove = context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id));
+                context.Elements.Remove(elementToRemove);
+				context.SaveChanges();
+				return Ok(new { message = $"Element named:{elementToRemove.Name} is successfuly deleted!"});
+            }			
+        }
+
+		[HttpDelete("deleteBudget/{email}")]
+		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			if (context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id)) == null) 
+		    {
+				return BadRequest(new { message = $"User({userInfo.Name}) doesn't own the provided budget!" });
+			}
+			else
+			{
+				Budgets budgetToRemove = context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id));
+                context.Budgets.Remove(budgetToRemove);
+				context.SaveChanges();
+				return Ok(new { message = $"Budget named:{budgetToRemove.Name} is successfuly removed!" });
+            }
+			
+        }
 		//[HttpGet("getTransactionHistroy/{email}"), Authorize]
 		//public async Task<ActionResult> GetTransactionHistory(string email)
 		//{
