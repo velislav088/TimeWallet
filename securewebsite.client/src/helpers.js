@@ -20,13 +20,13 @@ export const deleteItem = async ({ key, id }) => {
 		try {
 			const user = localStorage.getItem("user")
 			const response = await fetch(
-				`api/securewebsite/deleteBudget/${user}`,
+				`../api/securewebsite/deleteBudget/${user}`,
 				{
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: id,
+					body: JSON.stringify(id),
 				}
 			)
 

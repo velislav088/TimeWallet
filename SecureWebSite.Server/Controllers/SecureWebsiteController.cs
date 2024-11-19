@@ -277,24 +277,24 @@ namespace SecureWebSite.Server.Controllers
 		[HttpDelete("deleteBudget/{email}"), Authorize]
 		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
 		{
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
-			if (context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id)) == null) 
-		    {
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			if (context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id)) == null)
+			{
 				return BadRequest(new { message = $"User({userInfo.Name}) doesn't own the provided budget!" });
 			}
 			else
 			{
 				Budgets budgetToRemove = context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id));
-                context.Budgets.Remove(budgetToRemove);
+				context.Budgets.Remove(budgetToRemove);
 				context.SaveChanges();
 				return Ok(new { message = $"Budget named:{budgetToRemove.Name} is successfuly removed!" });
-            }
-			
-        }
+			}
+
+		}
 		//[HttpGet("getTransactionHistroy/{email}"), Authorize]
 		//public async Task<ActionResult> GetTransactionHistory(string email)
 		//{
