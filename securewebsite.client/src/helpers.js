@@ -12,22 +12,47 @@ export const getAllMatchingItems = ({ category, key, value }) => {
 	return data.filter((item) => item[key] === value)
 }
 
-// delete items from local storage
+// delete expense from local storage
 export const deleteExpense = async ({ key, id }) => {
 	const existingData = fetchData(key)
+
 	if (id) {
-		const newData = existingData.filter((item) => item.id !== id)
-		return localStorage.setItem(key, JSON.stringify(newData))
+		try {
+			const user = localStorage.getItem("user")
+			const response = await fetch(
+				`../api/securewebsite/deleteElement/${user}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(id),
+				}
+			)
+
+			if (!response.ok) {
+				throw new Error("Failed to delete item from server")
+			}
+
+			const newData = existingData.filter((item) => item.id !== id)
+			localStorage.setItem(key, JSON.stringify(newData))
+			window.location.reload()
+		} catch (error) {
+			console.error("Error deleting item:", error.message)
+			throw error
+		}
+	} else {
+		localStorage.removeItem(key)
 	}
-	return localStorage.removeItem(key)
 }
+
+// delete budget
 export const deleteItem = async ({ key, id }) => {
 	const existingData = fetchData(key)
 
 	if (id) {
 		try {
 			const user = localStorage.getItem("user")
-			console.log(id)
 			const response = await fetch(
 				`../api/securewebsite/deleteBudget/${user}`,
 				{
