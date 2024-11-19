@@ -29,16 +29,28 @@ export async function dashboardAction({ request }) {
 
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
+	let budgetCheck = fetchData("budgets")
 
 	if (_action === "createBudget") {
 		try {
-			createBudget({
-				name: values.newBudget,
-				amount: values.newBudgetAmount,
-			})
+			let nameAlreadyExists = budgetCheck.some(
+				(budget) => budget.name === values.newBudget
+			)
+			if (nameAlreadyExists) {
+				return toast.error(`${values.newBudget} already exists!`)
+			} else {
+				await createBudget({
+					name: values.newBudget,
+					amount: values.newBudgetAmount,
+				})
+			}
 			return toast.success("Budget created!")
 		} catch (e) {
-			throw new Error("There was a problem creating your budget.")
+			console.error("Error creating budget:", e)
+			return {
+				success: false,
+				message: "There was a problem creating your budget.",
+			}
 		}
 	}
 

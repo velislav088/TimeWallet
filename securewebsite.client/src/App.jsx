@@ -4,18 +4,10 @@ import {
 	RouterProvider,
 } from "react-router-dom"
 import { Route, Link } from "react-router-dom"
-
-// Library
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-
-// Layouts
 import Main from "./layouts/Main"
-
-// Actions
 import { deleteBudget } from "./actions/deleteBudget"
-
-// Routes
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard"
 import Error from "./pages/Error"
 import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage"
@@ -105,7 +97,7 @@ function App() {
 			localStorage.removeItem("user")
 
 			toast.success(data.message || "Logged out successfully", {
-				autoClose: 1500, // 1.5-second auto close
+				autoClose: 1500,
 			})
 			setTimeout(() => {
 				document.location = "/welcome"

@@ -274,7 +274,7 @@ namespace SecureWebSite.Server.Controllers
             }			
         }
 
-		[HttpDelete("deleteBudget/{email}")]
+		[HttpDelete("deleteBudget/{email}"), Authorize]
 		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
 		{
             User userInfo = await userManager.FindByEmailAsync(email);
