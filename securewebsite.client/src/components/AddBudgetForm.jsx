@@ -13,7 +13,7 @@ const AddBudgetForm = () => {
 			formRef.current.reset()
 			focusRef.current.focus()
 		}
-	}, [isSubmitting])
+	}, [isSubmitting]) 
 	return (
 		<div className="form-wrapper budget-form">
 			<h5>

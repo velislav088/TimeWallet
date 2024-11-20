@@ -3,7 +3,7 @@ import { fetchData } from "../helpers"
 
 const Main = () => {
 	return (
-		<div className="layout">
+		<div>
 			<main>
 				<Outlet />
 			</main>

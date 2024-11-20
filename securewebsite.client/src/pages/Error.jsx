@@ -5,14 +5,14 @@ const Error = () => {
 	const navigate = useNavigate()
 
 	return (
-		<div className="error">
-			<h1>Uh oh! We’ve got a problem.</h1>
+		<div>
+			<h1>Uh oh! We've got a problem.</h1>
 			<p>{error.message || error.statusText}</p>
-			<div className="flex-md">
-				<button className="btn btn--dark" onClick={() => navigate(-1)}>
+			<div>
+				<button onClick={() => navigate(-1)}>
 					<span>Go Back</span>
 				</button>
-				<Link to="/" className="btn btn--dark">
+				<Link to="/">
 					<span>Go home</span>
 				</Link>
 			</div>

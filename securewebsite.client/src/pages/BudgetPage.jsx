@@ -3,7 +3,12 @@ import { toast } from "react-toastify"
 import AddExpenseForm from "../components/AddExpenseForm"
 import BudgetItem from "../components/BudgetItem"
 import Table from "../components/Table"
-import { createExpense, deleteExpense, deleteItem, getAllMatchingItems } from "../helpers"
+import {
+	createExpense,
+	deleteExpense,
+	deleteItem,
+	getAllMatchingItems,
+} from "../helpers"
 
 export async function budgetLoader({ params }) {
 	const budget = await getAllMatchingItems({
@@ -18,6 +23,7 @@ export async function budgetLoader({ params }) {
 		value: params.id,
 	})
 
+	console.log(budget)
 	if (!budget) {
 		throw new Error("The budget you’re trying to find doesn’t exist")
 	}
@@ -58,14 +64,9 @@ export async function budgetAction({ request }) {
 
 const BudgetPage = () => {
 	const { budget, expenses } = useLoaderData()
-
+	console.log(budget.Amount)
 	return (
-		<div
-			className="grid-lg"
-			style={{
-				"--accent": budget.color,
-			}}
-		>
+		<div className="grid-lg">
 			<h1 className="h2">
 				<span className="accent">{budget.name}</span> Overview
 			</h1>

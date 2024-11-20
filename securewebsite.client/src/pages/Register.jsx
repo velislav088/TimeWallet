@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 function Register() {
 	document.title = "Register"
 
-	// dont ask an already registered user to register over and over again
+	// Don't ask an already registered user to register over and over again
 	useEffect(() => {
 		const user = localStorage.getItem("user")
 		if (user) {
@@ -69,7 +69,7 @@ function Register() {
 			dataToSend[key] = value
 		}
 
-		// create username
+		// Create username
 		const newUserName = dataToSend.Name.trim().split(" ")
 		dataToSend.UserName = newUserName.join("")
 
@@ -87,7 +87,7 @@ function Register() {
 
 		if (response.ok) {
 			toast.success(data.message || "Registered successfully", {
-				autoClose: 1500, // 1.5-second auto close
+				autoClose: 1500,
 			})
 			setTimeout(() => {
 				document.location = "/login"

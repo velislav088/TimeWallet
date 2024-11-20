@@ -13,18 +13,54 @@ import {
 	deleteItem,
 	fetchData,
 	waait,
+	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
 import Welcome from "./Welcome"
 
-// loader
-export function dashboardLoader() {
-	const budgets = fetchData("budgets")
-	const expenses = fetchData("expenses")
-	return { budgets, expenses }
+async function fetchDataFromApi(endpoint) {
+	const email = localStorage.getItem("user") // Get the email from localStorage
+
+	try {
+		// Call the backend API with the email to fetch budgets and elements
+		const response = await fetch(
+			`api/securewebsite/getInformationAboutUser/${email}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		)
+
+		if (!response.ok) {
+			throw new Error("Error fetching data from API.")
+		}
+
+		const data = await response.json()
+		return {
+			budgets: JSON.parse(data.budgetJson),
+			elements: JSON.parse(data.elementJson),
+		}
+	} catch (error) {
+		console.error("Error fetching data from API:", error)
+		return { budgets: [], elements: [] } // Return empty arrays on error
+	}
 }
 
-// action
+// Function for loading budgets and expenses
+export async function dashboardLoader() {
+	try {
+		// Fetch data from the API
+		const { budgets, expenses } = await fetchDataFromApi()
+		// Return the fetched data
+		return { budgets, expenses } // You mentioned 'expenses' is the same as 'elements'
+	} catch (error) {
+		console.error("Error loading dashboard data:", error)
+		return { budgets: [], expenses: [] } // Return empty arrays on error
+	}
+}
+// All available actions
 export async function dashboardAction({ request }) {
 	await waait()
 
@@ -48,14 +84,30 @@ export async function dashboardAction({ request }) {
 			return toast.success("Budget created!")
 		} catch (e) {
 			console.error("Error creating budget:", e)
-			return {
-				success: false,
-				message: "There was a problem creating your budget.",
-			}
+			return toast.error("There was a problem creating your budget.")
 		}
 	}
 
 	if (_action === "createExpense") {
+		let budgetFinder = fetchData("budgets")
+
+		const selectedBudget = budgetFinder.find(
+			(budget) => budget.id === values.newExpenseBudget
+		)
+
+		// Get the total spent by the budget
+		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
+		const remainingAmount = selectedBudget.amount - totalSpent
+		const expenseAmount = parseFloat(values.newExpenseAmount)
+
+		// Check if the expense exceeds the remaining balance of the budget
+		if (expenseAmount > remainingAmount) {
+			return toast.error(
+				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+					2
+				)}$`
+			)
+		}
 		try {
 			createExpense({
 				name: values.newExpense,
@@ -84,6 +136,7 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
 	const { budgets, expenses } = useLoaderData()
 	const [userInfo, setUserInfo] = useState({})
+	console.log(budgets)
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
@@ -99,7 +152,6 @@ const Dashboard = () => {
 				console.log("Error home page: ", error)
 			})
 	}, [])
-
 	return (
 		<>
 			<div className="dashboard">
@@ -115,7 +167,9 @@ const Dashboard = () => {
 								<AddExpenseForm budgets={budgets} />
 							</div>
 							<h2>Existing Budgets</h2>
+
 							<div>
+								{/* Renders all budgets available */}
 								{budgets.map((budget) => (
 									<BudgetItem
 										key={budget.id}
