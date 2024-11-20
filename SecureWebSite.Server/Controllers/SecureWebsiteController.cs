@@ -295,58 +295,22 @@ namespace SecureWebSite.Server.Controllers
 			}
 
 		}
-		//[HttpGet("getTransactionHistroy/{email}"), Authorize]
-		//public async Task<ActionResult> GetTransactionHistory(string email)
-		//{
-		//	User userInfo = await userManager.FindByEmailAsync(email);
-		//	if (userInfo == null)
-		//	{
-		//		return BadRequest(new { message = "Something went wrong, please try again." });
-		//	}
-		//	if (context.TransactionsHistories.FirstOrDefault(th => th.UserId == userInfo.Id) == null)
-		//	{
-		//	             return BadRequest(new { message = "There users has no transactions made!" });
-		//	         }
-		//	else
-		//	{
-		//		return Ok(new
-		//		{
-		//			message = "Operation succesfully made!",
-		//			UsersTransactions = context
-		//			.Elements
-		//			.Where(e => e.TransactionHistories.UserId == userInfo.Id)
 
-		//		}); ;
-		//	}
+		[HttpGet("getInformationAboutUser/{email}"), Authorize]
+		public async Task<ActionResult> GetInformationAboutUser(string email)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			string budgetJson = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
+			string elementJson = JsonSerializer.Serialize(context.Elements.Where(e => e.Budgets.UserId == userInfo.Id));
 
-		//}
+			return Ok(new {budgetJson = budgetJson, elementJson = elementJson });
+        }
 
-		//In Process of making...
 
-		//[HttpPost("editElement/{email}"), Authorize]  
-		//public async Task<ActionResult> EditAnChosenElement(string email, ElementEditDTO element)
-		//{
-		//          User userInfo = await userManager.FindByEmailAsync(email);
-		//          if (userInfo == null)
-		//          {
-		//              return BadRequest(new { message = "Something went wrong, please try again." });
-		//          }
-		//	Elements ElementToEdit = context.Elements.FirstOrDefault(e => e.id == element.Id);
-		//	List<Elements> TheElementsThatBelongsToTheSpecificUser = context
-		//		.Elements
-		//		.Where(e => e.TransactionHistories.UserId == userInfo.Id)
-		//		.ToList();
-		//	if(ElementToEdit != null 
-		//		&& TheElementsThatBelongsToTheSpecificUser.Any(e => e.id == element.Id))
-		//          {
-		//		if(element.EditableThingsInTheElementsClass
-		//			== Models.Enums.EditableThingsInTheElementsClass.Price)
-		//		{
-		//			//ElementToEdit.Price =
-		//		}
-		//	}
-		//	return Ok(ElementToEdit);
-		//      }
 
-	}
+    }
 }
