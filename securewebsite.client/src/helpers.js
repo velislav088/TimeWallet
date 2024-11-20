@@ -1,86 +1,18 @@
 export const waait = () =>
 	new Promise((res) => setTimeout(res, Math.random() * 800))
 
-// local storage fetcher
+// Fetch data from localStorage
 export const fetchData = (key) => {
 	return JSON.parse(localStorage.getItem(key))
 }
 
-// get all items from local storage
+// Get all requested items from localStorage
 export const getAllMatchingItems = ({ category, key, value }) => {
 	const data = fetchData(category) ?? []
 	return data.filter((item) => item[key] === value)
 }
 
-// delete expense from local storage
-export const deleteExpense = async ({ key, id }) => {
-	const existingData = fetchData(key)
-
-	if (id) {
-		try {
-			const user = localStorage.getItem("user")
-			const response = await fetch(
-				`../api/securewebsite/deleteElement/${user}`,
-				{
-					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(id),
-				}
-			)
-
-			if (!response.ok) {
-				throw new Error("Failed to delete item from server")
-			}
-
-			const newData = existingData.filter((item) => item.id !== id)
-			localStorage.setItem(key, JSON.stringify(newData))
-			window.location.reload()
-		} catch (error) {
-			console.error("Error deleting item:", error.message)
-			throw error
-		}
-	} else {
-		localStorage.removeItem(key)
-	}
-}
-
-// delete budget
-export const deleteItem = async ({ key, id }) => {
-	const existingData = fetchData(key)
-
-	if (id) {
-		try {
-			const user = localStorage.getItem("user")
-			const response = await fetch(
-				`../api/securewebsite/deleteBudget/${user}`,
-				{
-					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(id),
-				}
-			)
-
-			if (!response.ok) {
-				throw new Error("Failed to delete item from server")
-			}
-
-			const newData = existingData.filter((item) => item.id !== id)
-			localStorage.setItem(key, JSON.stringify(newData))
-			window.location.reload()
-		} catch (error) {
-			console.error("Error deleting item:", error.message)
-			throw error
-		}
-	} else {
-		localStorage.removeItem(key)
-	}
-}
-
-// create budget
+// Create budget
 export const createBudget = async ({ name, amount }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
@@ -89,12 +21,12 @@ export const createBudget = async ({ name, amount }) => {
 		amount: +amount,
 	}
 
-	// update localstorage
+	// Update localStorage
 	const existingBudgets = fetchData("budgets") ?? []
 	const updatedBudgets = [...existingBudgets, newItem]
 	localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 
-	// post to the db
+	// Update Database
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(`api/securewebsite/addBudget/${user}`, {
@@ -118,7 +50,7 @@ export const createBudget = async ({ name, amount }) => {
 	}
 }
 
-// create expense
+// Create Expense
 export const createExpense = async ({ name, amount, budgetId }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
@@ -128,12 +60,12 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 		budgetId: budgetId,
 	}
 
-	// update localstorage
+	// Update localStorage
 	const existingExpenses = fetchData("expenses") ?? []
 	const updatedExpenses = [...existingExpenses, newItem]
 	localStorage.setItem("expenses", JSON.stringify(updatedExpenses))
 
-	// post to the db
+	// Update Database
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(
@@ -164,25 +96,95 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 		throw error
 	}
 }
+// Delete budget
+export const deleteItem = async ({ key, id }) => {
+	const existingData = fetchData(key)
 
-// total spent by budget
+	if (id) {
+		try {
+			const user = localStorage.getItem("user")
+			// Update Database
+			const response = await fetch(
+				`../api/securewebsite/deleteBudget/${user}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(id),
+				}
+			)
+
+			if (!response.ok) {
+				throw new Error("Failed to delete item from server")
+			}
+
+			// Update localStorage
+			const newData = existingData.filter((item) => item.id !== id)
+			localStorage.setItem(key, JSON.stringify(newData))
+			window.location.reload()
+		} catch (error) {
+			console.error("Error deleting item:", error.message)
+			throw error
+		}
+	} else {
+		localStorage.removeItem(key)
+	}
+}
+// Delete expense
+export const deleteExpense = async ({ key, id }) => {
+	const existingData = fetchData(key)
+
+	if (id) {
+		try {
+			const user = localStorage.getItem("user")
+			// Update Database
+			const response = await fetch(
+				`../api/securewebsite/deleteElement/${user}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(id),
+				}
+			)
+
+			if (!response.ok) {
+				throw new Error("Failed to delete item from server")
+			}
+
+			// Update localStorage
+			const newData = existingData.filter((item) => item.id !== id)
+			localStorage.setItem(key, JSON.stringify(newData))
+			window.location.reload()
+		} catch (error) {
+			console.error("Error deleting item:", error.message)
+			throw error
+		}
+	} else {
+		localStorage.removeItem(key)
+	}
+}
+
+// Total spent by budget
 export const calculateSpentByBudget = (budgetId) => {
 	const expenses = fetchData("expenses") ?? []
 	const budgetSpent = expenses.reduce((acc, expense) => {
-		// check if expense.id === budgetId I passed in
+		// Check if expense.id matches passed budgetId
 		if (expense.budgetId !== budgetId) return acc
 
-		// add the current amount to my total
+		// Add the current amount to my total
 		return (acc += expense.amount)
 	}, 0)
 	return budgetSpent
 }
 
-// formatting
+// Formatting
 export const formatDateToLocaleString = (epoch) =>
 	new Date(epoch).toLocaleDateString()
 
-// formating percentages
+// Formating percentages
 export const formatPercentage = (amt) => {
 	return amt.toLocaleString(undefined, {
 		style: "percent",
@@ -190,7 +192,7 @@ export const formatPercentage = (amt) => {
 	})
 }
 
-// format currency
+// Format currency
 export const formatCurrency = (amt) => {
 	return amt.toLocaleString(undefined, {
 		style: "currency",

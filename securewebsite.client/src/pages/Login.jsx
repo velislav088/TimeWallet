@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 function Login() {
 	document.title = "Login"
 
-	// dont ask an already logged in user to login over and over again
+	// Don't ask an already logged in user to login over and over again
 	useEffect(() => {
 		const user = localStorage.getItem("user")
 		if (user) {
@@ -94,7 +94,7 @@ function Login() {
 		if (response.ok) {
 			localStorage.setItem("user", dataToSend.Email)
 			toast.success(data.message || "Registered successfully", {
-				autoClose: 1500, // 1.5-second auto close
+				autoClose: 1500,
 			})
 			document.location = "/"
 		} else {

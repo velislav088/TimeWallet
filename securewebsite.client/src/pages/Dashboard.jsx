@@ -13,18 +13,19 @@ import {
 	deleteItem,
 	fetchData,
 	waait,
+	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
 import Welcome from "./Welcome"
 
-// loader
+// Function for loading budgets and expenses
 export function dashboardLoader() {
 	const budgets = fetchData("budgets")
 	const expenses = fetchData("expenses")
 	return { budgets, expenses }
 }
 
-// action
+// All available actions
 export async function dashboardAction({ request }) {
 	await waait()
 
@@ -48,14 +49,30 @@ export async function dashboardAction({ request }) {
 			return toast.success("Budget created!")
 		} catch (e) {
 			console.error("Error creating budget:", e)
-			return {
-				success: false,
-				message: "There was a problem creating your budget.",
-			}
+			return toast.error("There was a problem creating your budget.")
 		}
 	}
 
 	if (_action === "createExpense") {
+		let budgetFinder = fetchData("budgets")
+
+		const selectedBudget = budgetFinder.find(
+			(budget) => budget.id === values.newExpenseBudget
+		)
+
+		// Get the total spent by the budget
+		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
+		const remainingAmount = selectedBudget.amount - totalSpent
+		const expenseAmount = parseFloat(values.newExpenseAmount)
+
+		// Check if the expense exceeds the remaining balance of the budget
+		if (expenseAmount > remainingAmount) {
+			return toast.error(
+				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+					2
+				)}$`
+			)
+		}
 		try {
 			createExpense({
 				name: values.newExpense,
@@ -115,7 +132,9 @@ const Dashboard = () => {
 								<AddExpenseForm budgets={budgets} />
 							</div>
 							<h2>Existing Budgets</h2>
+
 							<div>
+								{/* Renders all budgets available */}
 								{budgets.map((budget) => (
 									<BudgetItem
 										key={budget.id}
@@ -134,6 +153,7 @@ const Dashboard = () => {
 											)
 											.slice(0, 8)}
 									/>
+									{/* Table shows last 8 expenses by default, checks if there are more. */}
 									{expenses.length > 8 && (
 										<Link to="expenses">
 											View all expenses

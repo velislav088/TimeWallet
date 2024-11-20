@@ -6,16 +6,13 @@ import {
 } from "../helpers"
 
 const BudgetItem = ({ budget, showDelete = false }) => {
-	const { id, name, amount, color } = budget
+	const { id, name, amount } = budget
 	const spent = calculateSpentByBudget(id)
 
 	return (
 		<div className="form-wrapper budget-box">
 			<div
 				className="budget"
-				style={{
-					"--accent": color,
-				}}
 			>
 				<div className="progress-text">
 					<h5 className="accent">{name}</h5>
