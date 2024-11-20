@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SecureWebSite.Server.Models;
+using TimeWallet.Server.Models;
 
-namespace SecureWebSite.Server.Data
+namespace TimeWallet.Server.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {

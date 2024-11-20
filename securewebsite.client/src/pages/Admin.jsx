@@ -5,7 +5,7 @@ function Admin() {
 	const [partners, setPartners] = useState([])
 
 	useEffect(() => {
-		fetch("api/SecureWebsite/admin", {
+		fetch("api/timewallet/admin", {
 			method: "GET",
 			credentials: "include",
 		})

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SecureWebSite.Server.Controllers
+namespace TimeWallet.Server.Controllers
 {
 		[ApiController]
 		[Route("[controller]")]

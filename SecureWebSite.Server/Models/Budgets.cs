@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SecureWebSite.Server.Models
+namespace TimeWallet.Server.Models
 {
     public class Budgets
     {
-        //[{"id":"9844a411-7003-4336-9d65-e423fd560320","name":"asd","createdAt":1731788136212,"amount":564,"color":"34 65% 50%"}]
 
         [Key]
         [Required]

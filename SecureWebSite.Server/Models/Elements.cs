@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using SecureWebSite.Server.Models.Enums;
 
-namespace SecureWebSite.Server.Models
+namespace TimeWallet.Server.Models
 {
     public class Elements
     {

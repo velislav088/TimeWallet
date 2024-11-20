@@ -87,7 +87,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
-		fetch("api/SecureWebsite/home/" + user, {
+		fetch("api/timewallet/home/" + user, {
 			method: "GET",
 			credentials: "include",
 		})

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SecureWebSite.Server.Data;
-using SecureWebSite.Server.Models;
+using TimeWallet.Server.Data;
+using TimeWallet.Server.Models;
 
-namespace SecureWebSite.Server
+namespace TimeWallet.Server
 {
 		public class Program
 		{

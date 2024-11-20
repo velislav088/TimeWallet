@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SecureWebSite.Server.Data.Migrations
+namespace TimeWallet.Server.Data.Migrations
 {
     /// <inheritdoc />
     public partial class AddingTheBudgetColumnInTableUsers : Migration

@@ -4,21 +4,23 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SecureWebSite.Server.Data;
-using SecureWebSite.Server.Models;
-using SecureWebSite.Server.Models.DTO_Models;
-using SecureWebSite.Server.Models.NewFolder1;
+using TimeWallet.Server.Data;
+using TimeWallet.Server.Models;
+using TimeWallet.Server.Models.DTO_Models;
+using TimeWallet.Server.Models.NewFolder1;
 using System.Collections;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace SecureWebSite.Server.Controllers
+
+
+namespace TimeWallet.Server.Controllers
 {
-	[Route("api/securewebsite")]
+	[Route("api/timewallet")]
 	[ApiController]
-	public class SecureWebsiteController(SignInManager<User> sm, UserManager<User> um) : ControllerBase
+	public class TimeWalletController(SignInManager<User> sm, UserManager<User> um) : ControllerBase
 	{
 		private readonly SignInManager<User> signInManager = sm;
 		private readonly UserManager<User> userManager = um;
@@ -157,24 +159,24 @@ namespace SecureWebSite.Server.Controllers
 		}
 
 		
-		//Баланса на сметката/user-a
-		//test
-		[HttpPost("checkBudget/{email}"), Authorize]
-		public async Task<ActionResult> AddBudget(decimal Amount, string email)
-		{
-			User userInfo = await userManager.FindByEmailAsync(email);
-			if (userInfo == null)
-			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
-			}
-			else
-			{
-				context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
-				context.SaveChanges();
-				return Ok(new { message = "Successfuly added budget! " });
-			}
+		////Баланса на сметката/user-a
+		////test
+		//[HttpPost("checkBudget/{email}"), Authorize]
+		//public async Task<ActionResult> AddBudget(decimal Amount, string email)
+		//{
+		//	User userInfo = await userManager.FindByEmailAsync(email);
+		//	if (userInfo == null)
+		//	{
+		//		return BadRequest(new { message = "Something went wrong, please try again." });
+		//	}
+		//	else
+		//	{
+		//		context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
+		//		context.SaveChanges();
+		//		return Ok(new { message = "Successfuly added budget! " });
+		//	}
 
-		}
+		//}
 
 		//Добавяне на самата Колекция на елементите.
 		[HttpPost("addBudget/{email}"), Authorize]
@@ -187,7 +189,6 @@ namespace SecureWebSite.Server.Controllers
 			}
 			else
 			{
-				//[{"id":"9844a411-7003-4336-9d65-e423fd560320","name":"asd","createdAt":1731788136212,"amount":564,"color":"34 65% 50%"}]
 
 				List<string> UsersCollectionsNames = context.Budgets.Select(b => b.Name).ToList();
 

@@ -20,7 +20,7 @@ export const deleteExpense = async ({ key, id }) => {
 		try {
 			const user = localStorage.getItem("user")
 			const response = await fetch(
-				`../api/securewebsite/deleteElement/${user}`,
+				`../api/timewallet/deleteElement/${user}`,
 				{
 					method: "DELETE",
 					headers: {
@@ -54,7 +54,7 @@ export const deleteItem = async ({ key, id }) => {
 		try {
 			const user = localStorage.getItem("user")
 			const response = await fetch(
-				`../api/securewebsite/deleteBudget/${user}`,
+				`../api/timewallet/deleteBudget/${user}`,
 				{
 					method: "DELETE",
 					headers: {
@@ -97,7 +97,7 @@ export const createBudget = async ({ name, amount }) => {
 	// post to the db
 	try {
 		const user = localStorage.getItem("user")
-		const response = await fetch(`api/securewebsite/addBudget/${user}`, {
+		const response = await fetch(`api/timewallet/addBudget/${user}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
