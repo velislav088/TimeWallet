@@ -6,29 +6,27 @@ import {
 } from "../helpers"
 
 const BudgetItem = ({ budget, showDelete = false }) => {
-	const { id, name, amount } = budget
+	const { id, Name, Amount } = budget
 	const spent = calculateSpentByBudget(id)
 
 	return (
 		<div className="form-wrapper budget-box">
-			<div
-				className="budget"
-			>
+			<div className="budget">
 				<div className="progress-text">
-					<h5 className="accent">{name}</h5>
+					<h5 className="accent">{Name}</h5>
 					<p>
 						<span className="accent budgeted">
-							{formatCurrency(amount)}
+							{formatCurrency(Amount)}
 						</span>{" "}
 						Budgeted
 					</p>
 				</div>
-				<progress max={amount} value={spent}>
-					{formatPercentage(spent / amount)}
+				<progress max={Amount} value={spent}>
+					{formatPercentage(spent / Amount)}
 				</progress>
 				<div className="progress-text">
 					<small>{formatCurrency(spent)} spent</small>
-					<small>{formatCurrency(amount - spent)} remaining</small>
+					<small>{formatCurrency(Amount - spent)} remaining</small>
 				</div>
 				{showDelete ? (
 					<div>

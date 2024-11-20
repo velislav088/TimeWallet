@@ -16,9 +16,9 @@ export const getAllMatchingItems = ({ category, key, value }) => {
 export const createBudget = async ({ name, amount }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
-		name: name,
-		createdAt: Date.now(),
-		amount: +amount,
+		Name: name,
+		CreatedAt: Date.now(),
+		Amount: +amount,
 	}
 
 	// Update localStorage
@@ -194,6 +194,11 @@ export const formatPercentage = (amt) => {
 
 // Format currency
 export const formatCurrency = (amt) => {
+	if (amt == null || isNaN(amt)) {
+		// If amt is undefined, null, or not a valid number, return a default value
+		return "$0.00"
+	}
+
 	return amt.toLocaleString(undefined, {
 		style: "currency",
 		currency: "USD",

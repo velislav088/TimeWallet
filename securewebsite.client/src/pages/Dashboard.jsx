@@ -18,13 +18,48 @@ import {
 import { useEffect, useState } from "react"
 import Welcome from "./Welcome"
 
-// Function for loading budgets and expenses
-export function dashboardLoader() {
-	const budgets = fetchData("budgets")
-	const expenses = fetchData("expenses")
-	return { budgets, expenses }
+async function fetchDataFromApi(endpoint) {
+	const email = localStorage.getItem("user") // Get the email from localStorage
+
+	try {
+		// Call the backend API with the email to fetch budgets and elements
+		const response = await fetch(
+			`api/securewebsite/getInformationAboutUser/${email}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		)
+
+		if (!response.ok) {
+			throw new Error("Error fetching data from API.")
+		}
+
+		const data = await response.json()
+		return {
+			budgets: JSON.parse(data.budgetJson),
+			elements: JSON.parse(data.elementJson),
+		}
+	} catch (error) {
+		console.error("Error fetching data from API:", error)
+		return { budgets: [], elements: [] } // Return empty arrays on error
+	}
 }
 
+// Function for loading budgets and expenses
+export async function dashboardLoader() {
+	try {
+		// Fetch data from the API
+		const { budgets, expenses } = await fetchDataFromApi()
+		// Return the fetched data
+		return { budgets, expenses } // You mentioned 'expenses' is the same as 'elements'
+	} catch (error) {
+		console.error("Error loading dashboard data:", error)
+		return { budgets: [], expenses: [] } // Return empty arrays on error
+	}
+}
 // All available actions
 export async function dashboardAction({ request }) {
 	await waait()
@@ -101,6 +136,7 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
 	const { budgets, expenses } = useLoaderData()
 	const [userInfo, setUserInfo] = useState({})
+	console.log(budgets)
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
@@ -116,7 +152,6 @@ const Dashboard = () => {
 				console.log("Error home page: ", error)
 			})
 	}, [])
-
 	return (
 		<>
 			<div className="dashboard">
@@ -153,7 +188,6 @@ const Dashboard = () => {
 											)
 											.slice(0, 8)}
 									/>
-									{/* Table shows last 8 expenses by default, checks if there are more. */}
 									{expenses.length > 8 && (
 										<Link to="expenses">
 											View all expenses
