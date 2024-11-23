@@ -1,4 +1,4 @@
-﻿namespace SecureWebSite.Server.Models.NewFolder1
+﻿namespace TimeWallet.Server.Models.NewFolder1
 {
     public class BudgetAddDTO
     {

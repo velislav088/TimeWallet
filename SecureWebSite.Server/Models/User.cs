@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SecureWebSite.Server.Models
+namespace TimeWallet.Server.Models
 {
 		public class User : IdentityUser
 		{

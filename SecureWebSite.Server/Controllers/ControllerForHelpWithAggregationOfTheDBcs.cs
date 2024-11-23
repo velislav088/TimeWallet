@@ -1,8 +1,8 @@
-﻿using SecureWebSite.Server.Data;
-using SecureWebSite.Server.Models;
+﻿using TimeWallet.Server.Data;
+using TimeWallet.Server.Models;
 using System.Collections.ObjectModel;
 
-namespace SecureWebSite.Server.Controllers
+namespace TimeWallet.Server.Controllers
 {
     public class ControllerForHelpWithAggregationOfTheDBcs
     {

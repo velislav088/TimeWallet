@@ -1,6 +1,6 @@
-﻿using SecureWebSite.Server.Models.Enums;
+﻿using TimeWallet.Server.Models.Enums;
 
-namespace SecureWebSite.Server.Models.DTO_Models
+namespace TimeWallet.Server.Models.DTO_Models
 {
     public class ElementEditDTO
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SecureWebSite.Server.Models
+namespace TimeWallet.Server.Models
 {
     public class Budgets
     {

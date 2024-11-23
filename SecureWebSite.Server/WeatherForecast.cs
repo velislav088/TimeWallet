@@ -1,4 +1,4 @@
-namespace SecureWebSite.Server
+namespace TimeWallet.Server
 {
 		public class WeatherForecast
 		{

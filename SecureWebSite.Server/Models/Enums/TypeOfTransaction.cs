@@ -1,4 +1,4 @@
-﻿namespace SecureWebSite.Server.Models.Enums
+﻿namespace TimeWallet.Server.Models.Enums
 {
     public enum TypeOfTransaction
     {
