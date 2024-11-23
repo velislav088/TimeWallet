@@ -157,25 +157,6 @@ namespace SecureWebSite.Server.Controllers
 		}
 
 		
-		//Баланса на сметката/user-a
-		//test
-		[HttpPost("checkBudget/{email}"), Authorize]
-		public async Task<ActionResult> AddBudget(decimal Amount, string email)
-		{
-			User userInfo = await userManager.FindByEmailAsync(email);
-			if (userInfo == null)
-			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
-			}
-			else
-			{
-				context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
-				context.SaveChanges();
-				return Ok(new { message = "Successfuly added budget! " });
-			}
-
-		}
-
 		//Добавяне на самата Колекция на елементите.
 		[HttpPost("addBudget/{email}"), Authorize]
 		public async Task<ActionResult> AddBudget(string email, [FromBody] BudgetAddDTO JsonCollection)
