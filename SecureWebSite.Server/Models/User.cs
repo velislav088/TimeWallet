@@ -13,14 +13,14 @@ namespace SecureWebSite.Server.Models
 				[Column(TypeName ="datetime")]
 				public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-				[Column(TypeName = "datetime")]
-				public DateTime ModifiedDate { get; set; } = DateTime.Now;
+				//[Column(TypeName = "datetime")]
+				//public DateTime ModifiedDate { get; set; } = DateTime.Now;
 
 				[Column(TypeName = "datetime")]
 				public DateTime LastLogin { get; set; } = DateTime.Now;
 
-				public bool IsAdmin { get; set; } = false;
+				//public bool IsAdmin { get; set; } = false;
 
-		        public decimal Budget { get; set; }
+		        //public decimal Budget { get; set; }
 		}
 }
