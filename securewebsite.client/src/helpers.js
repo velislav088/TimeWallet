@@ -17,9 +17,9 @@ export const getAllMatchingItems = ({ category, key, value }) => {
 export const createBudget = async ({ name, amount }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
-		name: name,
-		createdAt: Date.now(),
-		amount: +amount,
+		Name: name,
+		CreatedAt: Date.now(),
+		Amount: +amount,
 	}
 
 	// update localstorage
@@ -73,16 +73,13 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	// post to the db
 	try {
 		const user = localStorage.getItem("user")
-		const response = await fetch(
-			`../api/timewallet/addElement/${user}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(newItem),
-			}
-		)
+		const response = await fetch(`../api/timewallet/addElement/${user}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newItem),
+		})
 
 		if (!response.ok) {
 			throw new Error(
@@ -199,6 +196,11 @@ export const formatPercentage = (amt) => {
 
 // format currency
 export const formatCurrency = (amt) => {
+	if (amt == null || isNaN(amt)) {
+		// If amt is undefined, null, or not a valid number, return a default value
+		return "$0.00"
+	}
+
 	return amt.toLocaleString(undefined, {
 		style: "currency",
 		currency: "USD",

@@ -28,7 +28,7 @@ export async function budgetLoader({ params }) {
 	if (!budget) {
 		throw new Error("The budget you’re trying to find doesn’t exist")
 	}
-
+	
 	return { budget, expenses }
 }
 

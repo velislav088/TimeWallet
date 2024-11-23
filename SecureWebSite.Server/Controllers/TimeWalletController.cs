@@ -23,7 +23,6 @@ using System.Text.Json;
 namespace TimeWallet.Server.Controllers
 {
 	[Route("api/timewallet")]
-	[Route("api/timewallet")]
 	[ApiController]
 	public class TimeWalletController(SignInManager<User> sm, UserManager<User> um) : ControllerBase
 	{
