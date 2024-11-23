@@ -1,3 +1,5 @@
+import { toast } from "react-toastify"
+
 export const waait = () =>
 	new Promise((res) => setTimeout(res, Math.random() * 800))
 
@@ -92,7 +94,6 @@ export const createBudget = async ({ name, amount }) => {
 	// update localstorage
 	const existingBudgets = fetchData("budgets") ?? []
 	const updatedBudgets = [...existingBudgets, newItem]
-	localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 
 	// post to the db
 	try {
@@ -105,13 +106,18 @@ export const createBudget = async ({ name, amount }) => {
 			body: JSON.stringify(newItem),
 		})
 
-		const data = await response.json()
-
-		if (response.ok) {
-			console.log("Budget successfully created on API:", data)
+		if (!response.ok) {
+			const errorData = await response.json() // Parse the error message
+			if (errorData.message) {
+				return toast.error(errorData.message) // Display the custom message
+			}
+			return toast.error("There was a problem creating your budget.")
+		} else {
+			const data = await response.json()
+			toast.success("Budget created!")
+			localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 			return data
 		}
-		console.log()
 	} catch (error) {
 		console.error("Failed to create budget on API:", error)
 		throw error
@@ -137,7 +143,7 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(
-			`../api/securewebsite/addElement/${user}`,
+			`../api/timewallet/addElement/${user}`,
 			{
 				method: "POST",
 				headers: {
@@ -164,8 +170,78 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 		throw error
 	}
 }
+// Delete budget
+export const deleteItem = async ({ key, id }) => {
+	const existingData = fetchData(key)
 
-// total spent by budget
+	if (id) {
+		try {
+			const user = localStorage.getItem("user")
+			// Update Database
+			const response = await fetch(
+				`../api/timewallet/deleteBudget/${user}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(id),
+				}
+			)
+
+			if (!response.ok) {
+				throw new Error("Failed to delete item from server")
+			}
+
+			// Update localStorage
+			const newData = existingData.filter((item) => item.id !== id)
+			localStorage.setItem(key, JSON.stringify(newData))
+			window.location.reload()
+		} catch (error) {
+			console.error("Error deleting item:", error.message)
+			throw error
+		}
+	} else {
+		localStorage.removeItem(key)
+	}
+}
+// Delete expense
+export const deleteExpense = async ({ key, id }) => {
+	const existingData = fetchData(key)
+
+	if (id) {
+		try {
+			const user = localStorage.getItem("user")
+			// Update Database
+			const response = await fetch(
+				`../api/timewallet/deleteElement/${user}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(id),
+				}
+			)
+
+			if (!response.ok) {
+				throw new Error("Failed to delete item from server")
+			}
+
+			// Update localStorage
+			const newData = existingData.filter((item) => item.id !== id)
+			localStorage.setItem(key, JSON.stringify(newData))
+			window.location.reload()
+		} catch (error) {
+			console.error("Error deleting item:", error.message)
+			throw error
+		}
+	} else {
+		localStorage.removeItem(key)
+	}
+}
+
+// Total spent by budget
 export const calculateSpentByBudget = (budgetId) => {
 	const expenses = fetchData("expenses") ?? []
 	const budgetSpent = expenses.reduce((acc, expense) => {

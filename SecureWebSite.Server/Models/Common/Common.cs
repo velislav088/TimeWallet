@@ -1,4 +1,4 @@
-﻿
+
 namespace TimeWallet.Server.Models.Common
 {
     public class Common

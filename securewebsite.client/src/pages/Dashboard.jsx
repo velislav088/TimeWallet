@@ -24,7 +24,7 @@ async function fetchDataFromApi(endpoint) {
 	try {
 		// Call the backend API with the email to fetch budgets and elements
 		const response = await fetch(
-			`api/securewebsite/getInformationAboutUser/${email}`,
+			`api/timewallet/getInformationAboutUser/${email}`,
 			{
 				method: "GET",
 				headers: {
@@ -66,22 +66,21 @@ export async function dashboardAction({ request }) {
 
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
-	let budgetCheck = fetchData("budgets")
 
 	if (_action === "createBudget") {
 		try {
-			let nameAlreadyExists = budgetCheck.some(
-				(budget) => budget.name === values.newBudget
-			)
-			if (nameAlreadyExists) {
-				return toast.error(`${values.newBudget} already exists!`)
+			let budgetLengthCheck = values.newBudget
+			if (budgetLengthCheck.length > 19) {
+				return toast.error(
+					"Budget name is too long. It must be 19 characters or fewer"
+				)
 			} else {
 				await createBudget({
 					name: values.newBudget,
 					amount: values.newBudgetAmount,
 				})
 			}
-			return toast.success("Budget created!")
+			return null
 		} catch (e) {
 			console.error("Error creating budget:", e)
 			return toast.error("There was a problem creating your budget.")
@@ -90,6 +89,7 @@ export async function dashboardAction({ request }) {
 
 	if (_action === "createExpense") {
 		let budgetFinder = fetchData("budgets")
+		let expenseLengthCheck = values.newExpense
 
 		const selectedBudget = budgetFinder.find(
 			(budget) => budget.id === values.newExpenseBudget
@@ -97,7 +97,7 @@ export async function dashboardAction({ request }) {
 
 		// Get the total spent by the budget
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
-		const remainingAmount = selectedBudget.amount - totalSpent
+		const remainingAmount = selectedBudget.Amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
 		// Check if the expense exceeds the remaining balance of the budget
@@ -106,6 +106,11 @@ export async function dashboardAction({ request }) {
 				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
 					2
 				)}$`
+			)
+		}
+		if (expenseLengthCheck.length > 11) {
+			return toast.error(
+				"Expense name is too long. It must be 11 characters or fewer"
 			)
 		}
 		try {
@@ -136,7 +141,6 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
 	const { budgets, expenses } = useLoaderData()
 	const [userInfo, setUserInfo] = useState({})
-	console.log(budgets)
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
@@ -166,7 +170,9 @@ const Dashboard = () => {
 								<AddBudgetForm />
 								<AddExpenseForm budgets={budgets} />
 							</div>
-							<h2>Existing Budgets</h2>
+							<h2 style={{ marginTop: "10px" }}>
+								Existing Budgets
+							</h2>
 
 							<div>
 								{/* Renders all budgets available */}

@@ -1,6 +1,10 @@
 import ExpenseItem from "./ExpenseItem"
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 const Table = ({ expenses, showBudget = true }) => {
+	// Sort expenses by createdAt from newest to oldest
+	const sortedExpenses = [...expenses].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
 	return (
 		<div className="table">
 			<table>
@@ -18,7 +22,7 @@ const Table = ({ expenses, showBudget = true }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{expenses.map((expense) => (
+					{sortedExpenses.map((expense) => (
 						<tr key={expense.id}>
 							<ExpenseItem
 								expense={expense}

@@ -6,6 +6,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons"
 import { faTrophy } from "@fortawesome/free-solid-svg-icons"
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons"
+import GoogleTranslate from "../components/GoogleTranslate"
 
 const Welcome = () => {
 	const [activeIndex, setActiveIndex] = useState(null)
@@ -45,7 +46,7 @@ const Welcome = () => {
 		},
 	]
 	return (
-		<div>
+		<div className="welcome-page">
 			<section>
 				<div className="first-section-text">
 					<h1>
@@ -149,6 +150,7 @@ const Welcome = () => {
 			<footer>
 				<div className="footer-content">
 					<p>© 2024 TimeWallet.</p>
+					<GoogleTranslate />
 				</div>
 			</footer>
 		</div>

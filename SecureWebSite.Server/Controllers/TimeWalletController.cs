@@ -8,6 +8,10 @@ using TimeWallet.Server.Data;
 using TimeWallet.Server.Models;
 using TimeWallet.Server.Models.DTO_Models;
 using TimeWallet.Server.Models.NewFolder1;
+using TimeWallet.Server.Data;
+using TimeWallet.Server.Models;
+using TimeWallet.Server.Models.DTO_Models;
+using TimeWallet.Server.Models.NewFolder1;
 using System.Collections;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
@@ -18,6 +22,7 @@ using System.Text.Json;
 
 namespace TimeWallet.Server.Controllers
 {
+	[Route("api/timewallet")]
 	[Route("api/timewallet")]
 	[ApiController]
 	public class TimeWalletController(SignInManager<User> sm, UserManager<User> um) : ControllerBase
@@ -194,7 +199,7 @@ namespace TimeWallet.Server.Controllers
 
 				if (UsersCollectionsNames.Contains(JsonCollection.Name))
 				{
-					return BadRequest(new { message = "There is already a collection named like this!" });
+					return BadRequest(new { message = $"{JsonCollection.Name} already exists!" });
 				}
 
 				Budgets thToAdd = new Budgets()

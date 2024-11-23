@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import GoogleTranslate from "../components/GoogleTranslate"
 
 function Register() {
 	document.title = "Register"
@@ -55,6 +56,12 @@ function Register() {
 					<Link to="/login">Login</Link>
 				</div>
 			</form>
+			<footer>
+				<div className="footer-content">
+					<p>© 2024 TimeWallet.</p>
+					<GoogleTranslate />
+				</div>
+			</footer>
 		</div>
 	)
 	async function registerHandler(e) {
