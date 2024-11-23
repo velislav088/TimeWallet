@@ -4,6 +4,8 @@ import {
 	formatDateToLocaleString,
 	getAllMatchingItems,
 } from "../helpers"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons"
 
 const ExpenseItem = ({ expense, showBudget }) => {
 	const fetcher = useFetcher()
@@ -19,19 +21,18 @@ const ExpenseItem = ({ expense, showBudget }) => {
 			<td>{expense.name}</td>
 			<td>{formatCurrency(expense.amount)}</td>
 			<td>{formatDateToLocaleString(expense.createdAt)}</td>
-			{showBudget && (
-				<td>
-				</td>
-			)}
+			{showBudget && <td></td>}
 			<td>
 				<fetcher.Form method="post">
 					<input type="hidden" name="_action" value="deleteExpense" />
 					<input type="hidden" name="expenseId" value={expense.id} />
 					<button
 						type="submit"
-						className="btn btn--warning"
+						className="button-trashcan"
 						aria-label={`Delete ${expense.name} expense`}
-					></button>
+					>
+						<FontAwesomeIcon icon={faTrashCan} className="trashcan-icon" />
+					</button>
 				</fetcher.Form>
 			</td>
 		</>

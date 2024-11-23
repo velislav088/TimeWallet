@@ -66,29 +66,21 @@ export async function dashboardAction({ request }) {
 
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
-	let budgetCheck = fetchData("budgets")
 
 	if (_action === "createBudget") {
 		try {
-			let nameAlreadyExists = budgetCheck.some(
-				(budget) => budget.name === values.newBudget
-			)
 			let budgetLengthCheck = values.newBudget
-			console.log(budgetLengthCheck.length)
 			if (budgetLengthCheck.length > 19) {
 				return toast.error(
 					"Budget name is too long. It must be 19 characters or fewer"
 				)
-			}
-			if (nameAlreadyExists) {
-				return toast.error(`${values.newBudget} already exists!`)
 			} else {
 				await createBudget({
 					name: values.newBudget,
 					amount: values.newBudgetAmount,
 				})
 			}
-			return toast.success("Budget created!")
+			return null
 		} catch (e) {
 			console.error("Error creating budget:", e)
 			return toast.error("There was a problem creating your budget.")
@@ -97,6 +89,7 @@ export async function dashboardAction({ request }) {
 
 	if (_action === "createExpense") {
 		let budgetFinder = fetchData("budgets")
+		let expenseLengthCheck = values.newExpense
 
 		const selectedBudget = budgetFinder.find(
 			(budget) => budget.id === values.newExpenseBudget
@@ -113,6 +106,11 @@ export async function dashboardAction({ request }) {
 				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
 					2
 				)}$`
+			)
+		}
+		if (expenseLengthCheck.length > 11) {
+			return toast.error(
+				"Expense name is too long. It must be 11 characters or fewer"
 			)
 		}
 		try {

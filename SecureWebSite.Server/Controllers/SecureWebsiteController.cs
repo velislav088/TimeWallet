@@ -174,7 +174,7 @@ namespace SecureWebSite.Server.Controllers
 
 				if (UsersCollectionsNames.Contains(JsonCollection.Name))
 				{
-					return BadRequest(new { message = "There is already a collection named like this!" });
+					return BadRequest(new { message = $"{JsonCollection.Name} already exists!" });
 				}
 
 				Budgets thToAdd = new Budgets()

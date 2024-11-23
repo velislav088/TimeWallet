@@ -1,3 +1,5 @@
+import { toast } from "react-toastify"
+
 export const waait = () =>
 	new Promise((res) => setTimeout(res, Math.random() * 800))
 
@@ -24,7 +26,6 @@ export const createBudget = async ({ name, amount }) => {
 	// Update localStorage
 	const existingBudgets = fetchData("budgets") ?? []
 	const updatedBudgets = [...existingBudgets, newItem]
-	localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 
 	// Update Database
 	try {
@@ -37,13 +38,18 @@ export const createBudget = async ({ name, amount }) => {
 			body: JSON.stringify(newItem),
 		})
 
-		const data = await response.json()
-
-		if (response.ok) {
-			console.log("Budget successfully created on API:", data)
+		if (!response.ok) {
+			const errorData = await response.json() // Parse the error message
+			if (errorData.message) {
+				return toast.error(errorData.message) // Display the custom message
+			}
+			return toast.error("There was a problem creating your budget.")
+		} else {
+			const data = await response.json()
+			toast.success("Budget created!")
+			localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 			return data
 		}
-		console.log()
 	} catch (error) {
 		console.error("Failed to create budget on API:", error)
 		throw error

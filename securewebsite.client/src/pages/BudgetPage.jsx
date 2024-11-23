@@ -4,9 +4,11 @@ import AddExpenseForm from "../components/AddExpenseForm"
 import BudgetItem from "../components/BudgetItem"
 import Table from "../components/Table"
 import {
+	calculateSpentByBudget,
 	createExpense,
 	deleteExpense,
 	deleteItem,
+	fetchData,
 	getAllMatchingItems,
 } from "../helpers"
 
@@ -23,7 +25,6 @@ export async function budgetLoader({ params }) {
 		value: params.id,
 	})
 
-	console.log(budget)
 	if (!budget) {
 		throw new Error("The budget you’re trying to find doesn’t exist")
 	}
@@ -37,6 +38,31 @@ export async function budgetAction({ request }) {
 	const { _action, ...values } = Object.fromEntries(data)
 
 	if (_action === "createExpense") {
+		let budgetFinder = fetchData("budgets")
+		let expenseLengthCheck = values.newExpense
+
+		const selectedBudget = budgetFinder.find(
+			(budget) => budget.id === values.newExpenseBudget
+		)
+
+		// Get the total spent by the budget
+		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
+		const remainingAmount = selectedBudget.Amount - totalSpent
+		const expenseAmount = parseFloat(values.newExpenseAmount)
+
+		// Check if the expense exceeds the remaining balance of the budget
+		if (expenseAmount > remainingAmount) {
+			return toast.error(
+				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+					2
+				)}$`
+			)
+		}
+		if (expenseLengthCheck.length > 11) {
+			return toast.error(
+				"Expense name is too long. It must be 11 characters or fewer"
+			)
+		}
 		try {
 			createExpense({
 				name: values.newExpense,
@@ -65,10 +91,10 @@ export async function budgetAction({ request }) {
 const BudgetPage = () => {
 	const { budget, expenses } = useLoaderData()
 	return (
-		<div className="grid-lg">
-			<h1 className="h2">
+		<div className="budget-page">
+			<h2>
 				<span className="accent">{budget.name}</span> Overview
-			</h1>
+			</h2>
 			<div className="flex-lg">
 				<BudgetItem budget={budget} showDelete={true} />
 				<AddExpenseForm budgets={[budget]} />

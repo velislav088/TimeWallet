@@ -44,7 +44,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 							}}
 						>
 							<button className="button" type="submit">
-								<span>Delete Budget</span>
+								<span className="submit-span">Delete Budget</span>
 							</button>
 						</Form>
 					</div>
