@@ -64,7 +64,6 @@ export async function budgetAction({ request }) {
 
 const BudgetPage = () => {
 	const { budget, expenses } = useLoaderData()
-	console.log(budget.Amount)
 	return (
 		<div className="grid-lg">
 			<h1 className="h2">

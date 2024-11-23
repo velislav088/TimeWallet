@@ -73,6 +73,13 @@ export async function dashboardAction({ request }) {
 			let nameAlreadyExists = budgetCheck.some(
 				(budget) => budget.name === values.newBudget
 			)
+			let budgetLengthCheck = values.newBudget
+			console.log(budgetLengthCheck.length)
+			if (budgetLengthCheck.length > 19) {
+				return toast.error(
+					"Budget name is too long. It must be 19 characters or fewer"
+				)
+			}
 			if (nameAlreadyExists) {
 				return toast.error(`${values.newBudget} already exists!`)
 			} else {
@@ -97,7 +104,7 @@ export async function dashboardAction({ request }) {
 
 		// Get the total spent by the budget
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
-		const remainingAmount = selectedBudget.amount - totalSpent
+		const remainingAmount = selectedBudget.Amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
 		// Check if the expense exceeds the remaining balance of the budget
@@ -136,7 +143,6 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
 	const { budgets, expenses } = useLoaderData()
 	const [userInfo, setUserInfo] = useState({})
-	console.log(budgets)
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
@@ -166,7 +172,9 @@ const Dashboard = () => {
 								<AddBudgetForm />
 								<AddExpenseForm budgets={budgets} />
 							</div>
-							<h2>Existing Budgets</h2>
+							<h2 style={{ marginTop: "10px" }}>
+								Existing Budgets
+							</h2>
 
 							<div>
 								{/* Renders all budgets available */}

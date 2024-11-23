@@ -9,6 +9,7 @@
 }
 :root {
 	--color-primary: hsl(100, 50%, 90%);
+	--color-primary-darkened: hsl(100, 50%, 80%);
 	--color-secondary: hsl(100, 50%, 10%);
 	--color-accent: hsl(160, 80%, 20%);
 	--color-accent-hover: hsl(160, 80%, 15%);
@@ -425,6 +426,7 @@ nav .button:active {
 	background: linear-gradient(hsl(160, 80%, 20%), hsl(160, 80%, 40%));
 	border-radius: 5px;
 	padding: 20px 20px;
+	padding-bottom: 100px;
 	margin: 20px;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -494,9 +496,18 @@ nav .button:active {
 /* Welcome page footer */
 footer {
 	margin-left: 10px;
+	margin-right: 10px;
 }
 footer p {
 	font-size: var(--text-h6);
+}
+.footer-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.google-translate {
+	margin-left: 20px;
 }
 /* Dashboard */
 .dashboard h2 {
@@ -596,4 +607,57 @@ footer p {
 /* Budget Item */
 .budget-box {
 	margin-right: 40px;
+}
+.progress-text h6 {
+	font-size: var(--text-h6);
+}
+.progress-text small {
+	font-size: var(--text-p);
+}
+.bottom {
+	margin-bottom: 5px;
+}
+.budget-box .link:hover {
+	color: var(--color-links);
+	transition: all 250ms;
+}
+.budget-box .link {
+	font-weight: 600;
+}
+/* Progress bars */
+progress {
+	-webkit-appearance: none;
+	appearance: none;
+}
+progress {
+	width: 95%;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--color-primary-darkened);
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+
+/* Chrome, Safari */
+progress::-webkit-progress-bar {
+	background-color: var(--color-primary-darkened);
+}
+
+progress::-webkit-progress-value {
+	background-color: var(--color-accent);
+	border-radius: 5px;
+}
+
+/* Firefox */
+progress::-moz-progress-bar {
+	background-color: var(--color-primary-darkened);
+	border-radius: 5px;
+}
+
+/* For older browsers */
+progress[value] {
+	color: var(--color-primary-darkened);
+}
+progress::-webkit-progress-value {
+	transition: width 0.5s ease;
 }

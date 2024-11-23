@@ -14,18 +14,18 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 			<div className="budget">
 				<div className="progress-text">
 					<h5 className="accent">{Name}</h5>
-					<p>
+					<h6 className="amount-budgeted">
 						<span className="accent budgeted">
 							{formatCurrency(Amount)}
 						</span>{" "}
 						Budgeted
-					</p>
+					</h6>
 				</div>
 				<progress max={Amount} value={spent}>
 					{formatPercentage(spent / Amount)}
 				</progress>
-				<div className="progress-text">
-					<small>{formatCurrency(spent)} spent</small>
+				<div className="progress-text bottom">
+					<small>{formatCurrency(spent)} spent | </small>
 					<small>{formatCurrency(Amount - spent)} remaining</small>
 				</div>
 				{showDelete ? (
@@ -43,15 +43,15 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 								}
 							}}
 						>
-							<button type="submit">
+							<button className="button" type="submit">
 								<span>Delete Budget</span>
 							</button>
 						</Form>
 					</div>
 				) : (
 					<div>
-						<Link to={`/budget/${id}`}>
-							<span>View Details</span>
+						<Link to={`/budget/${id}`} className="link">
+							<span className="link">View Details</span>
 						</Link>
 					</div>
 				)}
