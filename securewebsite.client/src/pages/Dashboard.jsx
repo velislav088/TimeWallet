@@ -24,7 +24,7 @@ async function fetchDataFromApi(endpoint) {
 	try {
 		// Call the backend API with the email to fetch budgets and elements
 		const response = await fetch(
-			`api/securewebsite/getInformationAboutUser/${email}`,
+			`api/timewallet/getInformationAboutUser/${email}`,
 			{
 				method: "GET",
 				headers: {
@@ -144,7 +144,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
-		fetch("api/SecureWebsite/home/" + user, {
+		fetch("api/timewallet/home/" + user, {
 			method: "GET",
 			credentials: "include",
 		})

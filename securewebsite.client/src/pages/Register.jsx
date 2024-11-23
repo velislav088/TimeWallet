@@ -80,7 +80,7 @@ function Register() {
 		const newUserName = dataToSend.Name.trim().split(" ")
 		dataToSend.UserName = newUserName.join("")
 
-		const response = await fetch("api/securewebsite/register", {
+		const response = await fetch("api/timewallet/register", {
 			method: "POST",
 			credentials: "include",
 			body: JSON.stringify(dataToSend),

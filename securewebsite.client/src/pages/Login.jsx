@@ -79,7 +79,7 @@ function Login() {
 		}
 
 		console.log("login data before send: ", dataToSend)
-		const response = await fetch("api/securewebsite/login", {
+		const response = await fetch("api/timewallet/login", {
 			method: "POST",
 			credentials: "include",
 			body: JSON.stringify(dataToSend),
