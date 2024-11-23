@@ -33,24 +33,35 @@ const router = createBrowserRouter(
 					errorElement={<Error />}
 					children={[
 						<Route
+							key="dashboard"
 							index={true}
 							element={<Dashboard />}
 							loader={dashboardLoader}
 							action={dashboardAction}
 							errorElement={<Error />}
 						/>,
-						<Route path="profile" element={<Profile />} />,
 						<Route
+							key="profile"
+							path="profile"
+							element={<Profile />}
+						/>,
+						<Route
+							key="budget"
 							path="budget/:id"
 							element={<BudgetPage />}
 							loader={budgetLoader}
 							action={budgetAction}
 							errorElement={<Error />}
 							children={[
-								<Route path="delete" action={deleteBudget} />,
+								<Route
+									key="delete-budget"
+									path="delete"
+									action={deleteBudget}
+								/>,
 							]}
 						/>,
 						<Route
+							key="expenses"
 							path="expenses"
 							element={<ExpensesPage />}
 							loader={expensesLoader}
