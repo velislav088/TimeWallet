@@ -162,7 +162,7 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "Logged in", user = currentuser });
 		}
 
-		
+
 		////Баланса на сметката/user-a
 		////test
 		//[HttpPost("checkBudget/{email}"), Authorize]
@@ -211,7 +211,7 @@ namespace TimeWallet.Server.Controllers
 					Amount = JsonCollection.Amount,
 					UserId = userInfo.Id
 				};
-				
+
 
 				context.Budgets.Add(thToAdd);
 				context.SaveChanges();
@@ -260,24 +260,24 @@ namespace TimeWallet.Server.Controllers
 		[HttpDelete("deleteElement/{email}"), Authorize]
 		public async Task<ActionResult> DeleteElement(string email, [FromBody] string id)
 		{
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
-			if(context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id)) == null)
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			if (context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id)) == null)
 
-            {
-				return BadRequest(new { message = "No element with the given parameters exists!"});
+			{
+				return BadRequest(new { message = "No element with the given parameters exists!" });
 			}
 			else
 			{
 				Elements elementToRemove = context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id));
-                context.Elements.Remove(elementToRemove);
+				context.Elements.Remove(elementToRemove);
 				context.SaveChanges();
-				return Ok(new { message = $"Element named:{elementToRemove.Name} is successfuly deleted!"});
-            }			
-        }
+				return Ok(new { message = $"Element named:{elementToRemove.Name} is successfuly deleted!" });
+			}
+		}
 
 		[HttpDelete("deleteBudget/{email}"), Authorize]
 		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
@@ -304,15 +304,43 @@ namespace TimeWallet.Server.Controllers
 		[HttpGet("getInformationAboutUser/{email}"), Authorize]
 		public async Task<ActionResult> GetInformationAboutUser(string email)
 		{
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			string budgetJson = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
+			string elementJson = JsonSerializer.Serialize(context.Elements.Where(e => e.Budgets.UserId == userInfo.Id));
+
+			return Ok(new { budgetJson = budgetJson, elementJson = elementJson });
+		}
+
+		[HttpGet("getInformationAboutBudget/{email}"), Authorize]
+		public async Task<ActionResult> GetInformationAboutBudget(string email, string id)
+		{
+			Guid GuidId = Guid.Parse(id);
             User userInfo = await userManager.FindByEmailAsync(email);
             if (userInfo == null)
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
-			string budgetJson = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
-			string elementJson = JsonSerializer.Serialize(context.Elements.Where(e => e.Budgets.UserId == userInfo.Id));
+			Budgets budget = context.Budgets.FirstOrDefault(b => b.id == GuidId);
+			if (budget == null)
+			{
+				return BadRequest(new { message = "This budget doesn't exist anymore or never existed!" });
+			}
+			else if(budget.UserId != userInfo.Id)
+			{
+				return BadRequest(new { message = "This budget doesn't belong to this user! How did you got it!?" });  
+				//TODO: this should notife us!
+			}
+			else
+			{
+				return Ok( new { budget = budget, expenses = context.Elements.Where(e => e.BudgetId == GuidId)});
+			}
 
-			return Ok(new {budgetJson = budgetJson, elementJson = elementJson });
+
+
         }
 
 
