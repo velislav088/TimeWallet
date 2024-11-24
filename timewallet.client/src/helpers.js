@@ -3,17 +3,17 @@ import { toast } from "react-toastify"
 export const waait = () =>
 	new Promise((res) => setTimeout(res, Math.random() * 800))
 
-// local storage fetcher
+// LocalStorage fetcher
 export const fetchData = (key) => {
 	return JSON.parse(localStorage.getItem(key))
 }
 
-// get all items from local storage
+// Get all items from local storage
 export const getAllMatchingItems = ({ category, key, value }) => {
 	const data = fetchData(category) ?? []
 	return data.filter((item) => item[key] === value)
 }
-// create budget
+// Create budget
 export const createBudget = async ({ name, amount }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
@@ -22,11 +22,11 @@ export const createBudget = async ({ name, amount }) => {
 		Amount: +amount,
 	}
 
-	// update localstorage
+	// Update localstorage
 	const existingBudgets = fetchData("budgets") ?? []
 	const updatedBudgets = [...existingBudgets, newItem]
 
-	// post to the db
+	// Post to the db
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(`api/timewallet/addBudget/${user}`, {
@@ -38,9 +38,9 @@ export const createBudget = async ({ name, amount }) => {
 		})
 
 		if (!response.ok) {
-			const errorData = await response.json() // Parse the error message
+			const errorData = await response.json()
 			if (errorData.message) {
-				return toast.error(errorData.message) // Display the custom message
+				return toast.error(errorData.message)
 			}
 			return toast.error("There was a problem creating your budget.")
 		} else {
@@ -55,7 +55,7 @@ export const createBudget = async ({ name, amount }) => {
 	}
 }
 
-// create expense
+// Create expense
 export const createExpense = async ({ name, amount, budgetId }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
@@ -65,12 +65,12 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 		budgetId: budgetId,
 	}
 
-	// update localstorage
+	// Update localstorage
 	const existingExpenses = fetchData("expenses") ?? []
 	const updatedExpenses = [...existingExpenses, newItem]
 	localStorage.setItem("expenses", JSON.stringify(updatedExpenses))
 
-	// post to the db
+	// Post to the db
 	try {
 		const user = localStorage.getItem("user")
 		const response = await fetch(`../api/timewallet/addElement/${user}`, {
@@ -173,20 +173,19 @@ export const deleteExpense = async ({ key, id }) => {
 export const calculateSpentByBudget = (budgetId) => {
 	const expenses = fetchData("expenses") ?? []
 	const budgetSpent = expenses.reduce((acc, expense) => {
-		// check if expense.id === budgetId I passed in
 		if (expense.budgetId !== budgetId) return acc
 
-		// add the current amount to my total
+		// Add the current amount to the total
 		return (acc += expense.amount)
 	}, 0)
 	return budgetSpent
 }
 
-// formatting
+// Formatting
 export const formatDateToLocaleString = (epoch) =>
 	new Date(epoch).toLocaleDateString()
 
-// formating percentages
+// Formating percentages
 export const formatPercentage = (amt) => {
 	return amt.toLocaleString(undefined, {
 		style: "percent",
@@ -194,7 +193,7 @@ export const formatPercentage = (amt) => {
 	})
 }
 
-// format currency
+// Format currency
 export const formatCurrency = (amt) => {
 	if (amt == null || isNaN(amt)) {
 		// If amt is undefined, null, or not a valid number, return a default value
