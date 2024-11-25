@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFlag } from "@fortawesome/free-regular-svg-icons"
 import { Link, useLoaderData } from "react-router-dom"
 import { toast } from "react-toastify"
 import AddBudgetForm from "../components/AddBudgetForm"
@@ -16,15 +14,13 @@ import {
 	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
-import Welcome from "./Welcome"
 
-async function fetchDataFromApi(endpoint) {
-	const email = localStorage.getItem("user") // Get the email from localStorage
+async function fetchDataFromApi() {
+	const user = localStorage.getItem("user")
 
 	try {
-		// Call the backend API with the email to fetch budgets and elements
 		const response = await fetch(
-			`api/timewallet/getInformationAboutUser/${email}`,
+			`api/timewallet/getInformationAboutUser/${user}`,
 			{
 				method: "GET",
 				headers: {
@@ -44,20 +40,18 @@ async function fetchDataFromApi(endpoint) {
 		}
 	} catch (error) {
 		console.error("Error fetching data from API:", error)
-		return { budgets: [], elements: [] } // Return empty arrays on error
+		return { budgets: [], elements: [] }
 	}
 }
 
 // Function for loading budgets and expenses
 export async function dashboardLoader() {
 	try {
-		// Fetch data from the API
 		const { budgets, expenses } = await fetchDataFromApi()
-		// Return the fetched data
-		return { budgets, expenses } // You mentioned 'expenses' is the same as 'elements'
+		return { budgets, expenses }
 	} catch (error) {
 		console.error("Error loading dashboard data:", error)
-		return { budgets: [], expenses: [] } // Return empty arrays on error
+		return { budgets: [], expenses: [] }
 	}
 }
 // All available actions

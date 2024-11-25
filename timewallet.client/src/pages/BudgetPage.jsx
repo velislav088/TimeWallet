@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom"
+import { json, useLoaderData } from "react-router-dom"
 import { toast } from "react-toastify"
 import AddExpenseForm from "../components/AddExpenseForm"
 import BudgetItem from "../components/BudgetItem"
@@ -12,6 +12,7 @@ import {
 	getAllMatchingItems,
 } from "../helpers"
 
+// Function for loading given budget and it's expenses
 export async function budgetLoader({ params }) {
 	const budget = await getAllMatchingItems({
 		category: "budgets",
@@ -28,26 +29,20 @@ export async function budgetLoader({ params }) {
 	if (!budget) {
 		throw new Error("The budget you’re trying to find doesn’t exist")
 	}
-	
 	return { budget, expenses }
 }
 
-// action
+// All available actions
 export async function budgetAction({ request }) {
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
 
 	if (_action === "createExpense") {
-		let budgetFinder = fetchData("budgets")
 		let expenseLengthCheck = values.newExpense
-
-		const selectedBudget = budgetFinder.find(
-			(budget) => budget.id === values.newExpenseBudget
-		)
 
 		// Get the total spent by the budget
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
-		const remainingAmount = selectedBudget.Amount - totalSpent
+		const remainingAmount = 1000 - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
 		// Check if the expense exceeds the remaining balance of the budget
@@ -90,10 +85,11 @@ export async function budgetAction({ request }) {
 
 const BudgetPage = () => {
 	const { budget, expenses } = useLoaderData()
+	console.log(budget)
 	return (
 		<div className="budget-page">
 			<h2>
-				<span className="accent">{budget.name}</span> Overview
+				<span className="accent">{budget.Name}</span> Overview
 			</h2>
 			<div className="flex-lg">
 				<BudgetItem budget={budget} showDelete={true} />
@@ -102,7 +98,7 @@ const BudgetPage = () => {
 			{expenses && expenses.length > 0 && (
 				<div className="grid-md">
 					<h2>
-						<span className="accent">{budget.name}</span> Expenses
+						<span className="accent">{budget.Name}</span> Expenses
 					</h2>
 					<Table expenses={expenses} showBudget={false} />
 				</div>

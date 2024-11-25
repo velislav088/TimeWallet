@@ -3,13 +3,13 @@ import { toast } from "react-toastify"
 import Table from "../components/Table"
 import { deleteItem, fetchData } from "../helpers"
 
-// loader
+// Function for loading all expenses
 export async function expensesLoader() {
 	const expenses = fetchData("expenses")
 	return { expenses }
 }
 
-// action
+// Expense delete action
 export async function expensesAction({ request }) {
 	const data = await request.formData()
 	const { _action, ...values } = Object.fromEntries(data)
