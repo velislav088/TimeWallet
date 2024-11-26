@@ -38,9 +38,10 @@ async function fetchDataFromApi(endpoint) {
 		}
 
 		const data = await response.json()
+		console.log(JSON.parse(data.elementJson))
 		return {
 			budgets: JSON.parse(data.budgetJson),
-			elements: JSON.parse(data.elementJson),
+			expenses: JSON.parse(data.elementJson),
 		}
 	} catch (error) {
 		console.error("Error fetching data from API:", error)
@@ -53,6 +54,7 @@ export async function dashboardLoader() {
 	try {
 		// Fetch data from the API
 		const { budgets, expenses } = await fetchDataFromApi()
+		console.log(expenses)
 		// Return the fetched data
 		return { budgets, expenses } // You mentioned 'expenses' is the same as 'elements'
 	} catch (error) {
@@ -70,6 +72,10 @@ export async function dashboardAction({ request }) {
 	if (_action === "createBudget") {
 		try {
 			let budgetLengthCheck = values.newBudget
+
+			if (values.newBudgetAmount < 0){
+				return toast.error("Budget cannot be lower than 0!")
+			}
 			if (budgetLengthCheck.length > 19) {
 				return toast.error(
 					"Budget name is too long. It must be 19 characters or fewer"
@@ -99,6 +105,10 @@ export async function dashboardAction({ request }) {
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
 		const remainingAmount = selectedBudget.Amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
+
+		if (values.newExpenseAmount < 0){
+			return toast.error("Expense cannot be lower than 0!")
+		}
 
 		// Check if the expense exceeds the remaining balance of the budget
 		if (expenseAmount > remainingAmount) {

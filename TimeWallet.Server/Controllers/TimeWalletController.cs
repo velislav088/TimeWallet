@@ -17,6 +17,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Runtime.CompilerServices;
 
 
 
@@ -234,25 +235,31 @@ namespace TimeWallet.Server.Controllers
 
 			Budgets Budget = context
 					.Budgets
-					.FirstOrDefault(th => th.id == Guid.Parse(JsonElement.BudgetId));
+					.FirstOrDefault(th => th.id == Guid.Parse(JsonElement.budgetId));
+			long a = long.Parse(JsonElement.createdAt.ToString());
+			string dateTimeConvertion = DateTimeOffset.FromUnixTimeMilliseconds(a).UtcDateTime.ToString("MM/dd/yyyy");
 
-			if (Budget != null)
+
+            if (Budget != null)
 			{
+						
 				Elements elementToAdd = new Elements()
 				{
-					id = Guid.Parse(JsonElement.Id),
-					Name = JsonElement.Name,
+					id = Guid.Parse(JsonElement.id),
+					name = JsonElement.name,
 					//Това id мога да го променя да го намира и по userId + CollectionName, ако ще ти е по удобно.
-					BudgetId = Guid.Parse(JsonElement.BudgetId),
-					Amount = JsonElement.Amount
+					budgetId = Guid.Parse(JsonElement.budgetId),
+					amount = JsonElement.amount,
+					createdAt = dateTimeConvertion
 				};
-				context.Elements.Add(elementToAdd);
+                await Console.Out.WriteLineAsync();
+                context.Elements.Add(elementToAdd);
 				context.SaveChanges();
-				return Ok(new { message = $"Succesfully added new element named -{JsonElement.Name}-!" });
+				return Ok(new { message = $"Succesfully added new element named -{JsonElement.name}-!" });
 			}
 			else
 			{
-				return BadRequest(new { message = $"Something went wrong, please try again.(No Budget with name:'{JsonElement.Name}' exists)" });
+				return BadRequest(new { message = $"Something went wrong, please try again.(No Budget with name:'{JsonElement.name}' exists)" });
 			}
 
 		}
@@ -275,7 +282,7 @@ namespace TimeWallet.Server.Controllers
 				Elements elementToRemove = context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id));
 				context.Elements.Remove(elementToRemove);
 				context.SaveChanges();
-				return Ok(new { message = $"Element named:{elementToRemove.Name} is successfuly deleted!" });
+				return Ok(new { message = $"Element named:{elementToRemove.name} is successfuly deleted!" });
 			}
 		}
 
@@ -309,10 +316,11 @@ namespace TimeWallet.Server.Controllers
 			{
 				return BadRequest(new { message = "Something went wrong, please try again." });
 			}
-			string budgetJson = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
-			string elementJson = JsonSerializer.Serialize(context.Elements.Where(e => e.Budgets.UserId == userInfo.Id));
+			string budgetJSON = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
+			string elementJSON = JsonSerializer.Serialize(context.Elements.Where(e => e.budgets.UserId == userInfo.Id));
 
-			return Ok(new { budgetJson = budgetJson, elementJson = elementJson });
+			//Промяна в имената! - Не ти прече
+			return Ok(new { budgetJson = budgetJSON, elementJson = elementJSON });
 		}
 
 		[HttpGet("getInformationAboutBudget/{email}"), Authorize]
@@ -336,7 +344,24 @@ namespace TimeWallet.Server.Controllers
 			}
 			else
 			{
-				return Ok( new { budget = budget, expenses = context.Elements.Where(e => e.BudgetId == GuidId)});
+				List<ElementGetDTO> elements = new List<ElementGetDTO>();
+                foreach (var element in context.Elements.Where(e => e.budgetId == GuidId))
+                {
+					elements.Add(new ElementGetDTO()
+					{
+						id = element.id,
+						name = element.name,
+						amount = element.amount,
+						createdAt = element.createdAt,
+						budgetId = element.budgetId
+					});
+                }
+
+				string elementsJSON = JsonSerializer.Serialize(elements);
+				string budgetJSON = JsonSerializer.Serialize(budget);
+
+				//Промяна в имената!!! - Пречи ти
+                return Ok( new { budgetJSON = budgetJSON, elementsJSON = elementsJSON});
 			}
 
 

@@ -60,10 +60,11 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
 		name: name,
-		createdAt: Date.now(),
+		createdAt: Date.now().toString(),
 		amount: +amount,
 		budgetId: budgetId,
 	}
+	console.log(newItem.createdAt)
 
 	// Update localstorage
 	const existingExpenses = fetchData("expenses") ?? []

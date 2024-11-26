@@ -4,10 +4,10 @@ namespace TimeWallet.Server.Models.DTO_Models
 {
     public class ElementDTO
     {    
-       public string Id { get; set; }
-       public string Name { get; set; }
-       public long CreatedAt { get; set; }
-       public decimal Amount { get; set; }
-       public string BudgetId { get; set; }
+       public string id { get; set; }
+       public string name { get; set; }
+       public long createdAt { get; set; }
+       public decimal amount { get; set; }
+       public string budgetId { get; set; }
     }
 }

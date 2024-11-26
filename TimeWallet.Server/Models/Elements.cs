@@ -10,20 +10,20 @@ namespace TimeWallet.Server.Models
         [Required]
         public Guid id { get; set; }
 
-        [ForeignKey(nameof(Budgets))]
+        [ForeignKey(nameof(budgets))]
         [Required]
-        public Guid BudgetId { get; set; }
-        public Budgets Budgets { get; set; }
+        public Guid budgetId { get; set; }
+        public Budgets budgets { get; set; }
 
         [Required]
         [MaxLength(Common.Common.UserName_Name_Length)]
-        public string Name { get; set; }
+        public string name { get; set; }
 
         [Required]
         [Range(Common.Common.Moneys_Min_Length, Common.Common.Moneys_Max_Length)]
-        public decimal Amount { get; set; }
+        public decimal amount { get; set; }
 
         [Required]
-        public DateTime CreatedAt = DateTime.Now;
+        public string createdAt { get; set; }
     }
 }
