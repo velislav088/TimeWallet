@@ -66,7 +66,7 @@ export async function dashboardAction({ request }) {
 		try {
 			let budgetLengthCheck = values.newBudget
 
-			if (values.newBudgetAmount < 0){
+			if (values.newBudgetAmount < 0) {
 				return toast.error("Budget cannot be lower than 0!")
 			}
 			if (budgetLengthCheck.length > 19) {
@@ -99,7 +99,7 @@ export async function dashboardAction({ request }) {
 		const remainingAmount = selectedBudget.Amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
-		if (values.newExpenseAmount < 0){
+		if (values.newExpenseAmount < 0) {
 			return toast.error("Expense cannot be lower than 0!")
 		}
 
@@ -162,22 +162,24 @@ const Dashboard = () => {
 	return (
 		<>
 			<div className="dashboard">
-				<h2>
-					Welcome back,{" "}
-					<span className="accent">{userInfo.name}</span>!
-				</h2>
+				<div className="info-text">
+					<h2>
+						Welcome back,{" "}
+						<span className="accent">{userInfo.name}</span>!
+					</h2>
+				</div>
 				<div>
 					{budgets && budgets.length > 0 ? (
 						<div>
-							<div>
+							<div className="dashboard-action">
 								<AddBudgetForm />
 								<AddExpenseForm budgets={budgets} />
 							</div>
-							<h2 style={{ marginTop: "10px" }}>
+							<h2 className="info-text" style={{ marginTop: "10px" }}>
 								Existing Budgets
 							</h2>
 
-							<div>
+							<div className="all-budgets">
 								{/* Renders all budgets available */}
 								{budgets.map((budget) => (
 									<BudgetItem
@@ -188,7 +190,7 @@ const Dashboard = () => {
 							</div>
 							{expenses && expenses.length > 0 && (
 								<div>
-									<h2>Recent Expenses</h2>
+									<h2 className="info-text" style={{ marginTop: "10px" }}>Recent Expenses</h2>
 									<Table
 										expenses={expenses
 											.sort(
@@ -196,6 +198,7 @@ const Dashboard = () => {
 													b.createdAt - a.createdAt
 											)
 											.slice(0, 8)}
+										showBudget={false}
 									/>
 									{expenses.length > 8 && (
 										<Link to="expenses">

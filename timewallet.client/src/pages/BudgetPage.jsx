@@ -38,11 +38,16 @@ export async function budgetAction({ request }) {
 	const { _action, ...values } = Object.fromEntries(data)
 
 	if (_action === "createExpense") {
+		let budgetFinder = fetchData("budgets")
 		let expenseLengthCheck = values.newExpense
+
+		const selectedBudget = budgetFinder.find(
+			(budget) => budget.id === values.newExpenseBudget
+		)
 
 		// Get the total spent by the budget
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
-		const remainingAmount = 1000 - totalSpent
+		const remainingAmount = selectedBudget.amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
 		// Check if the expense exceeds the remaining balance of the budget

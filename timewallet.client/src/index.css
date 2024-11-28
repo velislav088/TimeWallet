@@ -498,6 +498,24 @@ footer p {
 	margin-left: 20px;
 }
 /* Dashboard */
+.info-text {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.dashboard-action {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.all-budgets {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
 .dashboard h2 {
 	font-size: var(--text-h2);
 }

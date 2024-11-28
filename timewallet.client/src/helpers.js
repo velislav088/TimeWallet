@@ -60,7 +60,7 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	const newItem = {
 		id: crypto.randomUUID(),
 		name: name,
-		createdAt: Date.now().toString(),
+		createdAt: Date.now(),
 		amount: +amount,
 		budgetId: budgetId,
 	}
