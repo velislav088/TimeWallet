@@ -10,7 +10,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 	const spent = calculateSpentByBudget(id)
 
 	return (
-		<div className="form-wrapper budget-box budget-item">
+		<div className="form-wrapper budget-box budget-item budget-page-item">
 			<div className="budget">
 				<div className="progress-text">
 					<h5 className="accent">{Name}</h5>

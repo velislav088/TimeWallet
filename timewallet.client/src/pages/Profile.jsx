@@ -3,6 +3,8 @@ import { Chart as ChartJS } from "chart.js/auto"
 import { Bar, Doughnut, Line, Pie } from "react-chartjs-2"
 import { calculateSpentByBudget, fetchData } from "../helpers"
 import Table from "../components/Table"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 function Profile() {
 	document.title = "Profile"
@@ -55,35 +57,47 @@ function Profile() {
 					</div>
 					<div className="form-wrapper profile-form">
 						<h5>All Budgets</h5>
-						<Pie
-							data={{
-								labels: budgets.map((budget) => budget.Name),
-								datasets: [
-									{
-										label: "Amount",
-										data: budgets.map(
-											(budget) => budget.Amount
-										),
-									},
-								],
-							}}
-						/>
+						{budgets.length === 0 ? (
+							<h4>No budgets created!</h4>
+						) : (
+							<Pie
+								data={{
+									labels: budgets.map(
+										(budget) => budget.Name
+									),
+									datasets: [
+										{
+											label: "Amount",
+											data: budgets.map(
+												(budget) => budget.Amount
+											),
+										},
+									],
+								}}
+							/>
+						)}
 					</div>
 					<div className="form-wrapper profile-form">
 						<h5>All Expenses</h5>
-						<Pie
-							data={{
-								labels: expenses.map((expense) => expense.name),
-								datasets: [
-									{
-										label: "Amount",
-										data: expenses.map(
-											(expense) => expense.amount
-										),
-									},
-								],
-							}}
-						/>
+						{expenses.length === 0 ? (
+							<h4>No expenses created!</h4>
+						) : (
+							<Pie
+								data={{
+									labels: expenses.map(
+										(expense) => expense.name
+									),
+									datasets: [
+										{
+											label: "Amount",
+											data: expenses.map(
+												(expense) => expense.amount
+											),
+										},
+									],
+								}}
+							/>
+						)}
 					</div>
 				</div>
 			) : (
@@ -91,6 +105,17 @@ function Profile() {
 					<div>Access Denied!!!</div>
 				</div>
 			)}
+			<footer>
+				<div className="footer-content auth-footer">
+					<p>TimeWallet © 2024 All rights reserved</p>
+					<a href="https://github.com/velislav088/TimeWallet">
+						<FontAwesomeIcon icon={faGithub} />
+					</a>
+					<a className="footer-links" href="/welcome">
+						Home
+					</a>
+				</div>
+			</footer>
 		</section>
 	)
 }

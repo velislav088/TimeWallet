@@ -2,6 +2,8 @@ import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import GoogleTranslate from "../components/GoogleTranslate"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 function Register() {
 	document.title = "Register"
@@ -56,6 +58,17 @@ function Register() {
 					<Link to="/login">Login</Link>
 				</div>
 			</form>
+			<footer>
+				<div className="footer-content auth-footer">
+					<p>TimeWallet © 2024 All rights reserved</p>
+					<a href="https://github.com/velislav088/TimeWallet">
+						<FontAwesomeIcon icon={faGithub} />
+					</a>
+					<a className="footer-links" href="/welcome">
+						Home
+					</a>
+				</div>
+			</footer>
 		</div>
 	)
 	async function registerHandler(e) {

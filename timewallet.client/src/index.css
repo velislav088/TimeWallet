@@ -484,8 +484,64 @@ nav .button:active {
 .active:after {
 	content: "\2796";
 }
+.about-us-info {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.about-us-section {
+	margin: 20px 20px;
+}
+.about-us-section h1 {
+	font-size: var(--text-h2);
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.about-us-section h2 {
+	font-size: var(--text-h4);
+	font-weight: 600;
+}
+.person {
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+}
+.person-info {
+	display: flex;
+}
+.person-info ul {
+	margin-left: 10px;
+	margin-right: 10px;
+	list-style-type: none;
+}
+.person-info li {
+	font-size: var(--text-h6);
+}
+.person-1 {
+	border-right: 2px solid var(--color-secondary);
+}
+.person-2 {
+	text-align: right;
+}
+@media only screen and (max-width: 960px) {
+	.person-1 {
+		border-right: none;
+	}
+	.person-2-div {
+		margin-top: 30px;
+	}
+	.person-2 {
+		text-align: left;
+	}
+}
 /* Welcome page footer */
+.auth-footer {
+	position: absolute;
+	bottom: 0;
+}
 footer {
+	margin-top: auto;
 	margin-left: 10px;
 	margin-right: 10px;
 }
@@ -496,10 +552,23 @@ footer a {
 	font-size: var(--text-h6);
 	opacity: 75%;
 }
+.footer-links {
+	margin-left: 10px;
+	text-decoration: none;
+	opacity: 100%;
+}
+.footer-links:hover {
+	color: var(--color-links);
+	transition: all 250ms;
+}
 .google-translate {
 	margin-left: 20px;
 }
 /* Dashboard */
+.dashboard-main {
+	display: flex;
+	justify-content: center;
+}
 .info-text {
 	width: 100%;
 	display: flex;
@@ -516,7 +585,7 @@ footer a {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	gap: 30px;
+	gap: 40px;
 	flex-wrap: wrap;
 }
 .dashboard h2 {
@@ -638,14 +707,14 @@ footer a {
 	font-weight: 600;
 }
 /* Budget Page */
-.budget-item {
-	margin-right: 40px;
-}
 .budget-item h5 {
 	font-size: var(--text-h3);
 }
 .budget-item h6 {
 	font-size: var(--text-h5);
+}
+.budget-page-item {
+	margin-right: 40px;
 }
 table {
 	width: 100%;
@@ -792,7 +861,7 @@ progress::-webkit-progress-value {
 	justify-self: center;
 	font-size: var(--text-h5);
 }
-.profile-page h4{
+.profile-page h4 {
 	font-size: var(--text-h5);
 }
 .profile-info-div {

@@ -14,6 +14,8 @@ import {
 	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 async function fetchDataFromApi() {
 	const user = localStorage.getItem("user")
@@ -160,7 +162,7 @@ const Dashboard = () => {
 			})
 	}, [])
 	return (
-		<>
+		<div style={{ minHeight: "100%" }}>
 			<div className="dashboard">
 				<div className="info-text">
 					<h2 style={{ fontFamily: "DM Serif Display" }}>
@@ -171,7 +173,7 @@ const Dashboard = () => {
 						!
 					</h2>
 				</div>
-				<div>
+				<div className="dashboard-main">
 					{budgets && budgets.length > 0 ? (
 						<div>
 							<div className="dashboard-action">
@@ -237,7 +239,7 @@ const Dashboard = () => {
 					)}
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 export default Dashboard

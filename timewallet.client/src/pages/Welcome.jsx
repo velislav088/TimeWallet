@@ -8,6 +8,8 @@ import { faTrophy } from "@fortawesome/free-solid-svg-icons"
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import GoogleTranslate from "../components/GoogleTranslate"
 import { faGithub } from "@fortawesome/free-brands-svg-icons"
+import velislav from "/src/assets/velislav.png"
+import mert from "/src/assets/mert.jpg"
 
 const Welcome = () => {
 	const [activeIndex, setActiveIndex] = useState(null)
@@ -122,7 +124,7 @@ const Welcome = () => {
 					/>
 				</div>
 			</section>
-			<section className="FAQ-section">
+			<section id="FAQ" className="FAQ-section">
 				<h1>FAQ</h1>
 				{faqs.map((faq, index) => (
 					<div className="FAQ-box" key={index}>
@@ -148,11 +150,49 @@ const Welcome = () => {
 					</div>
 				))}
 			</section>
+			<section id="about-us" className="about-us-section">
+				<div className="info-text">
+					<h1>About us</h1>
+				</div>
+				<div className="about-us-info">
+					<div className="person-info person-1">
+						<img
+							className="person"
+							src={velislav}
+							alt="velislav"
+						></img>
+						<ul className="about-person">
+							<li>
+								<h2>Velislav Donchev</h2>
+							</li>
+							<li>
+								Specialist in frontend design, <br /> user
+								experience, and React components.
+							</li>
+						</ul>
+					</div>
+					<div className="person-info person-2-div">
+						<ul className="about-person person-2">
+							<li>
+								<h2>Mert Elsenev</h2>
+							</li>
+							<li>
+								Developer focusing on the backend <br /> and
+								database design.
+							</li>
+						</ul>
+						<img className="person" src={mert} alt="mert"></img>
+					</div>
+				</div>
+			</section>
 			<footer>
 				<div className="footer-content">
 					<p>TimeWallet © 2024 All rights reserved</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
+					</a>
+					<a className="footer-links" href="/welcome">
+						Home
 					</a>
 				</div>
 			</footer>

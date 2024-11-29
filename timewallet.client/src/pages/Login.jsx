@@ -1,3 +1,5 @@
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -14,52 +16,65 @@ function Login() {
 	}, [])
 
 	return (
-		<div className="auth-container">
-			<div className="background">
-				<div className="shape"></div>
-				<div className="shape"></div>
-			</div>
-			<form action="#" className="login" onSubmit={loginHandler}>
-				<h3>Login Here</h3>
-				<label htmlFor="email">Email</label>
-				<input
-					type="email"
-					placeholder="Email"
-					name="Email"
-					id="email"
-					required
-				/>
-
-				<label htmlFor="password">Password</label>
-				<input
-					type="password"
-					placeholder="Password"
-					name="Password"
-					id="password"
-					required
-				/>
-
-				<ul className="login-checkbox">
-					<li>
-						<label htmlFor="remember">Remember Password?</label>
-					</li>
-					<li>
-						<input
-							type="checkbox"
-							name="Remember"
-							id="remember"
-							className="checkbox"
-						/>
-					</li>
-				</ul>
-
-				<input type="submit" value="Login" className="button" />
-
-				<div className="logout-redirect">
-					<span>Or </span>
-					<Link to="/register">Register</Link>
+		<div>
+			<div className="auth-container">
+				<div className="background">
+					<div className="shape"></div>
+					<div className="shape"></div>
 				</div>
-			</form>
+				<form action="#" className="login" onSubmit={loginHandler}>
+					<h3>Login Here</h3>
+					<label htmlFor="email">Email</label>
+					<input
+						type="email"
+						placeholder="Email"
+						name="Email"
+						id="email"
+						required
+					/>
+
+					<label htmlFor="password">Password</label>
+					<input
+						type="password"
+						placeholder="Password"
+						name="Password"
+						id="password"
+						required
+					/>
+
+					<ul className="login-checkbox">
+						<li>
+							<label htmlFor="remember">Remember Password?</label>
+						</li>
+						<li>
+							<input
+								type="checkbox"
+								name="Remember"
+								id="remember"
+								className="checkbox"
+							/>
+						</li>
+					</ul>
+
+					<input type="submit" value="Login" className="button" />
+
+					<div className="logout-redirect">
+						<span>Or </span>
+						<Link to="/register">Register</Link>
+					</div>
+				</form>
+			</div>
+			<footer>
+				<div className="footer-content auth-footer">
+					<p>TimeWallet © 2024 All rights reserved</p>
+					<a href="https://github.com/velislav088/TimeWallet">
+						<FontAwesomeIcon icon={faGithub} />
+					</a>
+					<a className="footer-links" href="/welcome">
+						Home
+					</a>
+				</div>
+			</footer>
 		</div>
 	)
 	async function loginHandler(e) {
