@@ -163,9 +163,12 @@ const Dashboard = () => {
 		<>
 			<div className="dashboard">
 				<div className="info-text">
-					<h2>
+					<h2 style={{ fontFamily: "DM Serif Display" }}>
 						Welcome back,{" "}
-						<span className="accent">{userInfo.name}</span>!
+						<span className="accent accent-name">
+							{userInfo.name}
+						</span>
+						!
 					</h2>
 				</div>
 				<div>
@@ -177,7 +180,10 @@ const Dashboard = () => {
 							</div>
 							<h2
 								className="info-text"
-								style={{ marginTop: "10px" }}
+								style={{
+									marginTop: "30px",
+									fontFamily: "DM Serif Display",
+								}}
 							>
 								Existing Budgets
 							</h2>
@@ -195,7 +201,11 @@ const Dashboard = () => {
 								<div>
 									<h2
 										className="info-text"
-										style={{ marginTop: "10px" }}
+										style={{
+											marginTop: "30px",
+											marginBottom: "5px",
+											fontFamily: "DM Serif Display",
+										}}
 									>
 										Recent Expenses
 									</h2>
@@ -208,11 +218,6 @@ const Dashboard = () => {
 											.slice(0, 8)}
 										showBudget={false}
 									/>
-									{expenses.length > 8 && (
-										<Link to="expenses">
-											View all expenses
-										</Link>
-									)}
 								</div>
 							)}
 						</div>

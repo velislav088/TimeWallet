@@ -94,7 +94,7 @@ const BudgetPage = () => {
 	return (
 		<div className="budget-page">
 			<div className="info-text">
-				<h2>
+				<h2 style={{ fontFamily: "DM Serif Display" }}>
 					<span className="accent">{budget.Name}</span> Overview
 				</h2>
 			</div>
@@ -105,7 +105,13 @@ const BudgetPage = () => {
 			{expenses && expenses.length > 0 && (
 				<div>
 					<div className="info-text">
-						<h2>
+						<h2
+							style={{
+								marginTop: "20px",
+								marginBottom: "20px",
+								fontFamily: "DM Serif Display",
+							}}
+						>
 							<span className="accent">{budget.Name}</span>{" "}
 							Expenses
 						</h2>
