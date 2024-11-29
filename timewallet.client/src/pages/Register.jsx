@@ -23,29 +23,29 @@ function Register() {
 				<div className="shape"></div>
 			</div>
 			<form action="#" className="register" onSubmit={registerHandler}>
-				<h3>Register Here</h3>
-				<label htmlFor="name">Name</label>
+				<h3>Регистрирай се тук</h3>
+				<label htmlFor="name">Име</label>
 				<input
 					type="text"
-					placeholder="Name"
+					placeholder="Име"
 					name="Name"
 					id="name"
 					required
 				/>
 
-				<label htmlFor="email">Email</label>
+				<label htmlFor="email">Имейл</label>
 				<input
 					type="email"
-					placeholder="Email"
+					placeholder="Имейл"
 					name="Email"
 					id="email"
 					required
 				/>
 
-				<label htmlFor="password">Password</label>
+				<label htmlFor="password">Парола</label>
 				<input
 					type="password"
-					placeholder="Password"
+					placeholder="Парола"
 					name="PasswordHash"
 					id="password"
 					required
@@ -54,18 +54,18 @@ function Register() {
 				<input type="submit" value="Register" className="button" />
 
 				<div className="logout-redirect">
-					<span>Or </span>
-					<Link to="/login">Login</Link>
+					<span>Или </span>
+					<Link to="/login">Влезте</Link>
 				</div>
 			</form>
 			<footer>
 				<div className="footer-content auth-footer">
-					<p>TimeWallet © 2024 All rights reserved</p>
+					<p>TimeWallet © 2024 Всички права запазени</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
 					</a>
 					<a className="footer-links" href="/welcome">
-						Home
+						Начало
 					</a>
 				</div>
 			</footer>
@@ -100,7 +100,7 @@ function Register() {
 		const data = await response.json()
 
 		if (response.ok) {
-			toast.success(data.message || "Registered successfully", {
+			toast.success(data.message || "Успешно регистриране", {
 				autoClose: 1500,
 			})
 			setTimeout(() => {

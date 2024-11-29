@@ -28,24 +28,25 @@ const Welcome = () => {
 
 	const faqs = [
 		{
-			question: "What is this app?",
-			answer: "This app is a personal finance manager designed to help you track and manage your budgets and expenses in an easy and intuitive way. It allows you to create and manage budgets, monitor your spending, and keep your financial goals on track.",
+			question: "Какво представлява това приложение?",
+			answer: "Това приложение е личен финансов мениджър, предназначен да ви помогне да проследявате и управлявате своите бюджети и разходи по лесен и интуитивен начин. Тя ви позволява да създавате и управлявате бюджети, да наблюдавате разходите си и да поддържате финансовите си цели на път.",
 		},
 		{
-			question: "Can I track multiple budgets at once?",
-			answer: "Absolutely! You can create and manage as many budgets as you like, allowing you to organize your finances by different categories such as 'Food,' 'Entertainment,' or 'Savings.'",
+			question: "Мога ли да проследявам няколко бюджета наведнъж?",
+			answer: "Абсолютно! Можете да създавате и управлявате толкова бюджети, колкото желаете, което ви позволява да организирате финансите си по различни категории като „Храна“, „Развлечения“ или „Спестявания“.",
 		},
 		{
-			question: "Can I edit or delete a budget once created?",
-			answer: "Yes, you can edit or delete any budget you've created at any time. Simply go to your budget list, select the budget, and choose either to update its details or remove it completely.",
+			question: "Мога ли да изтрия бюджет, веднъж създаден?",
+			answer: "Да, можете да изтриете всеки бюджет, който сте създали по всяко време. Просто отидете на вашия списък с бюджети, изберете бюджета и изберете да го премахнете напълно.",
 		},
 		{
-			question: "Do I need an account to use this app?",
-			answer: "Yes, you need to sign up for an account to use the app. This helps us securely store your financial data and give you access across devices.",
+			question:
+				"Имам ли нужда от акаунт, за да използвам това приложение?",
+			answer: "Да, трябва да се регистрирате за акаунт, за да използвате приложението. Това ни помага да съхраняваме сигурно вашите финансови данни и да ви предоставя достъп на различни устройства.",
 		},
 		{
-			question: "How do I create a new budget?",
-			answer: "To create a new budget, simply navigate to the budget section and click on 'Add Budget.' You'll be prompted to provide a name for your budget and specify the amount. Once created, you can easily track your spending against it.",
+			question: "Как да създам нов бюджет?",
+			answer: "За да създадете нов бюджет, просто отидете до раздела с бюджета и щракнете върху „Добавяне на бюджет“. Ще бъдете подканени да въведете име за вашия бюджет и да посочите сумата. Веднъж създаден, можете лесно да проследявате разходите си спрямо него.",
 		},
 	]
 	return (
@@ -53,20 +54,21 @@ const Welcome = () => {
 			<section>
 				<div className="first-section-text">
 					<h1>
-						Save time with{" "}
+						Спести време с{" "}
 						<span className="accent">TimeWallet.</span>
 					</h1>
 					<h3>
-						Simplify your finances, budgeting, spending, savings &
-						more with real-time tracking, budget insights,
-						<b className="accent"> and more.</b>
+						Опростете вашите финанси, планиране, разходи,
+						спестявания и повече с проследяване в реално време,
+						информация за бюджета,
+						<b className="accent"> и още.</b>
 					</h3>
 					<div className="button-box">
 						<a className="button" href="/register">
-							Get Started
+							Започнете
 						</a>
 						<a className="button button-transparent" href="#sec-2">
-							How It Works
+							Как Работи
 						</a>
 					</div>
 				</div>
@@ -78,11 +80,11 @@ const Welcome = () => {
 			</section>
 			<section id="sec-2" className="info-card-section">
 				<div className="info-card">
-					<h2>Track your spending</h2>
+					<h2>Проследявайте разходите си</h2>
 					<h4>
-						Get a clear view of your expenses. Easily log and
-						categorize your spending to stay on top of your
-						finances.
+						Получете ясна представа за вашите разходи. Лесно влизане
+						и категоризирайте разходите си, за да сте в крак свашите
+						финанси.
 					</h4>
 					<FontAwesomeIcon
 						icon={faMagnifyingGlass}
@@ -90,11 +92,11 @@ const Welcome = () => {
 					/>
 				</div>
 				<div className="info-card">
-					<h2>Goal setting and planning</h2>
+					<h2>Поставяне на цели и планиране</h2>
 					<h4>
-						Set financial goals and track your progress. Whether
-						saving for a vacation or planning for retirement,
-						achieve your dreams with our tools.
+						Поставете си финансови цели и следете напредъка си. Дали
+						спестяване за ваканция или планиране на пенсиониране,
+						постигнете мечтите си с нашите инструменти.
 					</h4>
 					<FontAwesomeIcon
 						icon={faCalendarCheck}
@@ -102,10 +104,11 @@ const Welcome = () => {
 					/>
 				</div>
 				<div className="info-card">
-					<h2>Set and achieve budgets</h2>
+					<h2>Определете и постигнете бюджети</h2>
 					<h4>
-						Create monthly budgets that help you meet your financial
-						goals. Track your progress and stay in control.
+						Създавайте месечни бюджети, които ви помагат да
+						покривате финансовите си разходи цели. Проследявайте
+						напредъка си и поддържайте контрол.
 					</h4>
 					<FontAwesomeIcon
 						icon={faTrophy}
@@ -113,10 +116,11 @@ const Welcome = () => {
 					/>
 				</div>
 				<div className="info-card">
-					<h2>Plan for the future</h2>
+					<h2>Планирайте бъдещето</h2>
 					<h4>
-						Save for what matters. Set financial goals and let us
-						help you track your path to reaching them.
+						Спестете за това, което има значение. Поставете си
+						финансови цели и ни позволете да ви помогне да
+						проследите пътя си към достигането им.
 					</h4>
 					<FontAwesomeIcon
 						icon={faClockRotateLeft}
@@ -125,7 +129,7 @@ const Welcome = () => {
 				</div>
 			</section>
 			<section id="FAQ" className="FAQ-section">
-				<h1>FAQ</h1>
+				<h1>ЧЗВ</h1>
 				{faqs.map((faq, index) => (
 					<div className="FAQ-box" key={index}>
 						<button
@@ -152,7 +156,7 @@ const Welcome = () => {
 			</section>
 			<section id="about-us" className="about-us-section">
 				<div className="info-text">
-					<h1>About us</h1>
+					<h1>За Нас</h1>
 				</div>
 				<div className="about-us-info">
 					<div className="person-info person-1">
@@ -163,22 +167,22 @@ const Welcome = () => {
 						></img>
 						<ul className="about-person">
 							<li>
-								<h2>Velislav Donchev</h2>
+								<h2>Велислав Дончев</h2>
 							</li>
 							<li>
-								Specialist in frontend design, <br /> user
-								experience, and React components.
+								Специалист по фронтенд дизайн, <br /> потребителски
+								интерфейс и React компоненти.
 							</li>
 						</ul>
 					</div>
 					<div className="person-info person-2-div">
 						<ul className="about-person person-2">
 							<li>
-								<h2>Mert Elsenev</h2>
+								<h2>Мерт Елсенев</h2>
 							</li>
 							<li>
-								Developer focusing on the backend <br /> and
-								database design.
+								Разработчик, който се фокусира върху бекенда{" "}
+								<br /> и дизайн на база данни.
 							</li>
 						</ul>
 						<img className="person" src={mert} alt="mert"></img>
@@ -187,12 +191,12 @@ const Welcome = () => {
 			</section>
 			<footer>
 				<div className="footer-content">
-					<p>TimeWallet © 2024 All rights reserved</p>
+					<p>TimeWallet © 2024 Всички права запазени</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
 					</a>
 					<a className="footer-links" href="/welcome">
-						Home
+						Начало
 					</a>
 				</div>
 			</footer>

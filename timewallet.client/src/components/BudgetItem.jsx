@@ -18,15 +18,15 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 						<span className="accent budgeted">
 							{formatCurrency(Amount)}
 						</span>{" "}
-						Budgeted
+						Предвидени
 					</h6>
 				</div>
 				<progress max={Amount} value={spent}>
 					{formatPercentage(spent / Amount)}
 				</progress>
 				<div className="progress-text bottom">
-					<small>{formatCurrency(spent)} spent | </small>
-					<small>{formatCurrency(Amount - spent)} remaining</small>
+					<small>{formatCurrency(spent)} изразходени | </small>
+					<small>{formatCurrency(Amount - spent)} оставащи</small>
 				</div>
 				{showDelete ? (
 					<div>
@@ -36,7 +36,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 							onSubmit={(event) => {
 								if (
 									!confirm(
-										"Are you sure you want to permanently delete this budget?"
+										"Сигурни ли сте, че искате да изтриете този бюджет?"
 									)
 								) {
 									event.preventDefault()
@@ -44,14 +44,14 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 							}}
 						>
 							<button className="button" type="submit">
-								<span className="submit-span">Delete Budget</span>
+								<span className="submit-span">Изтрий Бюджет</span>
 							</button>
 						</Form>
 					</div>
 				) : (
 					<div>
 						<Link to={`/budget/${id}`} className="link">
-							<span className="link">View Details</span>
+							<span className="link">Виж Детайли</span>
 						</Link>
 					</div>
 				)}

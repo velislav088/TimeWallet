@@ -32,22 +32,22 @@ function Profile() {
 		<section className="profile-page">
 			<header className="info-text">
 				<h2 style={{ fontFamily: "DM Serif Display" }}>
-					Welcome to your page
+					Добре дошли във вашата страница
 				</h2>
 			</header>
 			{userInfo ? (
 				<div className="profile-info-div">
 					<div className="form-wrapper profile-form user-info">
 						<h4>
-							Name:{" "}
+							Име:{" "}
 							<span className="accent">{userInfo.name}</span>
 						</h4>
 						<h4>
-							Email:{" "}
+							Имейл:{" "}
 							<span className="accent">{userInfo.email}</span>
 						</h4>
 						<h4>
-							Created Date:{" "}
+							Дата на Създаване:{" "}
 							<span className="accent">
 								{userInfo.createdDate
 									? userInfo.createdDate.split("T")[0]
@@ -56,9 +56,9 @@ function Profile() {
 						</h4>
 					</div>
 					<div className="form-wrapper profile-form">
-						<h5>All Budgets</h5>
+						<h5>Всички Бюджети</h5>
 						{budgets.length === 0 ? (
-							<h4>No budgets created!</h4>
+							<h4>Няма създанени бюджети!</h4>
 						) : (
 							<Pie
 								data={{
@@ -67,7 +67,7 @@ function Profile() {
 									),
 									datasets: [
 										{
-											label: "Amount",
+											label: "Стойност",
 											data: budgets.map(
 												(budget) => budget.Amount
 											),
@@ -78,9 +78,9 @@ function Profile() {
 						)}
 					</div>
 					<div className="form-wrapper profile-form">
-						<h5>All Expenses</h5>
+						<h5>Всички Разходи</h5>
 						{expenses.length === 0 ? (
-							<h4>No expenses created!</h4>
+							<h4>Няма създанени разходи!</h4>
 						) : (
 							<Pie
 								data={{
@@ -102,17 +102,17 @@ function Profile() {
 				</div>
 			) : (
 				<div className="warning">
-					<div>Access Denied!!!</div>
+					<div>Достъп Забранен!</div>
 				</div>
 			)}
 			<footer>
 				<div className="footer-content auth-footer">
-					<p>TimeWallet © 2024 All rights reserved</p>
+					<p>TimeWallet © 2024 Всички права запазени</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
 					</a>
 					<a className="footer-links" href="/welcome">
-						Home
+						Начало
 					</a>
 				</div>
 			</footer>

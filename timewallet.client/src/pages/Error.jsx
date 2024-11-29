@@ -6,14 +6,14 @@ const Error = () => {
 
 	return (
 		<div>
-			<h1>Uh oh! We've got a problem.</h1>
+			<h1>Имаме проблем...</h1>
 			<p>{error.message || error.statusText}</p>
 			<div>
 				<button onClick={() => navigate(-1)}>
-					<span>Go Back</span>
+					<span>Върни се</span>
 				</button>
 				<Link to="/">
-					<span>Go home</span>
+					<span>Към началото</span>
 				</Link>
 			</div>
 		</div>

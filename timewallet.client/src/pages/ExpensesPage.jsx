@@ -20,9 +20,9 @@ export async function expensesAction({ request }) {
 				key: "expenses",
 				id: values.expenseId,
 			})
-			return toast.success("Expense deleted!")
+			return toast.success("Разход премахнат!")
 		} catch (e) {
-			throw new Error("There was a problem deleting your expense.")
+			throw new Error("Имаше проблем при премахването на разхода ви.")
 		}
 	}
 }
@@ -32,16 +32,16 @@ const ExpensesPage = () => {
 
 	return (
 		<div className="grid-lg">
-			<h1>All Expenses</h1>
+			<h1>Всички Разходи</h1>
 			{expenses && expenses.length > 0 ? (
 				<div className="grid-md">
 					<h2>
-						Recent Expenses <small>({expenses.length} total)</small>
+						Скорошни Разходи <small>({expenses.length} общо)</small>
 					</h2>
 					<Table expenses={expenses} />
 				</div>
 			) : (
-				<p>No Expenses to show</p>
+				<p>Няма разходи за показване.</p>
 			)}
 		</div>
 	)

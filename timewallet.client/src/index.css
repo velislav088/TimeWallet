@@ -189,6 +189,9 @@ ul {
 	position: absolute;
 	left: 40%;
 }
+.auth-container .register-redirect {
+	left: 35%;
+}
 .auth-container a:hover {
 	color: var(--color-links);
 	transition: all 250ms;
@@ -723,7 +726,18 @@ table {
 th {
 	color: var(--color-primary);
 }
-
+table th:nth-child(2) {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+table th:nth-child(1) {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+table td:last-child {
+	padding-left: 20px;
+	padding-right: 20px;
+}
 table tr:first-child th:first-child {
 	border-top-left-radius: 10px;
 }
@@ -780,6 +794,11 @@ tr {
 }
 .budget-page {
 	margin: 10px 20px;
+}
+.budget-page-main {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 .budget-page h2 {
 	font-size: var(--text-h2);

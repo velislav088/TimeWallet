@@ -53,14 +53,14 @@ export async function budgetAction({ request }) {
 		// Check if the expense exceeds the remaining balance of the budget
 		if (expenseAmount > remainingAmount) {
 			return toast.error(
-				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+				`Разхода надвишава оставащия бюджет! Остават: ${remainingAmount.toFixed(
 					2
 				)}$`
 			)
 		}
 		if (expenseLengthCheck.length > 11) {
 			return toast.error(
-				"Expense name is too long. It must be 11 characters or fewer"
+				"Името на разхода трябва да е 11 символа или по-малко"
 			)
 		}
 		try {
@@ -69,9 +69,9 @@ export async function budgetAction({ request }) {
 				amount: values.newExpenseAmount,
 				budgetId: values.newExpenseBudget,
 			})
-			return toast.success(`Expense ${values.newExpense} created!`)
+			return toast.success(`Разход ${values.newExpense} създаден!`)
 		} catch (e) {
-			throw new Error("There was a problem creating your expense.")
+			throw new Error("Имаше проблем при създаването на разхода ви.")
 		}
 	}
 
@@ -81,9 +81,9 @@ export async function budgetAction({ request }) {
 				key: "expenses",
 				id: values.expenseId,
 			})
-			return toast.success("Expense deleted!")
+			return toast.success("Разход премахнат!")
 		} catch (e) {
-			throw new Error("There was a problem deleting your expense.")
+			throw new Error("Имаше проблем при премахването на разхода ви.")
 		}
 	}
 }
@@ -95,30 +95,32 @@ const BudgetPage = () => {
 		<div className="budget-page">
 			<div className="info-text">
 				<h2 style={{ fontFamily: "DM Serif Display" }}>
-					<span className="accent">{budget.Name}</span> Overview
+					<span className="accent">{budget.Name}</span> Преглед
 				</h2>
 			</div>
-			<div className="dashboard-action">
-				<BudgetItem budget={budget} showDelete={true} />
-				<AddExpenseForm budgets={[budget]} />
-			</div>
-			{expenses && expenses.length > 0 && (
-				<div>
-					<div className="info-text">
-						<h2
-							style={{
-								marginTop: "20px",
-								marginBottom: "20px",
-								fontFamily: "DM Serif Display",
-							}}
-						>
-							<span className="accent">{budget.Name}</span>{" "}
-							Expenses
-						</h2>
-					</div>
-					<Table expenses={expenses} showBudget={false} />
+			<div className="budget-page-main">
+				<div className="dashboard-action">
+					<BudgetItem budget={budget} showDelete={true} />
+					<AddExpenseForm budgets={[budget]} />
 				</div>
-			)}
+				{expenses && expenses.length > 0 && (
+					<div>
+						<div className="info-text">
+							<h2
+								style={{
+									marginTop: "20px",
+									marginBottom: "20px",
+									fontFamily: "DM Serif Display",
+								}}
+							>
+								<span className="accent">{budget.Name}</span>{" "}
+								Разходи
+							</h2>
+						</div>
+						<Table expenses={expenses} showBudget={false} />
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }

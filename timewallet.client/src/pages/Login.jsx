@@ -23,20 +23,20 @@ function Login() {
 					<div className="shape"></div>
 				</div>
 				<form action="#" className="login" onSubmit={loginHandler}>
-					<h3>Login Here</h3>
-					<label htmlFor="email">Email</label>
+					<h3>Влезте Тук</h3>
+					<label htmlFor="email">Имейл</label>
 					<input
 						type="email"
-						placeholder="Email"
+						placeholder="Имейл"
 						name="Email"
 						id="email"
 						required
 					/>
 
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">Парола</label>
 					<input
 						type="password"
-						placeholder="Password"
+						placeholder="Парола"
 						name="Password"
 						id="password"
 						required
@@ -44,7 +44,7 @@ function Login() {
 
 					<ul className="login-checkbox">
 						<li>
-							<label htmlFor="remember">Remember Password?</label>
+							<label htmlFor="remember">Запомни Парола?</label>
 						</li>
 						<li>
 							<input
@@ -56,22 +56,22 @@ function Login() {
 						</li>
 					</ul>
 
-					<input type="submit" value="Login" className="button" />
+					<input type="submit" value="Вход" className="button" />
 
-					<div className="logout-redirect">
-						<span>Or </span>
-						<Link to="/register">Register</Link>
+					<div className="logout-redirect register-redirect">
+						<span>Или </span>
+						<Link to="/register">Регистрирай</Link>
 					</div>
 				</form>
 			</div>
 			<footer>
 				<div className="footer-content auth-footer">
-					<p>TimeWallet © 2024 All rights reserved</p>
+					<p>TimeWallet © 2024 Всички права запазени</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
 					</a>
 					<a className="footer-links" href="/welcome">
-						Home
+						Начало
 					</a>
 				</div>
 			</footer>
@@ -108,7 +108,7 @@ function Login() {
 
 		if (response.ok) {
 			localStorage.setItem("user", dataToSend.Email)
-			toast.success(data.message || "Registered successfully", {
+			toast.success(data.message || "Успешно влизане", {
 				autoClose: 1500,
 			})
 			document.location = "/"

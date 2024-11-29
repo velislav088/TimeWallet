@@ -11,9 +11,9 @@ const Table = ({ expenses, showBudget = true }) => {
 				<thead>
 					<tr>
 						{[
-							"Name",
-							"Amount",
-							"Date",
+							"Име",
+							"Стойност",
+							"Дата",
 							showBudget ? "Budget" : "",
 							"",
 						].map((i, index) => (

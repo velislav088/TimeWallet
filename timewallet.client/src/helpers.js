@@ -42,10 +42,10 @@ export const createBudget = async ({ name, amount }) => {
 			if (errorData.message) {
 				return toast.error(errorData.message)
 			}
-			return toast.error("There was a problem creating your budget.")
+			return toast.error("Имаше проблем при създаването на бюджета ви.")
 		} else {
 			const data = await response.json()
-			toast.success("Budget created!")
+			toast.success("Бюджет създаден!")
 			localStorage.setItem("budgets", JSON.stringify(updatedBudgets))
 			return data
 		}
@@ -94,7 +94,7 @@ export const createExpense = async ({ name, amount, budgetId }) => {
 	} catch (error) {
 		console.error("Failed to create expense on API:", error)
 
-		toast.error(`Failed to create expense: ${error.message}`)
+		toast.error(`Неуспешно създаване на разход: ${error.message}`)
 
 		throw error
 	}

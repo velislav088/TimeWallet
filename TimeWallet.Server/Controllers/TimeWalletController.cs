@@ -55,10 +55,10 @@ namespace TimeWallet.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("Something went wrong, please try again. " + ex.Message);
+				return BadRequest("Нещо се обърка, моля пробвайте пак. " + ex.Message);
 			}
 
-			return Ok(new { message = "Registered Successfully.", result = result });
+			return Ok(new { message = "Успешно регистриране.", result = result });
 		}
 
 		[HttpPost("login")]
@@ -81,7 +81,7 @@ namespace TimeWallet.Server.Controllers
 
 					if (!result.Succeeded)
 					{
-						return Unauthorized(new { message = "Check your login credentials and try again" });
+						return Unauthorized(new { message = "Невалидно потребителско име или парола" });
 					}
 
 					user_.LastLogin = DateTime.Now;
@@ -89,15 +89,15 @@ namespace TimeWallet.Server.Controllers
 				}
 				else
 				{
-					return BadRequest(new { message = "Please check your credentials and try again. " });
+					return BadRequest(new { message = "Невалидно потребителско име или парола. " });
 				}
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again. " + ex.Message });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак. " + ex.Message });
 			}
 
-			return Ok(new { message = "Login Successful." });
+			return Ok(new { message = "Успешно влизане." });
 		}
 
 		[HttpGet("logout"), Authorize]
@@ -110,10 +110,10 @@ namespace TimeWallet.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(new { message = "Someting went wrong, please try again. " + ex.Message });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак. " + ex.Message });
 			}
 
-			return Ok(new { message = "You are free to go!" });
+			return Ok(new { message = "Свободни сте!" });
 		}
 
 		//[HttpGet("admin"), Authorize]
@@ -130,7 +130,7 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 
 			return Ok(new { userInfo = userInfo });
@@ -157,10 +157,10 @@ namespace TimeWallet.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(new { message = "Something went wrong please try again. " + ex.Message });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак. " + ex.Message });
 			}
 
-			return Ok(new { message = "Logged in", user = currentuser });
+			return Ok(new { message = "Влязъл", user = currentuser });
 		}
 
 
@@ -190,7 +190,7 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 			else
 			{
@@ -199,7 +199,7 @@ namespace TimeWallet.Server.Controllers
 
 				if (UsersCollectionsNames.Contains(JsonCollection.Name))
 				{
-					return BadRequest(new { message = $"{JsonCollection.Name} already exists!" });
+					return BadRequest(new { message = $"{JsonCollection.Name} вече съществува!" });
 				}
 
 				Budgets thToAdd = new Budgets()
@@ -216,7 +216,7 @@ namespace TimeWallet.Server.Controllers
 
 				context.Budgets.Add(thToAdd);
 				context.SaveChanges();
-				return Ok(new { message = $"Succesfully added new collection named -{JsonCollection.Name}-!" });
+				return Ok(new { message = $"Успешно създаване на бюджет -{JsonCollection.Name}-!" });
 
 			}
 
@@ -230,7 +230,7 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 
 			Budgets Budget = context
@@ -255,11 +255,11 @@ namespace TimeWallet.Server.Controllers
                 await Console.Out.WriteLineAsync();
                 context.Elements.Add(elementToAdd);
 				context.SaveChanges();
-				return Ok(new { message = $"Succesfully added new element named -{JsonElement.name}-!" });
+				return Ok(new { message = $"Успешно създаване на разход -{JsonElement.name}-!" });
 			}
 			else
 			{
-				return BadRequest(new { message = $"Something went wrong, please try again.(No Budget with name:'{JsonElement.name}' exists)" });
+				return BadRequest(new { message = $"Нещо се обърка, моля пробвайте пак. (Няма бюджет с име:'{JsonElement.name}')" });
 			}
 
 		}
@@ -270,19 +270,19 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 			if (context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id)) == null)
 
 			{
-				return BadRequest(new { message = "No element with the given parameters exists!" });
+				return BadRequest(new { message = "Разход с дадените параметри не съсществува!" });
 			}
 			else
 			{
 				Elements elementToRemove = context.Elements.FirstOrDefault(e => e.id == Guid.Parse(id));
 				context.Elements.Remove(elementToRemove);
 				context.SaveChanges();
-				return Ok(new { message = $"Element named:{elementToRemove.name} is successfuly deleted!" });
+				return Ok(new { message = $"Разход:{elementToRemove.name} е успешно изтрит!" });
 			}
 		}
 
@@ -292,18 +292,18 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 			if (context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id)) == null)
 			{
-				return BadRequest(new { message = $"User({userInfo.Name}) doesn't own the provided budget!" });
+				return BadRequest(new { message = $"Потребител({userInfo.Name}) не притежава дадения бюджет!" });
 			}
 			else
 			{
 				Budgets budgetToRemove = context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id));
 				context.Budgets.Remove(budgetToRemove);
 				context.SaveChanges();
-				return Ok(new { message = $"Budget named:{budgetToRemove.Name} is successfuly removed!" });
+				return Ok(new { message = $"Бюджет на име:{budgetToRemove.Name} е успешно изтрит!" });
 			}
 
 		}
@@ -314,7 +314,7 @@ namespace TimeWallet.Server.Controllers
 			User userInfo = await userManager.FindByEmailAsync(email);
 			if (userInfo == null)
 			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
+				return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
 			}
 			string budgetJSON = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
 			string elementJSON = JsonSerializer.Serialize(context.Elements.Where(e => e.budgets.UserId == userInfo.Id));
@@ -330,16 +330,16 @@ namespace TimeWallet.Server.Controllers
             User userInfo = await userManager.FindByEmailAsync(email);
             if (userInfo == null)
             {
-                return BadRequest(new { message = "Something went wrong, please try again." });
+                return BadRequest(new { message = "Нещо се обърка, моля пробвайте пак." });
             }
 			Budgets budget = context.Budgets.FirstOrDefault(b => b.id == GuidId);
 			if (budget == null)
 			{
-				return BadRequest(new { message = "This budget doesn't exist anymore or never existed!" });
+				return BadRequest(new { message = "Бюджета вече не съществува или никога не е съществувал!" });
 			}
 			else if(budget.UserId != userInfo.Id)
 			{
-				return BadRequest(new { message = "This budget doesn't belong to this user! How did you got it!?" });  
+				return BadRequest(new { message = "Този бюджет не принадлежи на потребителя" });  
 				//TODO: this should notife us!
 			}
 			else

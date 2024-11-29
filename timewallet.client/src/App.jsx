@@ -83,10 +83,10 @@ const router = createBrowserRouter(
 				element={
 					<div>
 						<header>
-							<h1>Not Found</h1>
+							<h1>Не е намерена такава страница.</h1>
 						</header>
 						<p>
-							<Link to="/">Back to Home</Link>
+							<Link to="/">Обратно в началото</Link>
 						</p>
 					</div>
 				}
@@ -107,7 +107,7 @@ function App() {
 		if (response.ok) {
 			localStorage.removeItem("user")
 
-			toast.success(data.message || "Logged out successfully", {
+			toast.success(data.message || "Успешно излизане", {
 				autoClose: 1500,
 			})
 			setTimeout(() => {
@@ -133,13 +133,13 @@ function App() {
 						</ul>
 						<ul>
 							<a className="button" href="/profile">
-								Profile
+								Профил
 							</a>
 							<a
 								className="button button-transparent"
 								onClick={logout}
 							>
-								Log Out
+								Излезте
 							</a>
 						</ul>
 					</nav>
@@ -156,13 +156,13 @@ function App() {
 						</ul>
 						<ul className="navbar-right">
 							<a className="button" href="/login">
-								Login
+								Вход
 							</a>
 							<a
 								className="button button-transparent"
 								href="/register"
 							>
-								Register
+								Запис
 							</a>
 						</ul>
 					</nav>

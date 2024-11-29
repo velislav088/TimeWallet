@@ -18,29 +18,29 @@ const AddExpenseForm = ({ budgets }) => {
 	return (
 		<div className="form-wrapper expense">
 			<h5>
-				Add New{" "}
+				Създай Нов{" "}
 				<span className="accent">
 					{/* Show budget name if theres only 1 available */}
 					{budgets.length === 1 &&
 						`${budgets.map((budg) => budg.name)}`}
 				</span>{" "}
-				Expense
+				Разход
 			</h5>
 			<fetcher.Form method="post" ref={formRef}>
 				<div>
 					<div>
-						<label htmlFor="newExpense">Expense Name</label>
+						<label htmlFor="newExpense">Име на Разход</label>
 						<input
 							type="text"
 							name="newExpense"
 							id="newExpense"
-							placeholder="e.g., Coffee"
+							placeholder="пр., Кафе"
 							ref={focusRef}
 							required
 						/>
 					</div>
 					<div>
-						<label htmlFor="newExpenseAmount">Amount</label>
+						<label htmlFor="newExpenseAmount">Стойност</label>
 						<input
 							type="number"
 							step="0.01"
@@ -53,7 +53,7 @@ const AddExpenseForm = ({ budgets }) => {
 					</div>
 				</div>
 				<div hidden={budgets.length === 1}>
-					<label htmlFor="newExpenseBudget">Budget Category</label>
+					<label htmlFor="newExpenseBudget">Категория на Бюджет</label>
 					<select
 						name="newExpenseBudget"
 						id="newExpenseBudget"
@@ -78,10 +78,10 @@ const AddExpenseForm = ({ budgets }) => {
 					className="button"
 				>
 					{isSubmitting ? (
-						<span className="submit-span">Submitting…</span>
+						<span className="submit-span">Подаване……</span>
 					) : (
 						<>
-							<span className="submit-span">Add Expense</span>
+							<span className="submit-span">Създай Разход</span>
 						</>
 					)}
 				</button>

@@ -17,22 +17,22 @@ const AddBudgetForm = () => {
 	return (
 		<div className="form-wrapper budget-form">
 			<h5>
-				Create <span className="accent">Budget</span>
+				Създай <span className="accent">Бюджет</span>
 			</h5>
 			<fetcher.Form method="post" ref={formRef}>
 				<div>
-					<label htmlFor="newBudget">Budget Name</label>
+					<label htmlFor="newBudget">Име на Бюджет</label>
 					<input
 						type="text"
 						name="newBudget"
 						id="newBudget"
-						placeholder="e.g., Entertainment"
+						placeholder="пр., Забавление"
 						required
 						ref={focusRef}
 					/>
 				</div>
 				<div>
-					<label htmlFor="newBudgetAmount">Amount</label>
+					<label htmlFor="newBudgetAmount">Стойност</label>
 					<input
 						type="number"
 						step="0.01"
@@ -50,10 +50,10 @@ const AddBudgetForm = () => {
 					className="button"
 				>
 					{isSubmitting ? (
-						<span className="submit-span">Submitting…</span>
+						<span className="submit-span">Подаване…</span>
 					) : (
 						<>
-							<span className="submit-span">Create Budget</span>
+							<span className="submit-span">Създай Бюджет</span>
 						</>
 					)}
 				</button>

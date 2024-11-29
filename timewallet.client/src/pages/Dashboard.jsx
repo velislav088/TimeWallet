@@ -69,11 +69,11 @@ export async function dashboardAction({ request }) {
 			let budgetLengthCheck = values.newBudget
 
 			if (values.newBudgetAmount < 0) {
-				return toast.error("Budget cannot be lower than 0!")
+				return toast.error("Бюджета не може да е по-малко от 0!")
 			}
 			if (budgetLengthCheck.length > 19) {
 				return toast.error(
-					"Budget name is too long. It must be 19 characters or fewer"
+					"Името на бюджета трябва да е 19 символа или по-малко"
 				)
 			} else {
 				await createBudget({
@@ -83,8 +83,8 @@ export async function dashboardAction({ request }) {
 			}
 			return null
 		} catch (e) {
-			console.error("Error creating budget:", e)
-			return toast.error("There was a problem creating your budget.")
+			console.error("Проблем при създаването на бюджет:", e)
+			return toast.error("Имаше проблем при създаването на бюджета ви.")
 		}
 	}
 
@@ -102,20 +102,20 @@ export async function dashboardAction({ request }) {
 		const expenseAmount = parseFloat(values.newExpenseAmount)
 
 		if (values.newExpenseAmount < 0) {
-			return toast.error("Expense cannot be lower than 0!")
+			return toast.error("Разхода не може да е по-малко от 0!")
 		}
 
 		// Check if the expense exceeds the remaining balance of the budget
 		if (expenseAmount > remainingAmount) {
 			return toast.error(
-				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+				`Разхода надвишава оставащия бюджет! Остават: ${remainingAmount.toFixed(
 					2
 				)}$`
 			)
 		}
 		if (expenseLengthCheck.length > 11) {
 			return toast.error(
-				"Expense name is too long. It must be 11 characters or fewer"
+				"Името на разхода трябва да е 11 символа или по-малко"
 			)
 		}
 		try {
@@ -124,9 +124,9 @@ export async function dashboardAction({ request }) {
 				amount: values.newExpenseAmount,
 				budgetId: values.newExpenseBudget,
 			})
-			return toast.success(`Expense ${values.newExpense} created!`)
+			return toast.success(`Разход ${values.newExpense} създаден!`)
 		} catch (e) {
-			throw new Error("There was a problem creating your expense.")
+			throw new Error("Имаше проблем при създаването на разхода ви.")
 		}
 	}
 
@@ -136,9 +136,9 @@ export async function dashboardAction({ request }) {
 				key: "expenses",
 				id: values.expenseId,
 			})
-			return toast.success("Expense deleted!")
+			return toast.success("Разход премахнат!")
 		} catch (e) {
-			throw new Error("There was a problem deleting your expense.")
+			throw new Error("Имаше проблем при премахването на разхода ви.")
 		}
 	}
 }
@@ -166,7 +166,7 @@ const Dashboard = () => {
 			<div className="dashboard">
 				<div className="info-text">
 					<h2 style={{ fontFamily: "DM Serif Display" }}>
-						Welcome back,{" "}
+						Добре дошли обратно,{" "}
 						<span className="accent accent-name">
 							{userInfo.name}
 						</span>
@@ -187,7 +187,7 @@ const Dashboard = () => {
 									fontFamily: "DM Serif Display",
 								}}
 							>
-								Existing Budgets
+								Съществуващи Бюджети
 							</h2>
 
 							<div className="all-budgets">
@@ -209,7 +209,7 @@ const Dashboard = () => {
 											fontFamily: "DM Serif Display",
 										}}
 									>
-										Recent Expenses
+										Скорошни Разходи
 									</h2>
 									<Table
 										expenses={expenses
@@ -227,9 +227,9 @@ const Dashboard = () => {
 						<div>
 							<div className="info-text">
 								<h4>
-									Create a{" "}
-									<span className="accent">budget</span> to
-									get started!
+									Създай{" "}
+									<span className="accent">Бюджет</span> за да
+									започнеш!
 								</h4>
 							</div>
 							<div className="dashboard-action">
