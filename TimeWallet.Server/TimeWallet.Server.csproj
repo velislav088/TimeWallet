@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\Class.cs" />
+    <Compile Remove="Controllers\TimeWalletController.cs" />
   </ItemGroup>
 
   <ItemGroup>
