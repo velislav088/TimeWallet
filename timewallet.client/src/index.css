@@ -9,6 +9,8 @@
 }
 :root {
 	--color-primary: hsl(100, 50%, 90%);
+	--color-primary-hover: hsl(100, 50%, 85%);
+	--color-primary-active: hsl(100, 50%, 95%);
 	--color-primary-barely-dark: hsl(100, 50%, 85%);
 	--color-primary-darkened: hsl(100, 50%, 80%);
 	--color-secondary: hsl(100, 50%, 10%);
@@ -90,6 +92,7 @@ ul {
 	top: 50%;
 }
 .auth-container .background .shape {
+	opacity: 50%;
 	height: 200px;
 	width: 200px;
 	position: absolute;
@@ -489,10 +492,9 @@ footer {
 footer p {
 	font-size: var(--text-h6);
 }
-.footer-content {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+footer a {
+	font-size: var(--text-h6);
+	opacity: 75%;
 }
 .google-translate {
 	margin-left: 20px;
@@ -559,6 +561,9 @@ footer p {
 }
 .budget-form {
 	margin-right: 40px;
+}
+.budget-form h5 {
+	font-size: var(--text-h4) !important;
 }
 .form-wrapper h5 {
 	font-size: var(--text-h5);
@@ -635,6 +640,12 @@ footer p {
 	font-weight: 600;
 }
 /* Budget Page */
+.budget-item h5 {
+	font-size: var(--text-h3);
+}
+.budget-item h6 {
+	font-size: var(--text-h5);
+}
 table {
 	width: 100%;
 	font-size: var(--text-h5);
@@ -658,7 +669,7 @@ tr {
 }
 .button-trashcan {
 	padding: 5px 10px;
-	background-color: var(--color-accent);
+	background-color: var(--color-primary);
 	border-radius: 5px;
 	border-color: var(--color-accent);
 	cursor: pointer;
@@ -666,13 +677,13 @@ tr {
 }
 .button-trashcan:hover,
 .button-trashcan:focus {
-	background-color: var(--color-accent-hover);
+	background-color: var(--color-primary-hover);
 }
 .button-trashcan:hover {
 	transform: translateY(-3px);
 }
 .button-trashcan:active {
-	background-color: var(--color-accent-active);
+	background-color: var(--color-primary-active);
 	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
 	transform: translateY(0);
 }
@@ -721,4 +732,28 @@ progress[value] {
 }
 progress::-webkit-progress-value {
 	transition: width 0.5s ease;
+}
+
+.loader-parent {
+	display: flex;
+	justify-content: center; /* Horizontal alignment */
+	align-items: center; /* Vertical alignment */
+	height: 100vh;
+}
+.loader {
+	border: 16px solid var(--color-primary-darkened); /* Light grey */
+	border-top: 16px solid var(--color-accent); /* Blue */
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }

@@ -93,18 +93,23 @@ const BudgetPage = () => {
 	console.log(budget)
 	return (
 		<div className="budget-page">
-			<h2>
-				<span className="accent">{budget.Name}</span> Overview
-			</h2>
-			<div className="flex-lg">
+			<div className="info-text">
+				<h2>
+					<span className="accent">{budget.Name}</span> Overview
+				</h2>
+			</div>
+			<div className="dashboard-action">
 				<BudgetItem budget={budget} showDelete={true} />
 				<AddExpenseForm budgets={[budget]} />
 			</div>
 			{expenses && expenses.length > 0 && (
-				<div className="grid-md">
-					<h2>
-						<span className="accent">{budget.Name}</span> Expenses
-					</h2>
+				<div>
+					<div className="info-text">
+						<h2>
+							<span className="accent">{budget.Name}</span>{" "}
+							Expenses
+						</h2>
+					</div>
 					<Table expenses={expenses} showBudget={false} />
 				</div>
 			)}

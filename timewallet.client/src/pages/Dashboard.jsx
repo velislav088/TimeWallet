@@ -175,7 +175,10 @@ const Dashboard = () => {
 								<AddBudgetForm />
 								<AddExpenseForm budgets={budgets} />
 							</div>
-							<h2 className="info-text" style={{ marginTop: "10px" }}>
+							<h2
+								className="info-text"
+								style={{ marginTop: "10px" }}
+							>
 								Existing Budgets
 							</h2>
 
@@ -190,7 +193,12 @@ const Dashboard = () => {
 							</div>
 							{expenses && expenses.length > 0 && (
 								<div>
-									<h2 className="info-text" style={{ marginTop: "10px" }}>Recent Expenses</h2>
+									<h2
+										className="info-text"
+										style={{ marginTop: "10px" }}
+									>
+										Recent Expenses
+									</h2>
 									<Table
 										expenses={expenses
 											.sort(
@@ -210,11 +218,16 @@ const Dashboard = () => {
 						</div>
 					) : (
 						<div>
-							<h4>
-								Create a <span className="accent">budget</span>{" "}
-								to get started!
-							</h4>
-							<AddBudgetForm />
+							<div className="info-text">
+								<h4>
+									Create a{" "}
+									<span className="accent">budget</span> to
+									get started!
+								</h4>
+							</div>
+							<div className="dashboard-action">
+								<AddBudgetForm />
+							</div>
 						</div>
 					)}
 				</div>

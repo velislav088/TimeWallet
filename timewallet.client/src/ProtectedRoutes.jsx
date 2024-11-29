@@ -28,8 +28,8 @@ function ProtectedRoutes() {
 	}, [])
 
 	return waiting ? (
-		<div className="waiting-page">
-			<div>Waiting...</div>
+		<div className="loader-parent">
+			<div className="loader"></div>
 		</div>
 	) : isLogged ? (
 		<Outlet />

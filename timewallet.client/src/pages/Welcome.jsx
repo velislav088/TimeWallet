@@ -7,6 +7,7 @@ import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons"
 import { faTrophy } from "@fortawesome/free-solid-svg-icons"
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import GoogleTranslate from "../components/GoogleTranslate"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 const Welcome = () => {
 	const [activeIndex, setActiveIndex] = useState(null)
@@ -149,8 +150,10 @@ const Welcome = () => {
 			</section>
 			<footer>
 				<div className="footer-content">
-					<p>© 2024 TimeWallet.</p>
-					<GoogleTranslate />
+					<p>TimeWallet © 2024 All rights reserved</p>
+					<a href="https://github.com/velislav088/TimeWallet">
+						<FontAwesomeIcon icon={faGithub} />
+					</a>
 				</div>
 			</footer>
 		</div>
