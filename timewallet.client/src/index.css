@@ -616,11 +616,11 @@ footer a {
 	.form-wrapper {
 		margin-right: 0px;
 	}
-	.budget-form {
-		margin-right: 1vw !important;
+	.expense {
+		margin-left: 1vw !important;
 	}
-	.budget-box {
-		margin-right: 0.5vw !important;
+	.expense {
+		margin-left: 0.5vw !important;
 	}
 }
 /* Margin only for create budget form */
@@ -628,9 +628,6 @@ footer a {
 	margin-left: 20px;
 	height: 233px;
 	align-items: flex-start;
-}
-.budget-form {
-	margin-right: 40px;
 }
 .budget-form h5 {
 	font-size: var(--text-h4) !important;
@@ -713,8 +710,8 @@ footer a {
 .budget-item h6 {
 	font-size: var(--text-h5);
 }
-.budget-page-item {
-	margin-right: 40px;
+.expense {
+	margin-left: 40px;
 }
 table {
 	width: 100%;
