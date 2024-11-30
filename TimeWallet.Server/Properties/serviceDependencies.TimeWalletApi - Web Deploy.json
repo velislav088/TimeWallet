@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/TimeWalletApi/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsDefault_636E9A831F",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/time-wallet-server/databases/TimeWalletDB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Default"
+    }
+  }
+}
