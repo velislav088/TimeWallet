@@ -15,6 +15,7 @@ namespace TimeWallet.Server.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Elements> Elements { get; set; } = null!;
         public DbSet<Budgets> Budgets { get; set; } = null!;
+        public DbSet<UsersQrCodes> UsersQrCodes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

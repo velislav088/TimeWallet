@@ -8,10 +8,6 @@ using TimeWallet.Server.Data;
 using TimeWallet.Server.Models;
 using TimeWallet.Server.Models.DTO_Models;
 using TimeWallet.Server.Models.NewFolder1;
-using TimeWallet.Server.Data;
-using TimeWallet.Server.Models;
-using TimeWallet.Server.Models.DTO_Models;
-using TimeWallet.Server.Models.NewFolder1;
 using System.Collections;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
@@ -116,14 +112,6 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "Свободни сте!" });
 		}
 
-		//[HttpGet("admin"), Authorize]
-		//public ActionResult AdminPage(){
-		//		string[] partners = { "Raja", "Bill Gates", "Elon Musk", "Taylor Swift", "Jeff Bezoss",
-		//						"Mark Zuckerberg", "Joe Biden", "Putin"};
-
-		//		return Ok(new { trustedPartners = partners });
-		//}
-
 		[HttpGet("home/{email}"), Authorize]
 		public async Task<ActionResult> HomePage(string email)
 		{
@@ -163,25 +151,6 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "Влязъл", user = currentuser });
 		}
 
-
-		////Баланса на сметката/user-a
-		////test
-		//[HttpPost("checkBudget/{email}"), Authorize]
-		//public async Task<ActionResult> AddBudget(decimal Amount, string email)
-		//{
-		//	User userInfo = await userManager.FindByEmailAsync(email);
-		//	if (userInfo == null)
-		//	{
-		//		return BadRequest(new { message = "Something went wrong, please try again." });
-		//	}
-		//	else
-		//	{
-		//		context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
-		//		context.SaveChanges();
-		//		return Ok(new { message = "Successfuly added budget! " });
-		//	}
-
-		//}
 
 		//Добавяне на самата Колекция на елементите.
 		[HttpPost("addBudget/{email}"), Authorize]
