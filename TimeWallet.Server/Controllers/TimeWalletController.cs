@@ -31,6 +31,8 @@ namespace TimeWallet.Server.Controllers
 		private readonly UserManager<User> userManager = um;
 		private ApplicationDbContext context = new ApplicationDbContext();
 
+		
+		//Регистриране на потребител.
 		[HttpPost("register")]
 		public async Task<ActionResult> RegisterUser(User user)
 		{
@@ -61,6 +63,8 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "Registered Successfully.", result = result });
 		}
 
+		
+		//Влизане в профил
 		[HttpPost("login")]
 		public async Task<ActionResult> LoginUser(Login login)
 		{
@@ -100,6 +104,8 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "Login Successful." });
 		}
 
+
+		//Излизане от профил
 		[HttpGet("logout"), Authorize]
 		public async Task<ActionResult> LogoutUser()
 		{
@@ -116,14 +122,7 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "You are free to go!" });
 		}
 
-		//[HttpGet("admin"), Authorize]
-		//public ActionResult AdminPage(){
-		//		string[] partners = { "Raja", "Bill Gates", "Elon Musk", "Taylor Swift", "Jeff Bezoss",
-		//						"Mark Zuckerberg", "Joe Biden", "Putin"};
-
-		//		return Ok(new { trustedPartners = partners });
-		//}
-
+		//Начална страница
 		[HttpGet("home/{email}"), Authorize]
 		public async Task<ActionResult> HomePage(string email)
 		{
@@ -136,6 +135,8 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { userInfo = userInfo });
 		}
 
+		
+		//Тестов рекуест!
 		[HttpGet("xhtlekd")]
 		public async Task<ActionResult> CheckUser()
 		{
@@ -164,26 +165,8 @@ namespace TimeWallet.Server.Controllers
 		}
 
 
-		////Баланса на сметката/user-a
-		////test
-		//[HttpPost("checkBudget/{email}"), Authorize]
-		//public async Task<ActionResult> AddBudget(decimal Amount, string email)
-		//{
-		//	User userInfo = await userManager.FindByEmailAsync(email);
-		//	if (userInfo == null)
-		//	{
-		//		return BadRequest(new { message = "Something went wrong, please try again." });
-		//	}
-		//	else
-		//	{
-		//		context.Users.FirstOrDefault(u => u==userInfo).Budget = Amount;
-		//		context.SaveChanges();
-		//		return Ok(new { message = "Successfuly added budget! " });
-		//	}
 
-		//}
-
-		//Добавяне на самата Колекция на елементите.
+		//Добавяне на самата колекция(Budgets) на елементите.
 		[HttpPost("addBudget/{email}"), Authorize]
 		public async Task<ActionResult> AddBudget(string email, [FromBody] BudgetAddDTO JsonCollection)
 		{
@@ -264,6 +247,8 @@ namespace TimeWallet.Server.Controllers
 
 		}
 
+
+		//Изтриване на елемент(Expense)
 		[HttpDelete("deleteElement/{email}"), Authorize]
 		public async Task<ActionResult> DeleteElement(string email, [FromBody] string id)
 		{
@@ -286,6 +271,8 @@ namespace TimeWallet.Server.Controllers
 			}
 		}
 
+
+		//Изтриване на колекция()
 		[HttpDelete("deleteBudget/{email}"), Authorize]
 		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
 		{
