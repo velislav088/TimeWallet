@@ -10,6 +10,7 @@ namespace TimeWallet.Server.Models.Common
 
         public const double Moneys_Min_Length = 0.00;
         public const double Moneys_Max_Length = 999_999_999_999.99;
+        public const double Moneys_Max_Length_Receipts = 999_999_999_999_999.99;
         public const double Moneys_Max_Length_Acc_Full_Balance = 999_999_999_999_999_999.99;
 
         public const int Interceptor_OR_CameFrom_Name_Length = 120;

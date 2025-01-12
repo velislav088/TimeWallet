@@ -106,7 +106,7 @@ namespace TimeWallet.Server.Controllers
 
 
 		//Излизане от профил
-		[HttpGet("logout"), Authorize]
+		[HttpGet("logout")]
 		public async Task<ActionResult> LogoutUser()
 		{
 
@@ -123,7 +123,7 @@ namespace TimeWallet.Server.Controllers
 		}
 
 		//Начална страница
-		[HttpGet("home/{email}"), Authorize]
+		[HttpGet("home/{email}")]
 		public async Task<ActionResult> HomePage(string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -167,7 +167,7 @@ namespace TimeWallet.Server.Controllers
 
 
 		//Добавяне на самата колекция(Budgets) на елементите.
-		[HttpPost("addBudget/{email}"), Authorize]
+		[HttpPost("addBudget/{email}")]
 		public async Task<ActionResult> AddBudget(string email, [FromBody] BudgetAddDTO JsonCollection)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -207,7 +207,7 @@ namespace TimeWallet.Server.Controllers
 
 		//добавяне на елемент
 
-		[HttpPost("addElement/{email}"), Authorize]
+		[HttpPost("addElement/{email}")]
 		public async Task<ActionResult> AddElement(ElementDTO JsonElement, string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -249,7 +249,7 @@ namespace TimeWallet.Server.Controllers
 
 
 		//Изтриване на елемент(Expense)
-		[HttpDelete("deleteElement/{email}"), Authorize]
+		[HttpDelete("deleteElement/{email}")]
 		public async Task<ActionResult> DeleteElement(string email, [FromBody] string id)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -273,7 +273,7 @@ namespace TimeWallet.Server.Controllers
 
 
 		//Изтриване на колекция()
-		[HttpDelete("deleteBudget/{email}"), Authorize]
+		[HttpDelete("deleteBudget/{email}")]
 		public async Task<ActionResult> DeleteBudget(string email, [FromBody] string id)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -295,7 +295,7 @@ namespace TimeWallet.Server.Controllers
 
 		}
 
-		[HttpGet("getInformationAboutUser/{email}"), Authorize]
+		[HttpGet("getInformationAboutUser/{email}")]
 		public async Task<ActionResult> GetInformationAboutUser(string email)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -303,37 +303,37 @@ namespace TimeWallet.Server.Controllers
 			{
 				return BadRequest(new { message = "Something went wrong, please try again." });
 			}
-			string budgetJSON = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id));
-			string elementJSON = JsonSerializer.Serialize(context.Elements.Where(e => e.budgets.UserId == userInfo.Id));
+			string budgetJSON = JsonSerializer.Serialize(context.Budgets.Where(b => b.UserId == userInfo.Id).ToList());
+			string elementJSON = JsonSerializer.Serialize(context.Elements.Where(e => e.budgets.UserId == userInfo.Id).ToList());
 
 			//Промяна в имената! - Не ти прече
 			return Ok(new { budgetJson = budgetJSON, elementJson = elementJSON });
 		}
 
-		[HttpGet("getInformationAboutBudget/{email}"), Authorize]
+		[HttpGet("getInformationAboutBudget/{email}")]
 		public async Task<ActionResult> GetInformationAboutBudget(string email, string id)
 		{
 			Guid GuidId = Guid.Parse(id);
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
 			Budgets budget = context.Budgets.FirstOrDefault(b => b.id == GuidId);
 			if (budget == null)
 			{
 				return BadRequest(new { message = "This budget doesn't exist anymore or never existed!" });
 			}
-			else if(budget.UserId != userInfo.Id)
+			else if (budget.UserId != userInfo.Id)
 			{
-				return BadRequest(new { message = "This budget doesn't belong to this user! How did you got it!?" });  
+				return BadRequest(new { message = "This budget doesn't belong to this user! How did you got it!?" });
 				//TODO: this should notife us!
 			}
 			else
 			{
 				List<ElementGetDTO> elements = new List<ElementGetDTO>();
-                foreach (var element in context.Elements.Where(e => e.budgetId == GuidId))
-                {
+				foreach (var element in context.Elements.Where(e => e.budgetId == GuidId))
+				{
 					elements.Add(new ElementGetDTO()
 					{
 						id = element.id,
@@ -342,20 +342,39 @@ namespace TimeWallet.Server.Controllers
 						createdAt = element.createdAt,
 						budgetId = element.budgetId
 					});
-                }
+				}
 
 				string elementsJSON = JsonSerializer.Serialize(elements);
 				string budgetJSON = JsonSerializer.Serialize(budget);
 
 				//Промяна в имената!!! - Пречи ти
-                return Ok( new { budgetJSON = budgetJSON, elementsJSON = elementsJSON});
+				return Ok(new { budgetJSON = budgetJSON, elementsJSON = elementsJSON });
 			}
 
 
 
-        }
+		}
 
-
-
+  //      [HttpPost("addReceipt/{email}")]
+  //      public async Task<ActionResult> AddReceipt(string email, Receipts receipt, List<ReceiptItems> receiptItems)
+		//{
+  //          User userInfo = await userManager.FindByEmailAsync(email);
+  //          if (userInfo == null)
+  //          {
+  //              return BadRequest(new { message = "Something went wrong, please try again." });
+  //          }
+		//	if(receipt == null || receiptItems == null)
+		//	{
+  //              return BadRequest(new { message = "Something went wrong, please try again." });
+  //          }
+		//	context.Receipts.Add(receipt);
+		//	context.SaveChanges();
+		//	foreach (var receiptItem in receiptItems)
+		//	{
+		//		context.ReceiptItems.Add(receiptItem);
+		//		context.SaveChanges();
+		//	}
+		//	return Ok(new { message = $"Succesfully added new receipt with id:{receipt.Id}" });
+  //      }
     }
 }
