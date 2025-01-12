@@ -28,16 +28,6 @@
 	--text-h1: 3.815rem;
 	--toastify-color-success: var(--color-accent);
 }
-@media (prefers-color-scheme: light) {
-	:root {
-		--color-primary: hsl(100, 50%, 10%);
-		--color-secondary: hsl(100, 50%, 90%);
-		--color-accent: hsl(160, 80%, 80%);
-		--color-accent-hover: hsl(160, 80%, 85%);
-		--color-accent-active: hsl(160, 80%, 75%);
-		--color-tertiary: hsl(40, 80%, 80%);
-	}
-}
 .button {
 	width: 100%;
 	background-color: var(--color-accent);
@@ -829,8 +819,8 @@ progress::-webkit-progress-value {
 	height: 100vh;
 }
 .loader {
-	border: 16px solid var(--color-primary-darkened); /* Light grey */
-	border-top: 16px solid var(--color-accent); /* Blue */
+	border: 16px solid var(--color-primary-darkened);
+	border-top: 16px solid var(--color-accent);
 	border-radius: 50%;
 	width: 120px;
 	height: 120px;
