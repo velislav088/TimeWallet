@@ -355,26 +355,61 @@ namespace TimeWallet.Server.Controllers
 
 		}
 
-  //      [HttpPost("addReceipt/{email}")]
-  //      public async Task<ActionResult> AddReceipt(string email, Receipts receipt, List<ReceiptItems> receiptItems)
-		//{
-  //          User userInfo = await userManager.FindByEmailAsync(email);
-  //          if (userInfo == null)
-  //          {
-  //              return BadRequest(new { message = "Something went wrong, please try again." });
-  //          }
-		//	if(receipt == null || receiptItems == null)
-		//	{
-  //              return BadRequest(new { message = "Something went wrong, please try again." });
-  //          }
-		//	context.Receipts.Add(receipt);
-		//	context.SaveChanges();
-		//	foreach (var receiptItem in receiptItems)
-		//	{
-		//		context.ReceiptItems.Add(receiptItem);
-		//		context.SaveChanges();
-		//	}
-		//	return Ok(new { message = $"Succesfully added new receipt with id:{receipt.Id}" });
-  //      }
+		[HttpPost("addReceipt/{email}")]
+		public async Task<ActionResult> AddReceipt(string email, ReceiptDTO receipt)
+		{
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			else
+			{
+				Receipts receiptToAdd = new Receipts()
+				{
+					DateTime = receipt.DateTime,
+					ShopId = receipt.ShopId.ToString(),
+					ShopImage = receipt.ShopImage,
+					TotalAmount = receipt.TotalAmount,
+					UserId = receipt.UserId,
+				};
+
+				context.Receipts.Add(receiptToAdd);
+				context.SaveChanges();
+                return Ok(new { message = "New receipt is succesfully added!" });
+            }
+		}
+
+        [HttpPost("removeReceipt/{email}")]
+		public async Task<ActionResult> RemoveReceipt(string email, string receiptId)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			//TO DO: if the receiptId is not valid Guid!\
+			context.Receipts.Remove(context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)));
+			context.SaveChanges();
+			return Ok(new { message = "The receipt is succesfully delleted!" });
+        }
+
+        [HttpPost("getReceipt/{email}")]
+        public async Task<ActionResult> GetReceipt(string email, string receiptId)
+		{
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+			return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == (Guid)receiptId)});
+        }
+
+
+
+
+
+
+
     }
 }

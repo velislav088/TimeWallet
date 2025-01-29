@@ -7,10 +7,13 @@ namespace TimeWallet.Server.Models
     {
         [Key]
         [Required]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
 
         [Required]
-        public int ShopId { get; set; }
+        public string ShopId { get; set; }
+
+        [Required]
+        public byte[] ShopImage { get; set; }
 
         [Required]
         public DateTime DateTime { get; set; }
@@ -20,10 +23,8 @@ namespace TimeWallet.Server.Models
         public double TotalAmount { get; set; }
 
         [Required]
-        public string UserId { get; set; }  
-
-        [Required]
         [ForeignKey(nameof(UserId))]
+        public string UserId { get; set; }      
         public User User { get; set; }
 
     }

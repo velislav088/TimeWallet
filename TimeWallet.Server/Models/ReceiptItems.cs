@@ -7,7 +7,7 @@ namespace TimeWallet.Server.Models
     public class ReceiptItems
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
 
         [Required]
         [MaxLength(Common.Common.Title_Max_Length)]
