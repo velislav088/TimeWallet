@@ -402,7 +402,7 @@ namespace TimeWallet.Server.Controllers
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
-			return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == (Guid)receiptId)});
+			return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == Guid.Parse(receiptId))});
         }
 
 
