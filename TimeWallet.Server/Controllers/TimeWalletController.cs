@@ -57,7 +57,7 @@ namespace TimeWallet.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("Something went wrong, please try again. " + ex.Message);
+				return BadRequest("Something went wrong, please try again. " + ex.Message)
 			}
 
 			return Ok(new { message = "Registered Successfully.", result = result });
@@ -394,7 +394,7 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new { message = "The receipt is succesfully delleted!" });
         }
 
-        [HttpPost("getReceipt/{email}")]
+        [HttpGet("getReceipt/{email}")]
         public async Task<ActionResult> GetReceipt(string email, string receiptId)
 		{
             User userInfo = await userManager.FindByEmailAsync(email);
@@ -402,7 +402,11 @@ namespace TimeWallet.Server.Controllers
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
-			return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == (Guid)receiptId)});
+            if (context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)) == null)
+            {
+                return NotFound(new { message = "Receipt not found." });
+            }
+            return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == Guid.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == Guid.Parse(receiptId))});
         }
 
 
