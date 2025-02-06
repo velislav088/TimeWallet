@@ -14,8 +14,6 @@ import {
 	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 async function fetchDataFromApi() {
 	const user = localStorage.getItem("user")
@@ -36,10 +34,10 @@ async function fetchDataFromApi() {
 		}
 
 		const data = await response.json()
-		console.log(JSON.parse(data.elementJson))
+
 		return {
 			budgets: JSON.parse(data.budgetJson),
-			expenses: JSON.parse(data.elementJson),
+			elements: JSON.parse(data.elementJson),
 		}
 	} catch (error) {
 		console.error("Error fetching data from API:", error)
@@ -67,10 +65,6 @@ export async function dashboardAction({ request }) {
 	if (_action === "createBudget") {
 		try {
 			let budgetLengthCheck = values.newBudget
-
-			if (values.newBudgetAmount < 0) {
-				return toast.error("Budget cannot be lower than 0!")
-			}
 			if (budgetLengthCheck.length > 19) {
 				return toast.error(
 					"Budget name is too long. It must be 19 characters or fewer"
@@ -100,10 +94,6 @@ export async function dashboardAction({ request }) {
 		const totalSpent = calculateSpentByBudget(values.newExpenseBudget)
 		const remainingAmount = selectedBudget.Amount - totalSpent
 		const expenseAmount = parseFloat(values.newExpenseAmount)
-
-		if (values.newExpenseAmount < 0) {
-			return toast.error("Expense cannot be lower than 0!")
-		}
 
 		// Check if the expense exceeds the remaining balance of the budget
 		if (expenseAmount > remainingAmount) {
@@ -220,6 +210,11 @@ const Dashboard = () => {
 											.slice(0, 8)}
 										showBudget={false}
 									/>
+									{expenses.length > 8 && (
+										<Link to="expenses">
+											View all expenses
+										</Link>
+									)}
 								</div>
 							)}
 						</div>
