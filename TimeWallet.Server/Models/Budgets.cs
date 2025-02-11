@@ -20,7 +20,7 @@ namespace TimeWallet.Server.Models
         public string Name { get; set; }
 
         [Required]
-        public DateTime CreatedAt = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
         //sum of all elementsProperty
 

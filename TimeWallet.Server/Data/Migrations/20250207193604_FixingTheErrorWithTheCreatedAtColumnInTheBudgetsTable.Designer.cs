@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeWallet.Server.Data;
 
@@ -11,9 +12,11 @@ using TimeWallet.Server.Data;
 namespace TimeWallet.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250207193604_FixingTheErrorWithTheCreatedAtColumnInTheBudgetsTable")]
+    partial class FixingTheErrorWithTheCreatedAtColumnInTheBudgetsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,8 +230,8 @@ namespace TimeWallet.Server.Data.Migrations
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
-                    b.Property<int>("ReceiptId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ReceiptId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
@@ -239,11 +242,9 @@ namespace TimeWallet.Server.Data.Migrations
 
             modelBuilder.Entity("TimeWallet.Server.Models.Receipts", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");

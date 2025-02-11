@@ -18,7 +18,7 @@ namespace TimeWallet.Server.Models
         public double Amount { get; set; }
 
         [Required]
-        public Guid ReceiptId { get; set; }
+        public int ReceiptId { get; set; }
 
         [Required]
         [ForeignKey(nameof(ReceiptId))]

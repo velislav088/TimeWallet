@@ -7,7 +7,7 @@ namespace TimeWallet.Server.Models
     {
         [Key]
         [Required]
-        public Guid id { get; set; }
+        public int id { get; set; }
 
         [Required]
         public string ShopId { get; set; }

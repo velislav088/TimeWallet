@@ -35,6 +35,10 @@ namespace TimeWallet.Server.Data
 
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Budgets>()
+            .Property(b => b.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+
         }
     }
 }
