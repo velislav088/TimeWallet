@@ -35,13 +35,14 @@ async function fetchDataFromApi() {
 
 		const data = await response.json()
 
+		
 		return {
 			budgets: JSON.parse(data.budgetJson),
-			elements: JSON.parse(data.elementJson),
+			expenses: JSON.parse(data.elementJson),
 		}
 	} catch (error) {
 		console.error("Error fetching data from API:", error)
-		return { budgets: [], elements: [] }
+		return { budgets: [], expenses: [] }
 	}
 }
 
@@ -49,6 +50,28 @@ async function fetchDataFromApi() {
 export async function dashboardLoader() {
 	try {
 		const { budgets, expenses } = await fetchDataFromApi()
+
+		console.log("check")
+		localStorage.setItem("budgets",  JSON.stringify(budgets))
+		localStorage.setItem("expenses", JSON.stringify(expenses))
+		
+		// const budgetsCheck = JSON.parse(localStorage.getItem("budgets")) || [];
+		
+		// console.log(budgets);
+		
+		// for (let i = 0; i < budgets.length; i++) {
+		// 	if (budgetsCheck.includes(budgets[i])){
+		// 		console.log(budgets[i]);
+		// 	}
+			// console.log(budgetsCheck)
+			// console.log(budgets[i]);
+		// }
+		// console.log(budgetsCheck);
+		// console.log(budgets[0]);
+		// budgetsCheck.push(budgets[0])
+		// localStorage.setItem("budgets", JSON.stringify(budgetsCheck));
+		
+		
 		return { budgets, expenses }
 	} catch (error) {
 		console.error("Error loading dashboard data:", error)
