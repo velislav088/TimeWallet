@@ -1,0 +1,151 @@
+{
+	"navbar": {
+		"notFound": "Not Found",
+		"backTohome": "Back to Home",
+		"profile": "Profile",
+		"logout": "Log Out",
+		"login": "Login",
+		"register": "Register"
+	},
+	"hero": {
+		"title": "Save time with TimeWallet.",
+		"subtitle": "Simplify your finances, budgets, expenses, savings, and more with real-time tracking, budget analysis, and much more.",
+		"getStarted": "Get Started",
+		"howItWorks": "How It Works"
+	},
+	"info": {
+		"trackSpending": {
+			"title": "Track Your Spending",
+			"text": "Get a clear view of your expenses. Easily log and categorize your spending to stay on top of your finances."
+		},
+		"goalSetting": {
+			"title": "Set and Plan Goals",
+			"text": "Define financial goals and track your progress. Whether saving for a vacation or planning retirement, achieve your dreams with our tools."
+		},
+		"achieveBudgets": {
+			"title": "Set and Achieve Budgets",
+			"text": "Create monthly budgets that help you meet your financial goals. Track your progress and stay in control."
+		},
+		"planFuture": {
+			"title": "Plan for the Future",
+			"text": "Save for the important things. Set financial goals, and we'll help you stay on track."
+		}
+	},
+	"faq": {
+		"title": "FAQ",
+		"q1": "What is this app?",
+		"a1": "This app is a personal finance manager designed to help you track and manage your budgets and expenses in an easy and intuitive way.",
+		"q2": "Can I track multiple budgets at once?",
+		"a2": "Yes! You can create and manage as many budgets as you like, organizing finances into different categories like 'Food,' 'Entertainment,' or 'Savings.'",
+		"q3": "Can I edit or delete a budget after creating it?",
+		"a3": "Yes, you can edit or delete any budget you've created anytime. Simply go to your budget list, select the budget, and choose to update or remove it.",
+		"q4": "Do I need an account to use the app?",
+		"a4": "Yes, you need to register an account to use the app. This ensures your financial data is stored securely and allows access from different devices.",
+		"q5": "How do I create a new budget?",
+		"a5": "To create a new budget, go to the budgets section and click 'Add Budget.' Enter a budget name and set an amount. Once created, you can track your spending against it."
+	},
+	"aboutUs": {
+		"title": "About Us",
+		"person1": {
+			"name": "Velislav Donchev",
+			"role": "Frontend designer, UX, and React components."
+		},
+		"person2": {
+			"name": "Mert Elsenev",
+			"role": "Backend and database design specialist."
+		}
+	},
+	"footer": {
+		"text": "TimeWallet © 2024 All rights reserved",
+		"github": "GitHub",
+		"home": "Home"
+	},
+	"login": {
+		"title": "Login",
+		"emailLabel": "Email",
+		"emailPlaceholder": "Email",
+		"passwordLabel": "Password",
+		"passwordPlaceholder": "Password",
+		"rememberLabel": "Remember me",
+		"or": "Or",
+		"registerLink": " Register",
+		"submitButton": "Log In",
+		"successMessage": "Logged in successfully!"
+	},
+	"register": {
+		"title": "Register",
+		"nameLabel": "Name",
+		"namePlaceholder": "Name",
+		"emailLabel": "Email",
+		"emailPlaceholder": "Email",
+		"passwordLabel": "Password",
+		"passwordPlaceholder": "Password",
+		"submitButton": "Register",
+		"successMessage": "Registered successfully!",
+		"or": "Or",
+		"loginLink": " Login"
+	},
+	"dashboard": {
+		"welcomeText": "Welcome back,",
+		"existingBudgets": "Existing Budgets",
+		"recentExpenses": "Recent Expenses",
+		"viewAllExpenses": "View all expenses",
+		"createBudgetMessage": "Create a budget to get started!"
+	},
+	"budgetItem": {
+		"budgeted": "Budgeted",
+		"spent": "spent",
+		"remaining": "remaining",
+		"deleteBudgetConfirmation": "Are you sure you want to permanently delete this budget?",
+		"deleteBudgetButton": "Delete Budget",
+		"viewDetailsButton": "View Details"
+	},
+	"addBudgetForm": {
+		"createBudget": "Create",
+		"createBudgetAccent": "Budget",
+		"budgetName": "Budget Name",
+		"budgetNamePlaceholder": "e.g., Entertainment",
+		"amount": "Amount",
+		"amountPlaceholder": "e.g., $450",
+		"submitting": "Submitting…",
+		"createBudgetButton": "Create Budget"
+	},
+	"addExpenseForm": {
+		"addNew": "Add New",
+		"expense": "Expense",
+		"expenseName": "Expense Name",
+		"expenseNamePlaceholder": "e.g., Coffee",
+		"amount": "Amount",
+		"amountPlaceholder": "e.g., 1.50",
+		"budgetCategory": "Budget Category",
+		"submitting": "Submitting…",
+		"addExpenseButton": "Add Expense"
+	},
+	"table": {
+		"name": "Name",
+		"amount": "Amount",
+		"date": "Date",
+		"budget": "Budget"
+	},
+	"profile": {
+		"title": "Profile",
+		"welcome": "Welcome to your page",
+		"name": "Name",
+		"email": "Email",
+		"created_date": "Created Date",
+		"all_budgets": "All Budgets",
+		"no_budgets": "No budgets created!",
+		"all_expenses": "All Expenses",
+		"no_expenses": "No expenses created!",
+		"amount": "Amount",
+		"access_denied": "Access Denied!!!",
+		"rights_reserved": "All rights reserved",
+		"home": "Home"
+	},
+	"expenses": {
+		"title": "All Expenses",
+		"recent": "Recent Expenses",
+		"total": "total",
+		"no_expenses": "No Expenses to show"
+	}
+}

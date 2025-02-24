@@ -21,6 +21,8 @@ import Welcome from "./pages/Welcome"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import logoImage from "/src/assets/logo-image.svg"
+import LanguageSwitcher from "./components/LanguageSwitcher"
+import { useTranslation } from "react-i18next"
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -97,6 +99,8 @@ const router = createBrowserRouter(
 
 function App() {
 	const isLogged = localStorage.getItem("user")
+	const { t } = useTranslation()
+
 	const logout = async () => {
 		const response = await fetch("/api/timewallet/logout", {
 			method: "GET",
@@ -132,14 +136,15 @@ function App() {
 							</a>
 						</ul>
 						<ul>
+							<LanguageSwitcher />
 							<a className="button" href="/profile">
-								Profile
+								{t("navbar.profile")}
 							</a>
 							<a
 								className="button button-transparent"
 								onClick={logout}
 							>
-								Log Out
+								{t("navbar.logout")}
 							</a>
 						</ul>
 					</nav>
@@ -155,14 +160,15 @@ function App() {
 							</a>
 						</ul>
 						<ul className="navbar-right">
+							<LanguageSwitcher />
 							<a className="button" href="/login">
-								Login
+								{t("navbar.login")}
 							</a>
 							<a
 								className="button button-transparent"
 								href="/register"
 							>
-								Register
+								{t("navbar.register")}
 							</a>
 						</ul>
 					</nav>

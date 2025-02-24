@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import { useFetcher } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 const AddExpenseForm = ({ budgets }) => {
 	const fetcher = useFetcher()
@@ -7,6 +8,8 @@ const AddExpenseForm = ({ budgets }) => {
 
 	const formRef = useRef()
 	const focusRef = useRef()
+
+	const { t } = useTranslation() // Initialize translation hook
 
 	useEffect(() => {
 		if (!isSubmitting) {
@@ -18,48 +21,56 @@ const AddExpenseForm = ({ budgets }) => {
 	return (
 		<div className="form-wrapper expense">
 			<h5>
-				Add New{" "}
+				{t("addExpenseForm.addNew")}{" "}
 				<span className="accent">
-					{/* Show budget name if theres only 1 available */}
+					{/* Show budget name if there's only 1 available */}
 					{budgets.length === 1 &&
 						`${budgets.map((budg) => budg.name)}`}
 				</span>{" "}
-				Expense
+				{t("addExpenseForm.expense")}
 			</h5>
 			<fetcher.Form method="post" ref={formRef}>
 				<div>
 					<div>
-						<label htmlFor="newExpense">Expense Name</label>
+						<label htmlFor="newExpense">
+							{t("addExpenseForm.expenseName")}
+						</label>
 						<input
 							type="text"
 							name="newExpense"
 							id="newExpense"
-							placeholder="e.g., Coffee"
+							placeholder={t(
+								"addExpenseForm.expenseNamePlaceholder"
+							)}
 							ref={focusRef}
 							required
 						/>
 					</div>
 					<div>
-						<label htmlFor="newExpenseAmount">Amount</label>
+						<label htmlFor="newExpenseAmount">
+							{t("addExpenseForm.amount")}
+						</label>
 						<input
 							type="number"
 							step="0.01"
 							inputMode="decimal"
 							name="newExpenseAmount"
 							id="newExpenseAmount"
-							placeholder="e.g., 1.50"
+							placeholder={t("addExpenseForm.amountPlaceholder")}
 							required
 						/>
 					</div>
 				</div>
 				<div hidden={budgets.length === 1}>
-					<label htmlFor="newExpenseBudget">Budget Category</label>
+					<label htmlFor="newExpenseBudget">
+						{t("addExpenseForm.budgetCategory")}
+					</label>
 					<select
 						name="newExpenseBudget"
 						id="newExpenseBudget"
 						required
 					>
-						{/* Shows all available expenses */}
+						{/* Shows all available budgets */}
 						{budgets
 							.sort((a, b) => a.createdAt - b.createdAt)
 							.map((budget) => {
@@ -78,15 +89,18 @@ const AddExpenseForm = ({ budgets }) => {
 					className="button"
 				>
 					{isSubmitting ? (
-						<span className="submit-span">Submitting…</span>
+						<span className="submit-span">
+							{t("addExpenseForm.submitting")}
+						</span>
 					) : (
-						<>
-							<span className="submit-span">Add Expense</span>
-						</>
+						<span className="submit-span">
+							{t("addExpenseForm.addExpenseButton")}
+						</span>
 					)}
 				</button>
 			</fetcher.Form>
 		</div>
 	)
 }
+
 export default AddExpenseForm

@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import {
 	calculateSpentByBudget,
 	formatCurrency,
@@ -8,6 +9,7 @@ import {
 const BudgetItem = ({ budget, showDelete = false }) => {
 	const { id, Name, Amount } = budget
 	const spent = calculateSpentByBudget(id)
+	const { t } = useTranslation() // Initialize translation hook
 
 	return (
 		<div className="form-wrapper budget-box budget-item budget-page-item">
@@ -18,15 +20,20 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 						<span className="accent budgeted">
 							{formatCurrency(Amount)}
 						</span>{" "}
-						Budgeted
+						{t("budgetItem.budgeted")}
 					</h6>
 				</div>
 				<progress max={Amount} value={spent}>
 					{formatPercentage(spent / Amount)}
 				</progress>
 				<div className="progress-text bottom">
-					<small>{formatCurrency(spent)} spent | </small>
-					<small>{formatCurrency(Amount - spent)} remaining</small>
+					<small>
+						{formatCurrency(spent)} {t("budgetItem.spent")} |{" "}
+					</small>
+					<small>
+						{formatCurrency(Amount - spent)}{" "}
+						{t("budgetItem.remaining")}
+					</small>
 				</div>
 				{showDelete ? (
 					<div>
@@ -35,8 +42,8 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 							action="delete"
 							onSubmit={(event) => {
 								if (
-									!confirm(
-										"Are you sure you want to permanently delete this budget?"
+									!window.confirm(
+										t("budgetItem.deleteBudgetConfirmation")
 									)
 								) {
 									event.preventDefault()
@@ -44,14 +51,18 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 							}}
 						>
 							<button className="button" type="submit">
-								<span className="submit-span">Delete Budget</span>
+								<span className="submit-span">
+									{t("budgetItem.deleteBudgetButton")}
+								</span>
 							</button>
 						</Form>
 					</div>
 				) : (
 					<div>
 						<Link to={`/budget/${id}`} className="link">
-							<span className="link">View Details</span>
+							<span className="link">
+								{t("budgetItem.viewDetailsButton")}
+							</span>
 						</Link>
 					</div>
 				)}
@@ -59,4 +70,5 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 		</div>
 	)
 }
+
 export default BudgetItem

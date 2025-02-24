@@ -1,9 +1,14 @@
 import ExpenseItem from "./ExpenseItem"
+import { useTranslation } from "react-i18next"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 const Table = ({ expenses, showBudget = true }) => {
+	const { t } = useTranslation()
+
 	// Sort expenses by createdAt from newest to oldest
-	const sortedExpenses = [...expenses].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+	const sortedExpenses = [...expenses].sort(
+		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+	)
 
 	return (
 		<div className="table">
@@ -11,9 +16,9 @@ const Table = ({ expenses, showBudget = true }) => {
 				<thead>
 					<tr>
 						{[
-							"Name",
-							"Amount",
-							"Date",
+							t("table.name"),
+							t("table.amount"),
+							t("table.date"),
 							showBudget ? "Budget" : "",
 							"",
 						].map((i, index) => (

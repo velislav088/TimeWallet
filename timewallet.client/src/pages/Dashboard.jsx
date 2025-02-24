@@ -14,6 +14,8 @@ import {
 	calculateSpentByBudget,
 } from "../helpers"
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import LanguageSwitcher from "../components/LanguageSwitcher"
 
 async function fetchDataFromApi() {
 	const user = localStorage.getItem("user")
@@ -26,22 +28,25 @@ async function fetchDataFromApi() {
 				headers: {
 					"Content-Type": "application/json",
 				},
+				cache: "no-cache",
 			}
 		)
 
-		if (!response.ok) {
-			throw new Error("Error fetching data from API.")
-		}
+		// if (!response.ok) {
+		// 	throw new Error("Error fetching data from API.")
+		// }
 
 		const data = await response.json()
 
-		
+		console.log(JSON.parse(data.budgetJson))
+		console.log(JSON.parse(data.elementJson))
+
 		return {
 			budgets: JSON.parse(data.budgetJson),
 			expenses: JSON.parse(data.elementJson),
 		}
 	} catch (error) {
-		console.error("Error fetching data from API:", error)
+		console.error(error)
 		return { budgets: [], expenses: [] }
 	}
 }
@@ -52,26 +57,25 @@ export async function dashboardLoader() {
 		const { budgets, expenses } = await fetchDataFromApi()
 
 		console.log("check")
-		localStorage.setItem("budgets",  JSON.stringify(budgets))
+		localStorage.setItem("budgets", JSON.stringify(budgets))
 		localStorage.setItem("expenses", JSON.stringify(expenses))
-		
+
 		// const budgetsCheck = JSON.parse(localStorage.getItem("budgets")) || [];
-		
+
 		// console.log(budgets);
-		
+
 		// for (let i = 0; i < budgets.length; i++) {
 		// 	if (budgetsCheck.includes(budgets[i])){
 		// 		console.log(budgets[i]);
 		// 	}
-			// console.log(budgetsCheck)
-			// console.log(budgets[i]);
+		// console.log(budgetsCheck)
+		// console.log(budgets[i]);
 		// }
 		// console.log(budgetsCheck);
 		// console.log(budgets[0]);
 		// budgetsCheck.push(budgets[0])
 		// localStorage.setItem("budgets", JSON.stringify(budgetsCheck));
-		
-		
+
 		return { budgets, expenses }
 	} catch (error) {
 		console.error("Error loading dashboard data:", error)
@@ -121,7 +125,7 @@ export async function dashboardAction({ request }) {
 		// Check if the expense exceeds the remaining balance of the budget
 		if (expenseAmount > remainingAmount) {
 			return toast.error(
-				`Expense exceeds the remaining budget! Available: ${remainingAmount.toFixed(
+				`${t("register.namePlaceholder")} ${remainingAmount.toFixed(
 					2
 				)}$`
 			)
@@ -159,6 +163,7 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
 	const { budgets, expenses } = useLoaderData()
 	const [userInfo, setUserInfo] = useState({})
+	const { t } = useTranslation() // useTranslation hook to fetch translations
 
 	useEffect(() => {
 		const user = localStorage.getItem("user")
@@ -174,18 +179,25 @@ const Dashboard = () => {
 				console.log("Error home page: ", error)
 			})
 	}, [])
+
 	return (
 		<div style={{ minHeight: "100%" }}>
 			<div className="dashboard">
 				<div className="info-text">
 					<h2 style={{ fontFamily: "DM Serif Display" }}>
-						Welcome back,{" "}
+						{t("dashboard.welcomeText")}{" "}
 						<span className="accent accent-name">
 							{userInfo.name}
 						</span>
 						!
 					</h2>
 				</div>
+
+				{/* Language Switcher */}
+				<div style={{ position: "absolute", top: 10, right: 10 }}>
+					<LanguageSwitcher />
+				</div>
+
 				<div className="dashboard-main">
 					{budgets && budgets.length > 0 ? (
 						<div>
@@ -200,7 +212,7 @@ const Dashboard = () => {
 									fontFamily: "DM Serif Display",
 								}}
 							>
-								Existing Budgets
+								{t("dashboard.existingBudgets")}
 							</h2>
 
 							<div className="all-budgets">
@@ -212,6 +224,7 @@ const Dashboard = () => {
 									/>
 								))}
 							</div>
+
 							{expenses && expenses.length > 0 && (
 								<div>
 									<h2
@@ -222,7 +235,7 @@ const Dashboard = () => {
 											fontFamily: "DM Serif Display",
 										}}
 									>
-										Recent Expenses
+										{t("dashboard.recentExpenses")}
 									</h2>
 									<Table
 										expenses={expenses
@@ -235,7 +248,7 @@ const Dashboard = () => {
 									/>
 									{expenses.length > 8 && (
 										<Link to="expenses">
-											View all expenses
+											{t("dashboard.viewAllExpenses")}
 										</Link>
 									)}
 								</div>
@@ -244,11 +257,7 @@ const Dashboard = () => {
 					) : (
 						<div>
 							<div className="info-text">
-								<h4>
-									Create a{" "}
-									<span className="accent">budget</span> to
-									get started!
-								</h4>
+								<h4>{t("dashboard.createBudgetMessage")}</h4>
 							</div>
 							<div className="dashboard-action">
 								<AddBudgetForm />
@@ -260,4 +269,5 @@ const Dashboard = () => {
 		</div>
 	)
 }
+
 export default Dashboard

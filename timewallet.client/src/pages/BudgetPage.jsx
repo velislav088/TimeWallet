@@ -12,7 +12,6 @@ import {
 	getAllMatchingItems,
 } from "../helpers"
 
-// Function for loading given budget and it's expenses
 export async function budgetLoader({ params }) {
 	const budget = await getAllMatchingItems({
 		category: "budgets",
@@ -90,13 +89,12 @@ export async function budgetAction({ request }) {
 
 const BudgetPage = () => {
 	const { budget, expenses } = useLoaderData()
-	console.log(budget)
 	return (
 		<div className="budget-page">
 			<div className="info-text">
 				<h2 style={{ fontFamily: "DM Serif Display" }}>
 					<span className="accent">{budget.Name}</span> Overview
-				</h2>
+			</h2>
 			</div>
 			<div className="dashboard-action">
 				<BudgetItem budget={budget} showDelete={true} />
@@ -114,7 +112,7 @@ const BudgetPage = () => {
 						>
 							<span className="accent">{budget.Name}</span>{" "}
 							Expenses
-						</h2>
+					</h2>
 					</div>
 					<Table expenses={expenses} showBudget={false} />
 				</div>

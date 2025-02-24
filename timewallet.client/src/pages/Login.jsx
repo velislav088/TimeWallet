@@ -1,19 +1,21 @@
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function Login() {
-	document.title = "Login"
+	document.title = "Login";
+	const { t } = useTranslation();
 
 	// Don't ask an already logged in user to login over and over again
 	useEffect(() => {
-		const user = localStorage.getItem("user")
+		const user = localStorage.getItem("user");
 		if (user) {
-			document.location = "/"
+			document.location = "/";
 		}
-	}, [])
+	}, []);
 
 	return (
 		<div>
@@ -23,20 +25,20 @@ function Login() {
 					<div className="shape"></div>
 				</div>
 				<form action="#" className="login" onSubmit={loginHandler}>
-					<h3>Login Here</h3>
-					<label htmlFor="email">Email</label>
+					<h3>{t("login.title")}</h3>
+					<label htmlFor="email">{t("login.emailLabel")}</label>
 					<input
 						type="email"
-						placeholder="Email"
+						placeholder={t("login.emailPlaceholder")}
 						name="Email"
 						id="email"
 						required
 					/>
 
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">{t("login.passwordLabel")}</label>
 					<input
 						type="password"
-						placeholder="Password"
+						placeholder={t("login.passwordPlaceholder")}
 						name="Password"
 						id="password"
 						required
@@ -44,7 +46,7 @@ function Login() {
 
 					<ul className="login-checkbox">
 						<li>
-							<label htmlFor="remember">Remember Password?</label>
+							<label htmlFor="remember">{t("login.rememberLabel")}</label>
 						</li>
 						<li>
 							<input
@@ -56,44 +58,43 @@ function Login() {
 						</li>
 					</ul>
 
-					<input type="submit" value="Login" className="button" />
+					<input type="submit" value={t("login.submitButton")} className="button" />
 
 					<div className="logout-redirect">
-						<span>Or </span>
-						<Link to="/register">Register</Link>
+						<span>{t("login.or")}</span>
+						<Link to="/register">{t("login.registerLink")}</Link>
 					</div>
 				</form>
 			</div>
 			<footer>
 				<div className="footer-content auth-footer">
-					<p>TimeWallet © 2024 All rights reserved</p>
+					<p>{t("footer.text")}</p>
 					<a href="https://github.com/velislav088/TimeWallet">
 						<FontAwesomeIcon icon={faGithub} />
 					</a>
 					<a className="footer-links" href="/welcome">
-						Home
+						{t("footer.home")}
 					</a>
 				</div>
 			</footer>
 		</div>
-	)
-	async function loginHandler(e) {
-		e.preventDefault()
-		const form_ = e.target,
-			submitter = document.querySelector("input.login")
+	);
 
-		const formData = new FormData(form_, submitter),
-			dataToSend = {}
+	async function loginHandler(e) {
+		e.preventDefault();
+		const form_ = e.target;
+		const formData = new FormData(form_);
+		const dataToSend = {};
 
 		for (const [key, value] of formData) {
-			dataToSend[key] = value
+			dataToSend[key] = value;
 		}
 
 		if (dataToSend.Remember === "on") {
-			dataToSend.Remember = true
+			dataToSend.Remember = true;
 		}
 
-		console.log("login data before send: ", dataToSend)
+		console.log("login data before send: ", dataToSend);
 		const response = await fetch("api/timewallet/login", {
 			method: "POST",
 			credentials: "include",
@@ -102,21 +103,21 @@ function Login() {
 				"content-type": "Application/json",
 				Accept: "application/json",
 			},
-		})
+		});
 
-		const data = await response.json()
+		const data = await response.json();
 
 		if (response.ok) {
-			localStorage.setItem("user", dataToSend.Email)
-			toast.success(data.message || "Registered successfully", {
+			localStorage.setItem("user", dataToSend.Email);
+			toast.success(data.message || t("login.successMessage"), {
 				autoClose: 1500,
-			})
-			document.location = "/"
+			});
+			document.location = "/";
 		} else {
-			let errorMessage = data.message
-			toast.error(errorMessage)
+			let errorMessage = data.message;
+			toast.error(errorMessage);
 		}
 	}
 }
 
-export default Login
+export default Login;

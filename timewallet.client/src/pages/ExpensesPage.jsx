@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import Table from "../components/Table"
 import { deleteItem, fetchData } from "../helpers"
@@ -28,20 +29,23 @@ export async function expensesAction({ request }) {
 }
 
 const ExpensesPage = () => {
+	const { budgets } = useLoaderData()
 	const { expenses } = useLoaderData()
+	const { t } = useTranslation() // Initialize translation
 
 	return (
 		<div className="grid-lg">
-			<h1>All Expenses</h1>
+			<h1>{t("expenses.title")}</h1>
 			{expenses && expenses.length > 0 ? (
-				<div className="grid-md">
+				<div>
 					<h2>
-						Recent Expenses <small>({expenses.length} total)</small>
+						{t("expenses.recent")}{" "}
+						<small>({expenses.length} {t("expenses.total")})</small>
 					</h2>
-					<Table expenses={expenses} />
+					<Table expenses={expenses} showBudget={false} />
 				</div>
 			) : (
-				<p>No Expenses to show</p>
+				<p>{t("expenses.no_expenses")}</p>
 			)}
 		</div>
 	)
