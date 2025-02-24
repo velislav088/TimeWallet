@@ -126,6 +126,7 @@ export const deleteItem = async ({ key, id }) => {
 			const newData = existingData.filter((item) => item.id !== id)
 			localStorage.setItem(key, JSON.stringify(newData))
 			// window.location.reload()
+			
 		} catch (error) {
 			console.error("Error deleting item:", error.message)
 			throw error

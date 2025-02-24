@@ -25,5 +25,8 @@ namespace TimeWallet.Server.Models
 
         [Required]
         public string createdAt { get; set; }
+
+        //isValid() func - Приложи
+        public int? ReceiptId { get; set; }
     }
 }

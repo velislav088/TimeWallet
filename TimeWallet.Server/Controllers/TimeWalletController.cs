@@ -506,14 +506,24 @@ namespace TimeWallet.Server.Controllers
 			return Ok(new {user = userInfo});
         }
 
+        [HttpGet("getLastTenElements/{email}")]
+        public async Task<ActionResult> getLastTenElements(string email)
+        {
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "Something went wrong, please try again." });
+            }
+            List<Elements> userElements = await context.Elements
+				.Where(e => e.budgets.UserId == userInfo.Id)
+				.OrderByDescending(e => e.createdAt)
+				.Take(10)
+				.Include(e => e.budgets) // ✅ Load related budget
+				.ToListAsync();
 
 
-
-
-
-
-
-
+            return Ok(new {lastElements = userElements});
+        }
 
     }
 }
