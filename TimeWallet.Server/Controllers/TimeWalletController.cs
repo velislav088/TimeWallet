@@ -171,51 +171,57 @@ namespace TimeWallet.Server.Controllers
 
 		}
 
-		//добавяне на елемент
+        //добавяне на елемент
 
-		[HttpPost("addElement/{email}")]
-		public async Task<ActionResult> AddElement(ElementDTO JsonElement, string email)
-		{
-			User userInfo = await userManager.FindByEmailAsync(email);
-			if (userInfo == null)
-			{
-				return BadRequest(new { message = "Something went wrong, please try again." });
-			}
+        [HttpPost("addElement/{email}")]
+        public async Task<ActionResult> AddElement(ElementDTO JsonElement, string email)
+        {
+            Console.WriteLine($"Received request: {JsonElement.name}, BudgetId: {JsonElement.budgetId}");
 
-			Budgets Budget = context
-					.Budgets
-					.FirstOrDefault(th => th.id == Guid.Parse(JsonElement.budgetId));
-			long a = long.Parse(JsonElement.createdAt.ToString());
-			string dateTimeConvertion = DateTimeOffset.FromUnixTimeMilliseconds(a).UtcDateTime.ToString("MM/dd/yyyy");
+            User userInfo = await userManager.FindByEmailAsync(email);
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "User not found." });
+            }
+
+            if (!Guid.TryParse(JsonElement.budgetId, out Guid budgetGuid))
+            {
+                return BadRequest(new { message = "Invalid budget ID." });
+            }
+
+            Budgets Budget = context.Budgets.FirstOrDefault(th => th.id == budgetGuid);
+            if (Budget == null)
+            {
+                return BadRequest(new { message = $"No budget found with ID: '{JsonElement.budgetId}'." });
+            }
+
+            //if (!long.TryParse(JsonElement.createdAt.ToString(), out long timestamp))
+            //{
+            //    return BadRequest(new { message = "Invalid date format." });
+            //}
+
+            //string dateTimeConvertion = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).UtcDateTime.ToString("MM/dd/yyyy");
+
+            Elements elementToAdd = new Elements()
+            {
+                id = JsonElement.id,
+                name = JsonElement.name,
+                budgetId = budgetGuid,
+                amount = JsonElement.amount,
+                createdAt = JsonElement.createdAt,
+				ReceiptId = JsonElement.ReceiptId
+            };
+
+            context.Elements.Add(elementToAdd);
+            await context.SaveChangesAsync();
+
+            return Ok(new { message = $"Successfully added new element named -{JsonElement.name}-!" });
+        }
 
 
-            if (Budget != null)
-			{
-						
-				Elements elementToAdd = new Elements()
-				{
-					id = Guid.Parse(JsonElement.id),
-					name = JsonElement.name,
-					//Това id мога да го променя да го намира и по userId + CollectionName, ако ще ти е по удобно.
-					budgetId = Guid.Parse(JsonElement.budgetId),
-					amount = JsonElement.amount,
-					createdAt = dateTimeConvertion
-				};
-                await Console.Out.WriteLineAsync();
-                context.Elements.Add(elementToAdd);
-				context.SaveChanges();
-				return Ok(new { message = $"Succesfully added new element named -{JsonElement.name}-!" });
-			}
-			else
-			{
-				return BadRequest(new { message = $"Something went wrong, please try again.(No Budget with name:'{JsonElement.name}' exists)" });
-			}
 
-		}
-
-
-		//Изтриване на елемент(Expense)
-		[HttpDelete("deleteElement/{email}")]
+        //Изтриване на елемент(Expense)
+        [HttpDelete("deleteElement/{email}")]
 		public async Task<ActionResult> DeleteElement(string email, [FromBody] string id)
 		{
 			User userInfo = await userManager.FindByEmailAsync(email);
@@ -346,17 +352,17 @@ namespace TimeWallet.Server.Controllers
 
 				context.Receipts.Add(receiptToAdd);
 				context.SaveChanges();
-                return Ok(new { message = "New receipt is succesfully added!" });
-            }
+				return Ok(new { message = "New receipt is succesfully added!" });
+			}
 
-        }
-
-
-        
+		}
 
 
-        //Излизане от профил
-        [HttpGet("logout")]
+
+
+
+		//Излизане от профил
+		[HttpGet("logout")]
         public async Task<ActionResult> LogoutUser()
         {
 
@@ -413,55 +419,55 @@ namespace TimeWallet.Server.Controllers
 
             return Ok(new { message = "Logged in", user = currentuser });
         }
-        
 
-        [HttpPost("removeReceipt/{email}")]
-        public async Task<ActionResult> RemoveReceipt(string email, string receiptId)
-        {
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
-            //TO DO: if the receiptId is not valid Guid!\
-            context.Receipts.Remove(context.Receipts.FirstOrDefault(r => r.id == int.Parse(receiptId)));
-            context.SaveChanges();
-            return Ok(new { message = "The receipt is succesfully delleted!" });
-        }
 
-        [HttpGet("getReceipt/{email}")]
+		[HttpPost("removeReceipt/{email}")]
+		public async Task<ActionResult> RemoveReceipt(string email, string receiptId)
+		{
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			//TO DO: if the receiptId is not valid Guid!\
+			context.Receipts.Remove(context.Receipts.FirstOrDefault(r => r.id == receiptId));
+			context.SaveChanges();
+			return Ok(new { message = "The receipt is succesfully delleted!" });
+		}
+
+		[HttpGet("getReceipt/{email}")]
 		//TO DO
-        public async Task<ActionResult> GetReceipt(string email, string receiptId)
-        {
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
-            if (context.Receipts.FirstOrDefault(r => r.id == int.Parse(receiptId)) == null)
-            {
-                return NotFound(new { message = "Receipt not found." });
-            }
-            return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == int.Parse(receiptId)), items = context.ReceiptItems.Where(i => i.ReceiptId == int.Parse(receiptId)) });
-        }
+		public async Task<ActionResult> GetReceipt(string email, string receiptId)
+		{
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
+			if (context.Receipts.FirstOrDefault(r => r.id == receiptId) == null)
+			{
+				return NotFound(new { message = "Receipt not found." });
+			}
+			return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == receiptId), items = context.ReceiptItems.Where(i => i.ReceiptId == receiptId) });
+		}
 
-        [HttpGet("getAllReceiptsItemsOfUser/{email}")]
-        //TO DO
-        public async Task<ActionResult> GetAllReceiptsItemsOfUser(string email)
-        {
-            User userInfo = await userManager.FindByEmailAsync(email);
-            if (userInfo == null)
-            {
-                return BadRequest(new { message = "Something went wrong, please try again." });
-            }
+		[HttpGet("getAllReceiptsItemsOfUser/{email}")]
+		//TO DO
+		public async Task<ActionResult> GetAllReceiptsItemsOfUser(string email)
+		{
+			User userInfo = await userManager.FindByEmailAsync(email);
+			if (userInfo == null)
+			{
+				return BadRequest(new { message = "Something went wrong, please try again." });
+			}
 
-            List<ReceiptItems> itemsOfUser = context.ReceiptItems
-           .Where(ri => ri.Receipts.UserId == userInfo.Id)
+			List<ReceiptItems> itemsOfUser = context.ReceiptItems
+		   .Where(ri => ri.Receipts.UserId == userInfo.Id)
 			.ToList();
-            return Ok(new { items = itemsOfUser});
-        }
+			return Ok(new { items = itemsOfUser });
+		}
 
-        [HttpGet("getLastBudget/{email}")]
+		[HttpGet("getLastBudget/{email}")]
         public async Task<ActionResult> GetLastBudget(string email)
         {
             User userInfo = await userManager.FindByEmailAsync(email);
