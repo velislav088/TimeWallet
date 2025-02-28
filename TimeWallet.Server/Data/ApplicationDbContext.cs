@@ -24,8 +24,9 @@ namespace TimeWallet.Server.Data
             base.OnConfiguring(optionsBuilder);
             if (!optionsBuilder.IsConfigured)
             {
+                //optionsBuilder.UseSqlServer("Server=tcp:timewalletdbserver.database.windows.net,1433;Initial Catalog=TimeWalletDB;Persist Security Info=False;User ID=TimeWallet;Password=Aposiopeza...;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TrueWalletDB;Trusted_Connection=True;TrustServerCertificate=True;");
-                //optionsBuilder.UseSqlServer("Server=tcp:time-wallet-server.database.windows.net,1433;Initial Catalog=TimeWalletDB;Persist Security Info=False;User ID=MertElsenev;Password=m1e2r3t4!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                
             }
         }
 
