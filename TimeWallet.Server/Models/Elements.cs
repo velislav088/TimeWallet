@@ -24,7 +24,7 @@ namespace TimeWallet.Server.Models
         public decimal amount { get; set; }
 
         [Required]
-        public string createdAt { get; set; }
+        public long createdAt { get; set; }
 
         //isValid() func - Приложи
         public int? ReceiptId { get; set; }

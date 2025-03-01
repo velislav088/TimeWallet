@@ -45,11 +45,11 @@ export default defineConfig({
     server: {
         proxy: {
             '^/weatherforecast': {
-                target: "https://timewallet.azurewebsites.net/",
+                target: "https://localhost:7239",
                 secure: false
             },
             '^/api': {
-                target: "https://timewallet.azurewebsites.net/",
+                target: "https://localhost:7239",
                 secure: false
             }
         },

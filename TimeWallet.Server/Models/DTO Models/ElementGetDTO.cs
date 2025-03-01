@@ -9,7 +9,7 @@
         public Guid budgetId { get; set; }
         
         //Би трябвало да го конвертираш в DateTime!
-        public string createdAt { get; set; }
+        public long createdAt { get; set; }
         public decimal amount { get; set; }
 
     }
