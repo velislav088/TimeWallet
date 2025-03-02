@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeWallet.Server.Models
 {
-    public class Receipts
+    public class UsersReceipts
     {
         [Key]
         [Required]
@@ -22,5 +22,9 @@ namespace TimeWallet.Server.Models
         [Range(Common.Common.Moneys_Min_Length, Common.Common.Moneys_Max_Length_Receipts)]
         public double TotalAmount { get; set; }
 
+        [Required]
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

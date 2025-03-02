@@ -365,7 +365,7 @@ public async Task<ActionResult> AddReceipt(string email, ReceiptDTO receipt)
 			ShopId = receipt.ShopId.ToString(),
 			ShopImage = receipt.ShopImage,
 			TotalAmount = receipt.TotalAmount,
-			UserId = receipt.UserId,
+			//UserId = receipt.UserId,
 		};
 
 		context.Receipts.Add(receiptToAdd);
@@ -478,11 +478,8 @@ public async Task<ActionResult> GetAllReceiptsItemsOfUser(string email)
 	{
 		return BadRequest(new { message = "Something went wrong, please try again." });
 	}
+			return Ok();
 
-	List<ReceiptItems> itemsOfUser = context.ReceiptItems
-   .Where(ri => ri.Receipts.UserId == userInfo.Id)
-	.ToList();
-	return Ok(new { items = itemsOfUser });
 }
 
 [HttpGet("getLastBudget/{email}")]
