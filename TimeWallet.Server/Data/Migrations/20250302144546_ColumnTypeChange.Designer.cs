@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeWallet.Server.Data;
 
@@ -11,9 +12,11 @@ using TimeWallet.Server.Data;
 namespace TimeWallet.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250302144546_ColumnTypeChange")]
+    partial class ColumnTypeChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,7 +185,7 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Budgets", (string)null);
+                    b.ToTable("Budgets");
                 });
 
             modelBuilder.Entity("TimeWallet.Server.Models.Elements", b =>
@@ -212,7 +215,7 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.HasIndex("budgetId");
 
-                    b.ToTable("Elements", (string)null);
+                    b.ToTable("Elements");
                 });
 
             modelBuilder.Entity("TimeWallet.Server.Models.ReceiptItems", b =>
@@ -237,7 +240,7 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.HasIndex("ReceiptId");
 
-                    b.ToTable("ReceiptItems", (string)null);
+                    b.ToTable("ReceiptItems");
                 });
 
             modelBuilder.Entity("TimeWallet.Server.Models.Receipts", b =>
@@ -261,7 +264,7 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Receipts", (string)null);
+                    b.ToTable("Receipts");
                 });
 
             modelBuilder.Entity("TimeWallet.Server.Models.User", b =>
@@ -367,7 +370,7 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersReceipts", (string)null);
+                    b.ToTable("UsersReceipts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

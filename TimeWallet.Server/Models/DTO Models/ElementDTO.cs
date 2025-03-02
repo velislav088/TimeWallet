@@ -10,6 +10,6 @@ namespace TimeWallet.Server.Models.DTO_Models
        public decimal amount { get; set; }
        public Guid budgetId { get; set; }
         //isValid() func - Приложи
-        public int? ReceiptId { get; set; }
+       public string? ReceiptId { get; set; }
     }
 }
