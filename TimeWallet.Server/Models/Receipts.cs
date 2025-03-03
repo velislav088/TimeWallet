@@ -16,7 +16,7 @@ namespace TimeWallet.Server.Models
         public byte[] ShopImage { get; set; }
 
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime createdAt { get; set; }
 
         [Required]
         [Range(Common.Common.Moneys_Min_Length, Common.Common.Moneys_Max_Length_Receipts)]

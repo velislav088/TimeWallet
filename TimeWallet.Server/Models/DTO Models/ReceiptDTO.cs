@@ -14,7 +14,7 @@ namespace TimeWallet.Server.Models.DTO_Models
         public byte[] ShopImage { get; set; }
 
        
-        public DateTime DateTime { get; set; }
+        public DateTime createdAt { get; set; }
 
        
         public double TotalAmount { get; set; }

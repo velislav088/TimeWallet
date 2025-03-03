@@ -22,9 +22,8 @@ namespace TimeWallet.Server.Models
         [Range(Common.Common.Moneys_Min_Length, Common.Common.Moneys_Max_Length_Receipts)]
         public double TotalAmount { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(user))]
         public string UserId { get; set; }
-        public User User { get; set; }
+        public User user { get; set; }
     }
 }

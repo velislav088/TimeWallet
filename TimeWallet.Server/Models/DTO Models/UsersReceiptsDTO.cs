@@ -8,6 +8,5 @@
         public DateTime DateTime { get; set; }
         public double TotalAmount { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
     }
 }

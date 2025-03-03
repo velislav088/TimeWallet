@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeWallet.Server.Data;
 
@@ -11,9 +12,11 @@ using TimeWallet.Server.Data;
 namespace TimeWallet.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250302215226_TypeChanges_Part1")]
+    partial class TypeChanges_Part1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,36 +188,6 @@ namespace TimeWallet.Server.Data.Migrations
                     b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("TimeWallet.Server.Models.Elements", b =>
-                {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ReceiptId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("budgetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("createdAt")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(55)
-                        .HasColumnType("nvarchar(55)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("budgetId");
-
-                    b.ToTable("Elements");
-                });
-
             modelBuilder.Entity("TimeWallet.Server.Models.ReceiptItems", b =>
                 {
                     b.Property<Guid>("id")
@@ -245,6 +218,9 @@ namespace TimeWallet.Server.Data.Migrations
                     b.Property<string>("id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ShopId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -255,9 +231,6 @@ namespace TimeWallet.Server.Data.Migrations
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("id");
 
@@ -430,17 +403,6 @@ namespace TimeWallet.Server.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TimeWallet.Server.Models.Elements", b =>
-                {
-                    b.HasOne("TimeWallet.Server.Models.Budgets", "budgets")
-                        .WithMany()
-                        .HasForeignKey("budgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("budgets");
                 });
 
             modelBuilder.Entity("TimeWallet.Server.Models.ReceiptItems", b =>

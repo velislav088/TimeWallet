@@ -200,11 +200,7 @@ namespace TimeWallet.Server.Controllers
             //    return BadRequest(new { message = "Invalid date format." });
             //}
 
-            //string dateTimeConvertion = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).UtcDateTime.ToString("MM/dd/yyyy");
-            if (!long.TryParse(JsonElement.createdAt.ToString(), out long timestamp))
-            {
-                return BadRequest(new { message = "Invalid date format." });
-            }
+            //string dateTimeConvertion = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).UtcDateTime.ToString("MM/dd/yyyy")
 
             Elements elementToAdd = new Elements()
             {
@@ -257,7 +253,7 @@ namespace TimeWallet.Server.Controllers
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
-            if (context.Budgets.FirstOrDefault(b => b.id == Guid.Parse(id)) == null)
+            if (context.Budgets.Where(b => b.UserId == userInfo.Id).FirstOrDefault(b => b.id == Guid.Parse(id)) == null)
             {
                 return BadRequest(new { message = $"User({userInfo.Name}) doesn't own the provided budget!" });
             }
@@ -291,7 +287,7 @@ namespace TimeWallet.Server.Controllers
                 e.name,
                 e.budgetId,
                 e.amount,
-                createdAt = DateTimeOffset.FromUnixTimeMilliseconds(e.createdAt).UtcDateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                e.createdAt
             })
             .ToList();
 
@@ -362,7 +358,7 @@ namespace TimeWallet.Server.Controllers
             {
                 Receipts receiptToAdd = new Receipts()
                 {
-                    DateTime = receipt.DateTime,
+                    createdAt = receipt.createdAt,
                     ShopId = receipt.ShopId.ToString(),
                     ShopImage = receipt.ShopImage,
                     TotalAmount = receipt.TotalAmount,
@@ -467,7 +463,7 @@ namespace TimeWallet.Server.Controllers
             {
                 return NotFound(new { message = "Receipt not found." });
             }
-            return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == receiptId), items = context.ReceiptItems.Where(i => i.ReceiptId == receiptId) });
+            return Ok(new { receipt = context.Receipts.FirstOrDefault(r => r.id == receiptId), items = context.ReceiptItems.Where(i => i.ReceiptId == receiptId), message = "Operation succesful." });
         }
 
         [HttpGet("getAllReceiptsItemsOfUser/{email}")]
@@ -550,16 +546,21 @@ namespace TimeWallet.Server.Controllers
         [HttpPost("addUserReceipt/{email}")]
         public async Task<ActionResult> AddUserReceipt(string email, UsersReceiptsDTO receipt)
         {
+            // Get user info by email
             User userInfo = await userManager.FindByEmailAsync(email);
             if (userInfo == null)
             {
                 return BadRequest(new { message = "Something went wrong, please try again." });
             }
+
+            // Check if the receipt already exists
             List<UsersReceipts> usersReceipts = context.UsersReceipts.Where(r => r.UserId == userInfo.Id).ToList();
-            if(usersReceipts.FirstOrDefault(r => r.id == receipt.id) != null)
+            if (usersReceipts.FirstOrDefault(r => r.id == receipt.id) != null)
             {
                 return BadRequest(new { message = "User has already registered this receipt." });
             }
+
+            // Add the new receipt, setting only UserId
             UsersReceipts receiptToAdd = new UsersReceipts()
             {
                 id = receipt.id,
@@ -567,13 +568,16 @@ namespace TimeWallet.Server.Controllers
                 ShopId = receipt.ShopId,
                 ShopImage = receipt.ShopImage,
                 TotalAmount = receipt.TotalAmount,
-                UserId = receipt.UserId,
-                User = receipt.User
+                UserId = receipt.UserId // Only set UserId here
             };
+
+            // Add to the database and save changes
             context.UsersReceipts.Add(receiptToAdd);
-            context.SaveChanges();
-            return Ok(new { message = "The receipt is succesfully added!"});
+            await context.SaveChangesAsync();
+
+            return Ok(new { message = "The receipt is successfully added!" });
         }
+
 
     }
 }
