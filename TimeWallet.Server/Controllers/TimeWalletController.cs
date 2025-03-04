@@ -578,6 +578,28 @@ namespace TimeWallet.Server.Controllers
             return Ok(new { message = "The receipt is successfully added!" });
         }
 
+        [HttpPost("updateUser/{email}")]
+        public async Task<ActionResult> UpdateUser(string email, [FromBody] UpdateUserDTO model)
+        {
+            User userInfo = await userManager.FindByEmailAsync(email);
+
+            if (userInfo == null)
+            {
+                return BadRequest(new { message = "User not found." });
+            }
+
+            // Update name and email
+            userInfo.Name = model.UserName;
+            userInfo.Email = model.NewEmail;
+            userInfo.Theme = model.Theme;
+            userInfo.Language = model.Language;
+
+            // Save changes properly
+            context.Users.Update(userInfo);
+            await context.SaveChangesAsync();
+
+            return Ok(new { message = "User successfully updated." });
+        }
 
     }
 }
