@@ -287,7 +287,8 @@ namespace TimeWallet.Server.Controllers
                 e.name,
                 e.budgetId,
                 e.amount,
-                e.createdAt
+                e.createdAt,
+                e.ReceiptId
             })
             .ToList();
 
