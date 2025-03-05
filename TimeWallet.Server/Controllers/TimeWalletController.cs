@@ -568,7 +568,7 @@ namespace TimeWallet.Server.Controllers
                 ShopId = receipt.ShopId,
                 ShopImage = receipt.ShopImage,
                 TotalAmount = receipt.TotalAmount,
-                UserId = receipt.UserId // Only set UserId here
+                UserId = userInfo.Id // Only set UserId here
             };
 
             // Add to the database and save changes
